@@ -4,10 +4,8 @@ const bcrypt = require("bcryptjs");
 const createUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
-
-    if (!name || !email || !password) {
-      return res.status(400).send("Please fill all the required fields");
-    }
+    const { error } = validate(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
     const userExist = await user.findOne({ email });
     if (userExist) {
       return res.status(400).send("User already exits");
@@ -34,11 +32,19 @@ const createUser = async (req, res) => {
     });
   } catch (err) {
     console.error(err);
-    if(err.code === 11000){
+    if (err.code === 11000) {
       return res.status(400).send("Email already exists");
     }
     res.status(500).send("Error creating a new user", err);
   }
 };
+
+function validate(data) {
+  const schema = Joi.object({
+    email: Joi.string().min(2).max(40).required().email(),
+    password: Joi.string().min(6).max(30).required(),
+  });
+  return schema.validate(data);
+}
 
 module.exports = { createUser };
