@@ -5,23 +5,20 @@ const supplierSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  quantity: {
+  supplyQuantity: {
+    type: Number,
+  },
+  supplyPrice: {
     type: Number,
     required: true,
   },
-  price: {
-    price: Number,
-    required: true,
+  contact: {
+    type: String,
   },
   address: {
     type: String,
-    required: false,
-  },
-  contact: {
-    type: Number,
-    required: false,
   },
 });
 
-const supplier = mongoose.model('supplier', supplierSchema);
-module.exports = supplier
+const Supplier = mongoose.model("Supplier", supplierSchema);
+module.exports = Supplier;

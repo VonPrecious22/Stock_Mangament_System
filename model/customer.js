@@ -5,18 +5,14 @@ const customerSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-
   quantityBought: {
     type: Number,
-    required: true,
+    default: 0,
   },
-  price: {
+  buyingPrice: {
     type: Number,
-    required: true,
   },
 });
 
-const customer = mongoose.model("customer", customerSchema);
-module.exports = customer;
-
-
+const Customer = mongoose.model("Customer", customerSchema);
+module.exports = Customer;

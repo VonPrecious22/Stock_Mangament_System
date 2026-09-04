@@ -5,14 +5,8 @@ const stockSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  stockNumber: {
-    type: Number,
-    required: String,
-    required: true,
-  },
   description: {
     type: String,
-    required: true,
   },
   date: {
     type: Date,
@@ -20,10 +14,20 @@ const stockSchema = new mongoose.Schema({
   },
   valuationMethod: {
     type: String,
-    enum: ["FIFO", "LIFO", null],
+    enum: ["FIFO", "LIFO"],
     default: "FIFO",
   },
+  Product: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Product",
+    required: true
+  }
 });
 
 const stock = mongoose.model("stock", stockSchema);
 module.exports = stock;
+
+
+
+
+

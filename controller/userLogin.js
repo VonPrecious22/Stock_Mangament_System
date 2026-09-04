@@ -22,10 +22,13 @@ const loginUser = async (req, res) => {
 
     const token = jwt.sign(
       {
+        //payload for JWT
         _id: existingUser._id,
         name: existingUser.name,
         email: existingUser.email,
       },
+
+      // Digital signature
       process.env.JWT_SECRET,
       { expiresIn: process.env.JWT_EXPIRES_IN },
     );

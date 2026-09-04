@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 
 const createUser = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, contact } = req.body;
     const { error } = validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
     const userExist = await user.findOne({ email });
@@ -20,6 +20,7 @@ const createUser = async (req, res) => {
     const newUser = await user.create({
       name,
       email,
+      contact,
       password: hashedPassword,
     });
     res.status(201).json({
@@ -28,6 +29,7 @@ const createUser = async (req, res) => {
         id: newUser._id,
         name: newUser.name,
         email: newUser.email,
+        contact: newUser.contact,
       },
     });
   } catch (err) {
@@ -39,8 +41,16 @@ const createUser = async (req, res) => {
   }
 };
 
+const getUser = async(req, res) =>{
+const User = await user.findById(req.user._id).select('-password');
+res.send(user);
+}
+
+
 function validate(data) {
   const schema = Joi.object({
+    name: Joi.string().min(2).max(40).required().name(),
+    contact: Joi.number().min(10).max(20).required().contact(),
     email: Joi.string().min(2).max(40).required().email(),
     password: Joi.string().min(6).max(30).required(),
   });

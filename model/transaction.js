@@ -1,27 +1,34 @@
 const mongoose = require("mongoose");
 
 const transactionSchema = new mongoose.Schema({
+  date: {
+    type: Date,
+    default: Date.now,
+  },
   amount: {
     type: Number,
     required: true,
   },
+  quantityBought: {
+    type: Number,
+  },
   type: {
     type: String,
-    enum: ["IN", "OUT", null],
+    enum: ["sale", "restock"],
     required: true,
   },
-  note: {
+  notes: {
     type: String,
   },
-  date: {
-    type: Date,
-    default: Date.now(),
+  customer: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Customer",
   },
-  quantity_Bought: {
-    type: Number,
-    required: true,
+  manager: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "user",
   },
 });
 
-const transaction = mongoose.model("transaction", transactionSchema);
-module.exports = transaction;
+const Transaction = mongoose.model("Transaction", transactionSchema);
+module.exports = Transaction;
