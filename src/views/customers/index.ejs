@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/head', { pageTitle: 'Customers' }) %>
+</head>
+<body>
+  <div class="app-layout">
+    <%- include('../partials/sidebar', { currentPage: 'customers' }) %>
+    <main class="main-content">
+      <%- include('../partials/header', { pageTitle: 'Customers' }) %>
+
+      <div class="page-actions">
+        <a href="/customers/create" class="btn btn-primary">+ New customer</a>
+      </div>
+
+      <div class="row-list">
+        <% if (customers && customers.length > 0) { %>
+          <% customers.forEach(function(c) { %>
+            <a href="/customers/<%= c._id %>" class="row-item">
+              <div class="row-icon"><i class="ti ti-user"></i></div>
+              <div class="row-main">
+                <p class="row-title"><%= c.name %></p>
+                <p class="row-subtitle">Bought <%= c.quantityBought || 0 %> units</p>
+              </div>
+              <p class="row-meta">$<%= (c.buyingPrice || 0).toFixed(2) %></p>
+            </a>
+          <% }); %>
+        <% } else { %>
+          <div class="empty-state">
+            <p>No customers found. Click "+ New customer" to add one.</p>
+          </div>
+        <% } %>
+      </div>
+    </main>
+  </div>
+  <%- include('../partials/footer') %>
+</body>
+</html>

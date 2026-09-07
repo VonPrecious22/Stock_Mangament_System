@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%- include('../partials/head', { pageTitle: 'New Stock Batch' }) %>
+</head>
+<body>
+  <div class="app-layout">
+    <%- include('../partials/sidebar', { currentPage: 'stocks' }) %>
+    <main class="main-content">
+      <%- include('../partials/header', { pageTitle: 'New stock batch', user: user }) %>
+
+      <% if (typeof error !== 'undefined' && error) { %>
+        <div class="form-error"><%= error %></div>
+      <% } %>
+
+      <form action="/stocks/create" method="POST" class="form-card">
+        <div class="form-group">
+          <label>Batch name</label>
+          <input type="text" name="name" placeholder="September delivery" required />
+        </div>
+
+        <div class="form-group">
+          <label>Product</label>
+          <select name="ProductId" required>
+            <option value="">Select an existing product</option>
+            <% products.forEach(function(p) { %>
+              <option value="<%= p._id %>"><%= p.name %></option>
+            <% }); %>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Valuation method</label>
+          <select name="valuationMethod">
+            <option value="FIFO">FIFO</option>
+            <option value="LIFO">LIFO</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Description</label>
+          <textarea name="description" placeholder="Optional notes"></textarea>
+        </div>
+
+        <div class="form-actions">
+          <a href="/stocks" class="btn">Cancel</a>
+          <button type="submit" class="btn btn-primary">Create batch</button>
+        </div>
+      </form>
+    </main>
+  </div>
+  <%- include('../partials/footer') %>
+</body>
+</html>

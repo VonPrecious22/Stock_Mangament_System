@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%- include('../partials/head', { pageTitle: 'My Profile' }) %>
+</head>
+<body>
+  <div class="app-layout">
+    <%- include('../partials/sidebar', { currentPage: '' }) %>
+    <main class="main-content">
+      <%- include('../partials/header', { pageTitle: 'My profile' }) %>
+
+      <div class="detail-card">
+        <p class="detail-title"><%= profileUser.name %></p>
+        <p class="detail-description">Email: <%= profileUser.email %></p>
+        <p class="detail-description">Contact: <%= profileUser.contact %></p>
+      </div>
+    </main>
+  </div>
+  <%- include('../partials/footer') %>
+</body>
+</html>

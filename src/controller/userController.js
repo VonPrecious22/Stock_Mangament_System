@@ -1,15 +1,21 @@
 const user = require("../model/user");
 const bcrypt = require("bcryptjs");
+const Joi = require("joi");
 
+
+const renderRegisterForm = (req, res) => {
+  return res.render("auth/register");
+};
 const createUser = async (req, res) => {
   try {
     const { name, email, password, contact } = req.body;
     const { error } = validate(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
+    if (error)
+      return res.render("auth/register", { error: error.details[0].message });
+
     const userExist = await user.findOne({ email });
-    if (userExist) {
-      return res.status(400).send("User already exits");
-    }
+    if (userExist)
+      return res.render("auth/register", { error: "Email already exists" });
 
     //hash password.
     const salt = await bcrypt.genSalt(10);
@@ -23,38 +29,43 @@ const createUser = async (req, res) => {
       contact,
       password: hashedPassword,
     });
-    res.status(201).json({
-      message: "User created successfully",
-      user: {
-        id: newUser._id,
-        name: newUser.name,
-        email: newUser.email,
-        contact: newUser.contact,
-      },
-    });
+    req.session.userId = newUser._id;
+    req.session.userName = newUser.name;
+    res.redirect("/dashboard");
   } catch (err) {
     console.error(err);
-    if (err.code === 11000) {
-      return res.status(400).send("Email already exists");
-    }
-    res.status(500).send("Error creating a new user", err);
+    if (err.code === 11000)
+      return res.render("auth/register", { error: "Email already exists" });
+    res.render("auth/register", {
+      error: "Something went wrong. Please try again.",
+    });
   }
 };
 
-const getUser = async(req, res) =>{
-const User = await user.findById(req.user._id).select('-password');
-res.send(user);
-}
+const getUser = async (req, res) => {
+  try {
+    const foundUser = await user
+      .findById(req.session.userId)
+      .select("-password");
+    if (!foundUser) {
+      return res.redirect("/login");
+    }
 
+    return res.render("user/profile", { profileUser: foundUser });
+  } catch (err) {
+    console.error(err);
+   return res.render("errors/500");
+  }
+};
 
 function validate(data) {
   const schema = Joi.object({
-    name: Joi.string().min(2).max(40).required().name(),
-    contact: Joi.number().min(10).max(20).required().contact(),
+    name: Joi.string().min(2).max(40).required(),
+    contact: Joi.string().min(8).max(20).required(),
     email: Joi.string().min(2).max(40).required().email(),
     password: Joi.string().min(6).max(30).required(),
   });
   return schema.validate(data);
 }
 
-module.exports = { createUser };
+module.exports = { getUser, createUser,renderRegisterForm };

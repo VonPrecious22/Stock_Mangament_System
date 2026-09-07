@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%- include('../partials/head', { pageTitle: 'Edit Stock Batch' }) %>
+</head>
+<body>
+  <div class="app-layout">
+    <%- include('../partials/sidebar', { currentPage: 'stocks' }) %>
+    <main class="main-content">
+      <%- include('../partials/header', { pageTitle: 'Edit stock batch', user: user }) %>
+
+      <% if (typeof error !== 'undefined' && error) { %>
+        <div class="form-error"><%= error %></div>
+      <% } %>
+
+      <form action="/stocks/<%= stock._id %>?_method=PUT" method="POST" class="form-card">
+        <div class="form-group">
+          <label>Batch name</label>
+          <input type="text" name="name" value="<%= stock.name %>" required />
+        </div>
+
+        <div class="form-group">
+          <label>Valuation method</label>
+          <select name="valuationMethod">
+            <option value="FIFO" <%= stock.valuationMethod === 'FIFO' ? 'selected' : '' %>>FIFO</option>
+            <option value="LIFO" <%= stock.valuationMethod === 'LIFO' ? 'selected' : '' %>>LIFO</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Description</label>
+          <textarea name="description"><%= stock.description %></textarea>
+        </div>
+
+        <div class="form-actions">
+          <a href="/stocks/<%= stock._id %>" class="btn">Cancel</a>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+      </form>
+    </main>
+  </div>
+  <%- include('../partials/footer') %>
+</body>
+</html>

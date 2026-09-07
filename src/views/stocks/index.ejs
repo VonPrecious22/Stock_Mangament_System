@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%- include('../partials/head', { pageTitle: 'Stock' }) %>
+</head>
+<body>
+  <div class="app-layout">
+    <%- include('../partials/sidebar', { currentPage: 'stocks' }) %>
+    <main class="main-content">
+      <%- include('../partials/header', { pageTitle: 'Stock overview', user: user }) %>
+
+      <div class="page-actions">
+        <a href="/stocks/create" class="btn btn-primary">+ New stock batch</a>
+      </div>
+
+      <table class="data-table">
+        <thead>
+          <tr><th>Batch</th><th>Product</th><th>Qty</th><th>Method</th><th></th></tr>
+        </thead>
+        <tbody>
+          <% stocks.forEach(function(s) { %>
+            <tr>
+              <td><a href="/stocks/<%= s._id %>"><%= s.name %></a></td>
+              <td><%= s.Product ? s.Product.name : '—' %></td>
+              <td><%= s.Product ? s.Product.quantity : '—' %></td>
+              <td><span class="badge badge-<%= s.valuationMethod.toLowerCase() %>"><%= s.valuationMethod %></span></td>
+              <td>
+                <a href="/stocks/<%= s._id %>/edit">Edit</a>
+                <form action="/stocks/<%= s._id %>?_method=DELETE" method="POST" style="display:inline;" onsubmit="return confirm('Delete this stock batch?');">
+                  <button type="submit" class="link-danger">Delete</button>
+                </form>
+              </td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </main>
+  </div>
+  <%- include('../partials/footer') %>
+</body>
+</html>

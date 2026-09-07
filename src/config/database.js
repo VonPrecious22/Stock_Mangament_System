@@ -11,7 +11,7 @@ async function connectDatabase() {
     console.error("Database failed to connect", err);
     process.exit(1);
   }
-}
+}`65rdkl`
 
 // Export the function directly
 module.exports = connectDatabase;

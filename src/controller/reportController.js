@@ -3,45 +3,38 @@ const Product = require("../model/product");
 
 const getFinancialSummary = async (req, res) => {
   try {
-    const result = await Transaction.aggregate([
-      {
-        $group: {
-          _id: "$type",
-          total: { $sum: "$amount" },
-        },
-      },
-    ]);
+    const result = await Transaction.find();
 
     let totalRevenue = 0;
     let totalCost = 0;
 
-    result.forEach((r) => {
-      if (r._id === "sale") totalRevenue = r.total;
-      if (r._id === "restock") totalCost = r.total;
+    result.forEach((transaction) => {
+      if (transaction.type === "sale") {
+        totalRevenue += transaction.amount;
+      }
+      if (transaction.type === "restock") {
+        totalCost += transaction.amount;
+      }
     });
 
     const profit = totalRevenue - totalCost;
 
     const products = await Product.find();
-    const inventoryValue = products.reduce(
-      (sum, p) => sum + p.quantity * p.sellingPrice,
-      0,
-    );
+    let inventoryValue = 0;
+    products.forEach((product) => {
+      inventoryValue += product.quantity * product.sellingPrice;
+    });
 
-    return res.status(200).json({
+    return res.render("reports/summary", {
       totalRevenue,
       totalCost,
       profit,
       inventoryValue,
+      currentPage: "reports",
     });
   } catch (err) {
     console.error(err);
-    return res
-      .status(500)
-      .json({
-        error: "Error calculating financial summary",
-        details: err.message,
-      });
+    return res.render("errors/500");
   }
 };
 

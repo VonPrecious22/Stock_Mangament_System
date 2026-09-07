@@ -2,125 +2,193 @@ const mongoose = require("mongoose");
 const Joi = require("joi");
 const stock = require("../model/stock");
 const Product = require("../model/product");
-//Create a new stock
+
+
+const renderCreateForm = async (req, res) => {
+  try {
+    const products = await Product.find().lean();
+    return res.render("stocks/create", {
+      products,
+      currentPage: "stocks",
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).render("errors/500");
+  }
+};
+// Create a new stock
 const createStock = async (req, res) => {
   try {
-    const { name,  description, valuationMethod, ProductId} = req.body;
-    const { error } = validate(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
+    const {
+      name,
+      description,
+      valuationMethod,
+      ProductId,
+      productName,
+      category,
+      sellingPrice,
+      quantity,
+    } = req.body;
+
+    const { error } = validateCreate(req.body);
+    if (error) {
+      const products = await Product.find();
+      return res.render("stocks/create", {
+        error: error.details[0].message,
+        products,
+        currentPage: "stocks",
+      });
+    }
+
+    let finalProductId = ProductId;
+
+    if (!finalProductId) {
+      const newProduct = await Product.create({
+        name: productName,
+        category,
+        sellingPrice,
+        quantity,
+      });
+      finalProductId = newProduct._id;
+    }
+
     const newStock = await stock.create({
       name,
       description,
       valuationMethod,
-      Product: ProductId,
-    })
-   const populatedStock = await newStock.populate("Product");
+      Product: finalProductId,
+    });
 
-    return res.status(201).json({
-      message: "Stock created successfully",
-      stock: populatedStock,
-      // stock: {
-      //   id: newStock._id,
-      //   name: newStock.name,
-      //   stockQuantity: newStock.stockQuantity,
-      //   description: newStock.description,
-      //   valuationMethod: newStock.valuationMethod,
-      // },
+    return res.redirect(`/stocks/${newStock._id}`);
+  } catch (err) {
+    console.error(err);
+    const products = await Product.find();
+    return res.render("stocks/create", {
+      error: "Something went wrong. Please try again.",
+      products,
+      currentPage: "stocks",
+    });
+  }
+};
+
+// Get single stock
+const getStock = async (req, res) => {
+  try {
+    const foundStock = await stock.findById(req.params.id).populate("Product");
+    if (!foundStock) return res.status(404).render("errors/404");
+
+    return res.render("stocks/show", {
+      stock: foundStock,
+      currentPage: "stocks",
     });
   } catch (err) {
     console.error(err);
-    return res.status(500).send("Error creating a new stock", err.message);
+    return res.render("errors/500");
   }
 };
 
-//Get stocks
-const getStock = async (req, res) => {
+// Get all stocks
+const getAllStocks = async (req, res) => {
   try {
-    const stock = await stock.findById(req.params.id).populate("Product");
-    return res.send(stock);
+    const allStocks = await stock.find().populate("Product");
+
+    return res.render("stocks/index", {
+      stocks: allStocks,
+      currentPage: "stocks",
+    });
   } catch (err) {
     console.error(err);
-    return res.status(500).send("Error getting the stock", err.message);
+    return res.render("errors/500");
   }
 };
 
-//Get all Stocks
-const getAllStocks = async (req, res) => {
-  try{
-    const allStocks = await stock.find().populate("Product");
-    if(!allStocks) return res.status(404).json({error: "No stocks found"});
-    return res.status(200).json({
-      message: "All stocks retrieved successfully",
-      stocks: allStocks.map((stock) => ({
-        id: stock._id,
-        name: stock.name,
-        description: stock.description,
-        valuationMethod: stock.valuationMethod,
-        product: stock.Product,
-      }))
-    })
-  }catch(err) {
+
+const renderEditForm = async (req, res) => {
+  try {
+    const foundStock = await stock.findById(req.params.id).lean();
+    if (!foundStock) return res.status(404).render("errors/404");
+
+    return res.render("stocks/edit", {
+      stock: foundStock,
+      currentPage: "stocks",
+    });
+  } catch (err) {
     console.error(err);
-    return res.status(500).send("Error getting all stocks", err.message);
+    return res.status(500).render("errors/500");
   }
-}
+};
 
-
-//Update stock
-const updateStock = async (req, res) =>{
-  try{
-   const {name,  description, valuationMethod} = req.body;
-   const {error} = validate(req.body);
-   if(error) return res.status(400).send(error.details[0].message);
-   const updatedStock = await stock.findByIdAndUpdate(
-     req.params.id,
-     {
-       name,
-      
-       description,
-       valuationMethod,
-     },
-     { returnDocument: "after", runValidators: true },
-   );
-if (!updatedStock) return res.status(404).json({ error: "Stock not found" });
-
-   return res.status(200).json({
-    message: "Stock updated successfully",
-    stock:{
-      id: updatedStock._id,
-      name: updatedStock.name,
-      description: updatedStock.description,
-      valuationMethod: updatedStock.valuationMethod,
+// Update stock
+const updateStock = async (req, res) => {
+  try {
+    const { name, description, valuationMethod } = req.body;
+    const { error } = validateUpdate(req.body);
+    if (error) {
+      const existingStock = await stock.findById(req.params.id);
+      return res.render("stocks/edit", {
+        stock: existingStock,
+        error: error.details[0].message,
+        currentPage: "stocks",
+      });
     }
-   });
-  }catch(err) {
-      console.error(err);
-      return res.status(500).send("Error updating the stock", err.message);
-  }
-}
 
-//Delete stock
+    const updatedStock = await stock.findByIdAndUpdate(
+      req.params.id,
+      { name, description, valuationMethod },
+      { returnDocument: "after", runValidators: true },
+    );
 
-const deleteStock = async (req, res) =>{
-  try{
-    const deletedStock = await stock.findByIdAndDelete(req.params.id);
-  if(!deletedStock) return res.status(404).json({error: "Stock not found"});
-  return res.status(200).json({message: "Stock deleted successfully"});
-  } catch(err){
+    if (!updatedStock) return res.status(404).render("errors/404");
+
+    return res.redirect(`/stocks/${updatedStock._id}`);
+  } catch (err) {
     console.error(err);
-    return res.status(500).send("Error Occurred while deleting the stock", err.message);
+    return res.render("errors/500");
   }
-}
- 
+};
 
-function validate(data) {
+// Delete stock
+const deleteStock = async (req, res) => {
+  try {
+    const deletedStock = await stock.findByIdAndDelete(req.params.id);
+    if (!deletedStock) return res.status(404).render("errors/404");
+
+    return res.redirect("/stocks");
+  } catch (err) {
+    console.error(err);
+    return res.render("errors/500");
+  }
+};
+
+function validateCreate(data) {
   const schema = Joi.object({
-    ProductId: Joi.string().required(),
     name: Joi.string().min(2).max(40).required(),
-    description: Joi.string().min(2).max(200),
+    description: Joi.string().min(2).max(200).allow(""),
+    valuationMethod: Joi.string().valid("FIFO", "LIFO").required(),
+    ProductId: Joi.string().allow(""),
+    productName: Joi.string().min(2).max(40).allow(""),
+    category: Joi.string().valid("A", "B", "C").allow(""),
+    sellingPrice: Joi.number().allow(""),
+    quantity: Joi.number().allow(""),
+  }).or("ProductId", "productName"); // must provide one or the other
+  return schema.validate(data);
+}
+
+function validateUpdate(data) {
+  const schema = Joi.object({
+    name: Joi.string().min(2).max(40).required(),
+    description: Joi.string().min(2).max(200).allow(""),
     valuationMethod: Joi.string().valid("FIFO", "LIFO").required(),
   });
   return schema.validate(data);
 }
 
-module.exports = {createStock, getStock, getAllStocks, updateStock, deleteStock};
+module.exports = {
+  renderEditForm,
+  renderCreateForm,
+  createStock,
+  getStock,
+  getAllStocks,
+  updateStock,
+  deleteStock,
+};

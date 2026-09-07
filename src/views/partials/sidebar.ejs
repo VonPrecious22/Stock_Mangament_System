@@ -1,0 +1,26 @@
+<div class="sidebar">
+  <p class="sidebar-logo">Stock Manager</p>
+  <nav class="sidebar-nav">
+    <a href="/dashboard" class="<%= currentPage === 'dashboard' ? 'active' : '' %>">
+      <i class="ti ti-layout-dashboard"></i> Dashboard
+    </a>
+    <a href="/stocks" class="<%= currentPage === 'stocks' ? 'active' : '' %>">
+      <i class="ti ti-box"></i> Stock
+    </a>
+    <a href="/products" class="<%= currentPage === 'products' ? 'active' : '' %>">
+      <i class="ti ti-package"></i> Products
+    </a>
+    <a href="/suppliers" class="<%= currentPage === 'suppliers' ? 'active' : '' %>">
+      <i class="ti ti-truck-delivery"></i> Suppliers
+    </a>
+    <a href="/customers" class="<%= currentPage === 'customers' ? 'active' : '' %>">
+      <i class="ti ti-users"></i> Customers
+    </a>
+    <a href="/transactions" class="<%= currentPage === 'transactions' ? 'active' : '' %>">
+      <i class="ti ti-receipt"></i> Transactions
+    </a>
+    <a href="/reports" class="<%= currentPage === 'reports' ? 'active' : '' %>">
+      <i class="ti ti-chart-bar"></i> Reports
+    </a>
+  </nav>
+</div>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%- include('../partials/head', { pageTitle: 'Transactions' }) %>
+</head>
+<body>
+  <div class="app-layout">
+    <%- include('../partials/sidebar', { currentPage: 'transactions' }) %>
+    <main class="main-content">
+      <%- include('../partials/header', { pageTitle: 'Transactions', user: user }) %>
+
+      <div class="page-actions">
+        <a href="/transactions/create" class="btn btn-primary">+ New transaction</a>
+      </div>
+
+      <table class="data-table">
+        <thead>
+          <tr><th>Date</th><th>Customer</th><th>Type</th><th>Amount</th><th></th></tr>
+        </thead>
+        <tbody>
+          <% transactions.forEach(function(t) { %>
+            <tr>
+              <td><a href="/transactions/<%= t._id %>"><%= t.date.toDateString() %></a></td>
+              <td><%= t.customer ? t.customer.name : '—' %></td>
+              <td><span class="badge badge-<%= t.type %>"><%= t.type %></span></td>
+              <td>$<%= t.amount.toFixed(2) %></td>
+              <td>
+                <form action="/transactions/<%= t._id %>?_method=DELETE" method="POST" style="display:inline;" onsubmit="return confirm('Delete this transaction?');">
+                  <button type="submit" class="link-danger">Delete</button>
+                </form>
+              </td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </main>
+  </div>
+  <%- include('../partials/footer') %>
+</body>
+</html>

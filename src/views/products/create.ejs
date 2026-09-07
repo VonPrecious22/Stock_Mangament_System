@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%- include('../partials/head', { pageTitle: 'New Product' }) %>
+</head>
+<body>
+  <div class="app-layout">
+    <%- include('../partials/sidebar', { currentPage: 'products' }) %>
+    <main class="main-content">
+      <%- include('../partials/header', { pageTitle: 'New product', user: user }) %>
+
+      <% if (typeof error !== 'undefined' && error) { %>
+        <div class="form-error"><%= error %></div>
+      <% } %>
+
+      <form action="/products/create" method="POST" class="form-card">
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" name="name" required />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Selling price</label>
+            <input type="number" step="0.01" name="sellingPrice" required />
+          </div>
+          <div class="form-group">
+            <label>Quantity</label>
+            <input type="number" name="quantity" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Value tier</label>
+          <select name="category">
+            <option value="">None</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+          </select>
+        </div>
+        <div class="form-actions">
+          <a href="/products" class="btn">Cancel</a>
+          <button type="submit" class="btn btn-primary">Create product</button>
+        </div>
+      </form>
+    </main>
+  </div>
+  <%- include('../partials/footer') %>
+</body>
+</html>

@@ -7,7 +7,7 @@ const productSchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    enum: ["A", "B", "C", null],
+    enum: ["A", "B", "C",],
   },
   sellingPrice: {
     type: Number,

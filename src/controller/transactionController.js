@@ -1,73 +1,100 @@
 const Joi = require("joi");
 const Transaction = require("../model/transaction");
+const Customer = require("../model/customer");
+
+const renderCreateForm = async (req, res) => {
+  try {
+    const customers = await Customer.find().lean();
+    return res.render("transactions/create", {
+      customers,
+      currentPage: "transactions",
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).render("errors/500");
+  }
+};
 
 const createTransaction = async (req, res) => {
   try {
-    const { amount, quantityBought, type, notes, customerId, managerId } =
-      req.body;
+    const { amount, quantityBought, type, notes, customerId } = req.body;
     const { error } = validate(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
+    if (error) {
+      const customers = await Customer.find();
+      return res.render("transactions/create", {
+        error: error.details[0].message,
+        customers,
+        currentPage: "transactions",
+      });
+    }
 
-    const newTransaction = await Transaction.create({
+    await Transaction.create({
       amount,
       quantityBought,
       type,
       notes,
       customer: customerId,
-      manager: managerId,
     });
 
-    const populatedTransaction = await newTransaction.populate([
-      "customer",
-      "manager",
-    ]);
-
-    return res.status(201).json({
-      message: "Transaction created successfully",
-      transaction: populatedTransaction,
-    });
+    return res.redirect("/transactions");
   } catch (err) {
     console.error(err);
-    return res
-      .status(500)
-      .json({ error: "Error creating transaction", details: err.message });
+    const customers = await Customer.find();
+    return res.render("transactions/create", {
+      error: "Something went wrong. Please try again.",
+      customers,
+      currentPage: "transactions",
+    });
   }
 };
 
 const getTransaction = async (req, res) => {
   try {
     const foundTransaction = await Transaction.findById(req.params.id).populate(
-      ["customer", "manager"],
+      ["customer"],
     );
-    if (!foundTransaction)
-      return res.status(404).json({ error: "Transaction not found" });
-    return res.status(200).json(foundTransaction);
+    if (!foundTransaction) return res.status(404).render("errors/404");
+
+    return res.render("transactions/show", {
+      transaction: foundTransaction,
+      currentPage: "transactions",
+    });
   } catch (err) {
     console.error(err);
-    return res
-      .status(500)
-      .json({ error: "Error getting transaction", details: err.message });
+    return res.render("errors/500");
   }
 };
 
 const getAllTransactions = async (req, res) => {
   try {
-    const allTransactions = await Transaction.find().populate([
-      "customer",
-      "manager",
-    ]);
-    return res.status(200).json({
-      message: "All transactions retrieved successfully",
+    const allTransactions = await Transaction.find().populate(["customer"]);
+
+    return res.render("transactions/index", {
       transactions: allTransactions,
+      currentPage: "transactions",
     });
   } catch (err) {
     console.error(err);
-    return res
-      .status(500)
-      .json({ error: "Error getting all transactions", details: err.message });
+    return res.render("errors/500");
   }
 };
 
+const renderEditForm = async (req, res) => {
+  try {
+    const foundTransaction = await Transaction.findById(req.params.id).lean();
+    if (!foundTransaction) return res.status(404).render("errors/404");
+
+    const customers = await Customer.find().lean();
+    return res.render("transactions/edit", {
+      transaction: foundTransaction,
+      customers,
+      currentPage: "transactions",
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).render("errors/500");
+  }
+};
 const updateTransaction = async (req, res) => {
   try {
     const { amount, quantityBought, type, notes } = req.body;
@@ -80,18 +107,12 @@ const updateTransaction = async (req, res) => {
       { returnDocument: "after", runValidators: true },
     );
 
-    if (!updatedTransaction)
-      return res.status(404).json({ error: "Transaction not found" });
+    if (!updatedTransaction) return res.status(404).render("errors/404");
 
-    return res.status(200).json({
-      message: "Transaction updated successfully",
-      transaction: updatedTransaction,
-    });
+    return res.redirect(`/transactions/${updatedTransaction._id}`);
   } catch (err) {
     console.error(err);
-    return res
-      .status(500)
-      .json({ error: "Error updating transaction", details: err.message });
+    return res.render("errors/500");
   }
 };
 
@@ -100,16 +121,12 @@ const deleteTransaction = async (req, res) => {
     const deletedTransaction = await Transaction.findByIdAndDelete(
       req.params.id,
     );
-    if (!deletedTransaction)
-      return res.status(404).json({ error: "Transaction not found" });
-    return res
-      .status(200)
-      .json({ message: "Transaction deleted successfully" });
+    if (!deletedTransaction) return res.status(404).render("errors/404");
+
+    return res.redirect("/transactions");
   } catch (err) {
     console.error(err);
-    return res
-      .status(500)
-      .json({ error: "Error deleting transaction", details: err.message });
+    return res.render("errors/500");
   }
 };
 
@@ -117,18 +134,19 @@ function validate(data) {
   const schema = Joi.object({
     amount: Joi.number().required(),
     quantityBought: Joi.number(),
-    type: Joi.string(),
     notes: Joi.string().min(2).max(200),
     customerId: Joi.string(),
-    managerId: Joi.string(),
+    type: Joi.string().valid("sale", "restock").required(),
   });
   return schema.validate(data);
 }
 
 module.exports = {
+  renderCreateForm,
   createTransaction,
   getTransaction,
   getAllTransactions,
+  renderEditForm,
   updateTransaction,
   deleteTransaction,
 };

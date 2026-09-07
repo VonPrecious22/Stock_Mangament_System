@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%- include('../partials/head', { pageTitle: 'Products' }) %>
+</head>
+<body>
+  <div class="app-layout">
+    <%- include('../partials/sidebar', { currentPage: 'products' }) %>
+    <main class="main-content">
+      <%- include('../partials/header', { pageTitle: 'Products', user: user }) %>
+
+      <div class="page-actions">
+        <a href="/products/create" class="btn btn-primary">+ New product</a>
+      </div>
+
+      <div class="card-grid">
+        <% products.forEach(function(p) { %>
+          <a href="/products/<%= p._id %>" class="product-card">
+            <div class="product-card-top">
+              <i class="ti ti-package"></i>
+              <span class="badge badge-tier-<%= (p.category || '').toLowerCase() %>">Tier <%= p.category || '—' %></span>
+            </div>
+            <p class="product-card-name"><%= p.name %></p>
+            <p class="product-card-price">$<%= p.sellingPrice.toFixed(2) %></p>
+            <p class="product-card-qty <%= p.quantity < 10 ? 'text-danger' : '' %>">
+              <%= p.quantity %> in stock<%= p.quantity < 10 ? ' — low' : '' %>
+            </p>
+          </a>
+        <% }); %>
+      </div>
+    </main>
+  </div>
+  <%- include('../partials/footer') %>
+</body>
+</html>

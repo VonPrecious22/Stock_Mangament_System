@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%- include('../partials/head', { pageTitle: 'Suppliers' }) %>
+</head>
+<body>
+  <div class="app-layout">
+    <%- include('../partials/sidebar', { currentPage: 'suppliers' }) %>
+    <main class="main-content">
+      <%- include('../partials/header', { pageTitle: 'Suppliers', user: user }) %>
+
+      <div class="page-actions">
+        <a href="/suppliers/create" class="btn btn-primary">+ New supplier</a>
+      </div>
+
+      <div class="row-list">
+        <% suppliers.forEach(function(s) { %>
+          <a href="/suppliers/<%= s._id %>" class="row-item">
+            <div class="row-icon"><i class="ti ti-truck-delivery"></i></div>
+            <div class="row-main">
+              <p class="row-title"><%= s.name %></p>
+              <p class="row-subtitle"><%= s.address || 'No address' %> · <%= s.contact || 'No contact' %></p>
+            </div>
+            <p class="row-meta">Supplies <%= s.supplyQuantity || 0 %> units</p>
+          </a>
+        <% }); %>
+      </div>
+    </main>
+  </div>
+  <%- include('../partials/footer') %>
+</body>
+</html>

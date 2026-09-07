@@ -1,58 +1,83 @@
 const Joi = require("joi");
 const Supplier = require("../model/supplier");
 
+const renderCreateForm = (req, res) => {
+  return res.render("suppliers/create", {
+    error: null,
+    currentPage: "suppliers",
+  });
+};
+
 const createSupplier = async (req, res) => {
   try {
     const { name, supplyQuantity, supplyPrice, contact, address } = req.body;
     const { error } = validate(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
+    if (error) {
+      return res.render("suppliers/create", {
+        error: error.details[0].message,
+        currentPage: "suppliers",
+      });
+    }
 
-    const newSupplier = await Supplier.create({
+    await Supplier.create({
       name,
       supplyQuantity,
       supplyPrice,
       contact,
       address,
     });
-
-    return res.status(201).json({
-      message: "Supplier created successfully",
-      supplier: newSupplier,
-    });
+    return res.redirect("/suppliers");
   } catch (err) {
     console.error(err);
-    return res
-      .status(500)
-      .json({ error: "Error creating supplier", details: err.message });
+    return res.render("suppliers/create", {
+      error: "Something went wrong. Please try again.",
+      currentPage: "suppliers",
+    });
   }
 };
 
 const getSupplier = async (req, res) => {
   try {
     const foundSupplier = await Supplier.findById(req.params.id);
-    if (!foundSupplier)
-      return res.status(404).json({ error: "Supplier not found" });
-    return res.status(200).json(foundSupplier);
+    if (!foundSupplier) return res.status(404).render("errors/404");
+
+    return res.render("suppliers/show", {
+      supplier: foundSupplier,
+      currentPage: "suppliers",
+    });
   } catch (err) {
     console.error(err);
-    return res
-      .status(500)
-      .json({ error: "Error getting supplier", details: err.message });
+    return res.render("errors/500");
   }
 };
 
 const getAllSuppliers = async (req, res) => {
   try {
     const allSuppliers = await Supplier.find();
-    return res.status(200).json({
-      message: "All suppliers retrieved successfully",
+
+    return res.render("suppliers/index", {
       suppliers: allSuppliers,
+      currentPage: "suppliers",
     });
   } catch (err) {
     console.error(err);
-    return res
-      .status(500)
-      .json({ error: "Error getting all suppliers", details: err.message });
+    return res.render("errors/500");
+  }
+};
+
+const renderEditForm = async (req, res) => {
+  try {
+    const supplier = await Supplier.findById(req.params.id).lean();
+    if (!supplier) return res.status(404).render("errors/404");
+
+    return res.render("suppliers/edit", {
+      supplier,
+      error: null,
+      currentPage: "suppliers",
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).render("errors/500");
   }
 };
 
@@ -60,7 +85,14 @@ const updateSupplier = async (req, res) => {
   try {
     const { name, supplyQuantity, supplyPrice, contact, address } = req.body;
     const { error } = validate(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
+    if (error) {
+      const supplier = await Supplier.findById(req.params.id);
+      return res.render("suppliers/edit", {
+        supplier,
+        error: error.details[0].message,
+        currentPage: "suppliers",
+      });
+    }
 
     const updatedSupplier = await Supplier.findByIdAndUpdate(
       req.params.id,
@@ -68,32 +100,24 @@ const updateSupplier = async (req, res) => {
       { returnDocument: "after", runValidators: true },
     );
 
-    if (!updatedSupplier)
-      return res.status(404).json({ error: "Supplier not found" });
+    if (!updatedSupplier) return res.status(404).render("errors/404");
 
-    return res.status(200).json({
-      message: "Supplier updated successfully",
-      supplier: updatedSupplier,
-    });
+    return res.redirect(`/suppliers/${updatedSupplier._id}`);
   } catch (err) {
     console.error(err);
-    return res
-      .status(500)
-      .json({ error: "Error updating supplier", details: err.message });
+    return res.render("errors/500");
   }
 };
 
 const deleteSupplier = async (req, res) => {
   try {
     const deletedSupplier = await Supplier.findByIdAndDelete(req.params.id);
-    if (!deletedSupplier)
-      return res.status(404).json({ error: "Supplier not found" });
-    return res.status(200).json({ message: "Supplier deleted successfully" });
+    if (!deletedSupplier) return res.status(404).render("errors/404");
+
+    return res.redirect("/suppliers");
   } catch (err) {
     console.error(err);
-    return res
-      .status(500)
-      .json({ error: "Error deleting supplier", details: err.message });
+    return res.render("errors/500");
   }
 };
 
@@ -109,6 +133,8 @@ function validate(data) {
 }
 
 module.exports = {
+  renderCreateForm,
+  renderEditForm,
   createSupplier,
   getSupplier,
   getAllSuppliers,

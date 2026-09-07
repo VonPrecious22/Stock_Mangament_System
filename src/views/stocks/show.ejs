@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%- include('../partials/head', { pageTitle: stock.name }) %>
+</head>
+<body>
+  <div class="app-layout">
+    <%- include('../partials/sidebar', { currentPage: 'stocks' }) %>
+    <main class="main-content">
+      <%- include('../partials/header', { pageTitle: stock.name, user: user }) %>
+
+      <a href="/stocks" class="back-link">&larr; Back to stock</a>
+
+      <div class="detail-card">
+        <div class="detail-card-top">
+          <div>
+            <p class="detail-title"><%= stock.name %></p>
+          <p class="detail-subtitle">Created <%= (stock.date || stock.createdAt || new Date()).toDateString() %></p>
+          </div>
+          <span class="badge badge-<%= stock.valuationMethod.toLowerCase() %>"><%= stock.valuationMethod %></span>
+        </div>
+        <p class="detail-description"><%= stock.description || 'No description' %></p>
+      </div>
+
+      <p class="section-title">Product in this batch</p>
+      <% if (stock.Product) { %>
+        <div class="product-row-card">
+          <div class="product-icon"><i class="ti ti-package"></i></div>
+          <div>
+            <p class="product-name"><%= stock.Product.name %></p>
+            <p class="product-meta">$<%= stock.Product.sellingPrice %> · Tier <%= stock.Product.category || '—' %> · <%= stock.Product.quantity %> units</p>
+          </div>
+        </div>
+      <% } else { %>
+        <p>No product linked to this batch.</p>
+      <% } %>
+
+      <div class="detail-actions">
+        <a href="/stocks/<%= stock._id %>/edit" class="btn">Edit batch</a>
+        <form action="/stocks/<%= stock._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Delete this stock batch?');">
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      </div>
+    </main>
+  </div>
+  <%- include('../partials/footer') %>
+</body>
+</html>

@@ -2,33 +2,31 @@ const Joi = require("joi");
 const stock = require("../model/stock");
 const Product = require("../model/product");
 
+//form. 
+
+const renderCreateForm = (req, res) =>{
+  res.render("products/create", {currentPage: "products"});
+}
+
 const createProduct = async (req, res) => {
   try {
     const { name, quantity, sellingPrice, category } = req.body;
     const { error } = validate(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
+    if (error) {
+      return res.render("products/create", {
+        error: error.details[0].message,
+        currentPage: "products",
+      });
+    }
 
-    const createdProduct = await Product.create({
-      name,
-      quantity,
-      sellingPrice,
-      category,
-    });
-    return res.status(201).json({
-      message: "Product created succesfully.",
-      Product: {
-        id: createdProduct._id,
-        name: createdProduct.name,
-        quantity: createdProduct.quantity,
-        category: createdProduct.category,
-        sellingPrice: createdProduct.sellingPrice,
-      },
-    });
+    await Product.create({ name, quantity, sellingPrice, category });
+    return res.redirect("/products");
   } catch (err) {
     console.error(err);
-  return res
-    .status(500)
-    .json({ error: "Error creating a product",details: err.message });
+    return res.render("products/create", {
+      error: "Something went wrong. Please try again.",
+      currentPage: "products",
+    });
   }
 };
 
@@ -37,55 +35,59 @@ const createProduct = async (req, res) => {
 const getAllProduct = async (req, res) => {
   try {
     const allProduct = await Product.find();
-    if (!allProduct) return res.status(500).send("products not found");
-    return res.status(200).json({
-      message: "All products retrieved succesfully",
-      Product: allProduct.map((product) => ({
-        productId: product._id,
-        name: product.name,
-        price: product.sellingPrice,
-        quantity: product.quantity,
-        category: product.category,
-        sellingPrice: product.sellingPrice,
-      })),
+
+    return res.render("products/index", {
+      products: allProduct,
+      currentPage: "products",
     });
   } catch (err) {
     console.error(err);
-    return res
-      .status(500)
-      .send("Error occured when finding product", err.message);
+    return res.render("errors/500");
   }
 };
 
 // Update product
+const renderEditForm = async(req, res) =>{
+  try{
+   const product = await Product.findById(req.params.id).lean();
+   if(!product) return res.status(404).render("errors/404");
+
+   return res.render("product/edit",{
+    product,
+    currentPage: "products"
+   })
+  }catch(err){
+console.error(err);
+return res.status(500).render("errors/500");
+  }
+}
+
+
 const updateProduct = async (req, res) => {
   try {
     const { name, category, sellingPrice, quantity } = req.body;
     const { error } = validate(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
+    if (error) {
+      const product = await Product.findById(req.params.id);
+      return res.render("products/edit", {
+        product,
+        error: error.details[0].message,
+        currentPage: "products",
+      });
+    }
 
     const updatedProduct = await Product.findByIdAndUpdate(
       req.params.id,
-      { 
-        name, 
-        category, 
-        sellingPrice, 
-        quantity },
+      { name, category, sellingPrice, quantity },
       { returnDocument: "after", runValidators: true },
     );
 
-    if (!updatedProduct)
-      return res.status(404).json({ error: "Product not found" });
+    if (!updatedProduct) return res.status(404).render("errors/404");
 
-    return res.status(200).json({
-      message: "Product updated successfully",
-      product: updatedProduct,
-    });
+    return res.redirect(`/products/${updatedProduct._id}`);
   } catch (err) {
     console.error(err);
-    return res
-      .status(500)
-      .json({ error: "Error updating product", details: err.message });
+    return res.render("errors/500");
   }
 };
 
@@ -93,28 +95,46 @@ const updateProduct = async (req, res) => {
 const deleteProduct = async (req, res) => {
   try {
     const deletedProduct = await Product.findByIdAndDelete(req.params.id);
-    if (!deletedProduct)
-      return res.status(404).json({ error: "Product not found" });
-    return res.status(200).json({ message: "Product deleted successfully" });
+    if (!deletedProduct) return res.status(404).render("errors/404");
+
+    return res.redirect("/products");
   } catch (err) {
     console.error(err);
-    return res
-      .status(500)
-      .json({ error: "Error deleting product", details: err.message });
+    return res.render("errors/500");
   }
+};
+
+const getProduct = async (req, res) => {
+  try {
+    const foundProduct = await Product.findById(req.params.id);
+    if (!foundProduct) return res.status(404).render("errors/404");
+
+    return res.render("products/show", {
+      product: foundProduct,
+      currentPage: "products",
+    });
+  } catch (err) {
+    console.error(err);
+    return res.render("errors/500");
+  }
+};
+
+module.exports = {
+  renderCreateForm,
+  renderEditForm,
+  createProduct,
+  getProduct,
+  getAllProduct,
+  updateProduct,
+  deleteProduct,
 };
 
 function validate(data) {
   const schema = Joi.object({
-    quantity: Joi.number().required(),
-    sellingPrice: Joi.number().required(),
-    category: Joi.string().valid("A", "B", "C"),
     name: Joi.string().min(2).max(40).required(),
-    description: Joi.string().min(2).max(200),
-    valuationMethod: Joi.string().valid("FIFO", "LIFO").required(),
+    category: Joi.string().valid("A", "B", "C").allow(""),
+    sellingPrice: Joi.number().required(),
+    quantity: Joi.number().required(),
   });
   return schema.validate(data);
 }
-
-
-module.exports = {createProduct, getAllProduct, updateProduct, deleteProduct};

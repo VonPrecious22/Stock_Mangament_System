@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%- include('../partials/head', { pageTitle: 'Transaction Detail' }) %>
+</head>
+<body>
+  <div class="app-layout">
+    <%- include('../partials/sidebar', { currentPage: 'transactions' }) %>
+    <main class="main-content">
+      <%- include('../partials/header', { pageTitle: 'Transaction detail', user: user }) %>
+
+      <a href="/transactions" class="back-link">&larr; Back to transactions</a>
+
+      <div class="detail-card">
+        <div class="detail-card-top">
+          <div>
+            <p class="detail-title">$<%= transaction.amount.toFixed(2) %></p>
+            <p class="detail-subtitle"><%= transaction.date.toDateString() %></p>
+          </div>
+          <span class="badge badge-<%= transaction.type %>"><%= transaction.type %></span>
+        </div>
+        <p class="detail-description">Customer: <%= transaction.customer ? transaction.customer.name : '—' %></p>
+        <% if (transaction.quantityBought) { %>
+          <p class="detail-description">Quantity: <%= transaction.quantityBought %></p>
+        <% } %>
+        <% if (transaction.notes) { %>
+          <p class="detail-description">Notes: <%= transaction.notes %></p>
+        <% } %>
+      </div>
+
+      <div class="detail-actions">
+        <form action="/transactions/<%= transaction._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Delete this transaction?');">
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      </div>
+    </main>
+  </div>
+  <%- include('../partials/footer') %>
+</body>
+</html>
