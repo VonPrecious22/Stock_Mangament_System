@@ -1,0 +1,487 @@
+/* =========================================
+   STOCK PAGE STYLES
+   ========================================= */
+
+:root {
+  --aqua: #00a6a6;
+  --dark-aqua: #007f7f;
+  --light-aqua: #f0fbfb;
+
+  --white: #ffffff;
+  --black: #1f2937;
+
+  --border-color: #e5e7eb;
+
+  --green: #218739;
+  --green-dark: #17652a;
+  --green-light: #e5f6e9;
+
+  --red: #c62828;
+  --red-dark: #9f1f1f;
+  --red-light: #ffe5e5;
+
+  --muted-text: #6b7280;
+
+  --font-sans:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+}
+
+
+/* =========================================
+   BODY
+   ========================================= */
+
+body {
+  color: var(--black);
+  background-color: #f9fafb;
+  font-family: var(--font-sans);
+  margin: 0;
+}
+
+
+/* =========================================
+   MAIN CONTENT
+   ========================================= */
+
+.main-content {
+  color: var(--black);
+  padding: 24px;
+}
+
+
+/* =========================================
+   PAGE SECTION
+   ========================================= */
+
+.page-section {
+  width: 100%;
+  margin-top: 20px;
+  padding: 24px;
+
+  background-color: var(--white);
+
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.05);
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================
+   PAGE HEADING
+   ========================================= */
+
+.page-heading {
+  margin-bottom: 24px;
+}
+
+.page-title {
+  margin: 0;
+
+  color: var(--black);
+
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.page-description {
+  margin: 6px 0 0;
+
+  color: var(--muted-text);
+
+  font-size: 15px;
+}
+
+
+/* =========================================
+   BUTTON BASE
+   ========================================= */
+
+.btn {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 36px;
+
+  padding: 8px 16px;
+
+  border: none;
+  border-radius: 6px;
+
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+
+  text-decoration: none;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+  
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.08);
+
+  box-sizing: border-box;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 3px 6px rgba(0, 0, 0, 0.12);
+}
+
+
+/* =========================================
+   NEW STOCK BUTTON
+   ========================================= */
+
+.btn-primary {
+  color: var(--white);
+  background-color: var(--aqua);
+}
+
+.btn-primary:hover {
+  color: var(--white);
+  background-color: var(--dark-aqua);
+}
+
+
+/* =========================================
+   EDIT BUTTON
+   ========================================= */
+
+.btn-edit {
+  color: var(--white);
+  background-color: var(--green);
+
+  min-width: 70px;
+}
+
+.btn-edit:hover {
+  color: var(--white);
+  background-color: var(--green-dark);
+}
+
+
+/* =========================================
+   DELETE BUTTON
+   ========================================= */
+
+.btn-delete {
+  color: var(--white);
+  background-color: var(--red);
+
+  min-width: 75px;
+
+  border: none;
+  border-radius: 6px;
+}
+
+.btn-delete:hover {
+  color: var(--white);
+  background-color: var(--red-dark);
+}
+
+
+/* =========================================
+   TABLE CONTAINER
+   ========================================= */
+
+.table-container {
+  width: 100%;
+
+  overflow-x: auto;
+
+  border-radius: 6px;
+
+  border: 1px solid var(--border-color);
+}
+
+
+/* =========================================
+   TABLE
+   ========================================= */
+
+.data-table {
+  width: 100%;
+
+  border-collapse: collapse;
+
+  color: var(--black);
+
+  background-color: var(--white);
+}
+
+
+/* =========================================
+   TABLE HEADER
+   ========================================= */
+
+.data-table th {
+  padding: 14px 18px;
+
+  color: var(--white);
+
+  background-color: var(--aqua);
+
+  font-size: 15px;
+  font-weight: 600;
+
+  text-align: left;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================
+   TABLE CELLS
+   ========================================= */
+
+.data-table td {
+  padding: 14px 18px;
+
+  color: var(--black);
+
+  border-bottom: 1px solid var(--border-color);
+
+  font-size: 15px;
+
+  vertical-align: middle;
+}
+
+
+/* Remove border from final row */
+
+.data-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+
+/* Row hover */
+
+.data-table tbody tr:hover td {
+  background-color: var(--light-aqua);
+}
+
+
+/* =========================================
+   TABLE COLUMNS
+   ========================================= */
+
+.col-batch {
+  width: 30%;
+  font-weight: 600;
+}
+
+.col-product {
+  width: 25%;
+  color: #374151;
+}
+
+.col-qty {
+  width: 15%;
+  color: #374151;
+  font-weight: 500;
+}
+
+.col-method {
+  width: 15%;
+}
+
+
+/* =========================================
+   BATCH LINK
+   ========================================= */
+
+.batch-link {
+  color: var(--dark-aqua);
+
+  text-decoration: none;
+
+  transition: color 0.15s ease;
+}
+
+.batch-link:hover {
+  color: var(--aqua);
+
+  text-decoration: underline;
+}
+
+
+/* =========================================
+   ACTION COLUMN
+   ========================================= */
+
+.actions-heading {
+  text-align: center !important;
+}
+
+.col-actions {
+  width: 15%;
+
+  text-align: center;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================
+   EDIT + DELETE HORIZONTAL ALIGNMENT
+   ========================================= */
+
+.action-buttons {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-direction: row;
+
+  gap: 8px;
+
+  white-space: nowrap;
+}
+
+
+/* Make form behave correctly beside Edit */
+
+.action-buttons form {
+  display: flex;
+
+  align-items: center;
+
+  margin: 0;
+  padding: 0;
+}
+
+
+/* =========================================
+   VALUATION METHOD BADGES
+   ========================================= */
+
+.badge {
+  display: inline-block;
+
+  min-width: 65px;
+
+  padding: 4px 10px;
+
+  border-radius: 20px;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  text-align: center;
+
+  letter-spacing: 0.3px;
+
+  box-sizing: border-box;
+}
+
+
+/* FIFO */
+
+.badge-fifo {
+  color: #0369a1;
+  background-color: #e0f2fe;
+}
+
+
+/* LIFO */
+
+.badge-lifo {
+  color: #15803d;
+  background-color: var(--green-light);
+}
+
+
+/* Average */
+
+.badge-average {
+  color: #b45309;
+  background-color: #fef3c7;
+}
+
+
+/* Default */
+
+.badge-default {
+  color: var(--muted-text);
+  background-color: #f3f4f6;
+}
+
+
+/* =========================================
+   EMPTY MESSAGE
+   ========================================= */
+
+.empty-message {
+  padding: 32px !important;
+
+  color: var(--muted-text) !important;
+
+  font-style: italic;
+
+  text-align: center;
+}
+
+
+/* =========================================
+   BOTTOM ACTIONS
+   ========================================= */
+
+.bottom-actions {
+  display: flex;
+
+  justify-content: flex-start;
+
+  margin-top: 24px;
+}
+
+
+/* =========================================
+   RESPONSIVE DESIGN
+   ========================================= */
+
+@media (max-width: 700px) {
+
+  .main-content {
+    padding: 16px 12px;
+  }
+
+  .page-section {
+    padding: 16px;
+  }
+
+  .data-table {
+    min-width: 750px;
+  }
+
+  .bottom-actions .btn-primary {
+    width: 100%;
+  }
+
+  /*
+     Keep Edit and Delete horizontal
+     even on smaller screens.
+  */
+
+  .action-buttons {
+    flex-direction: row;
+    justify-content: center;
+  }
+}

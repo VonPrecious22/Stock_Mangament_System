@@ -1,35 +1,86 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <%- include('../partials/head', { pageTitle: 'Reports' }) %>
+  <link rel="stylesheet" href="/css/report.css">
 </head>
+
 <body>
   <div class="app-layout">
+
     <%- include('../partials/sidebar', { currentPage: 'reports' }) %>
+
     <main class="main-content">
-      <%- include('../partials/header', { pageTitle: 'Financial summary', user: user }) %>
+
+      <%- include('../partials/header', {
+        pageTitle: 'Financial summary',
+        user: user
+      }) %>
+
+
+      <!-- =====================================================
+           FINANCIAL SUMMARY
+           ===================================================== -->
 
       <div class="stats-grid">
+
+        <!-- Total Revenue -->
         <div class="stat-card">
-          <p class="stat-label">Total revenue</p>
-          <p class="stat-value stat-success">$<%= totalRevenue.toFixed(2) %></p>
+          <span class="stat-label">Total revenue</span>
+
+          <span class="stat-value stat-success">
+            $<%= totalRevenue.toFixed(2) %>
+          </span>
         </div>
+
+
+        <!-- Total Cost -->
         <div class="stat-card">
-          <p class="stat-label">Total cost</p>
-          <p class="stat-value stat-danger">$<%= totalCost.toFixed(2) %></p>
+          <span class="stat-label">Total cost</span>
+
+          <span class="stat-value stat-danger">
+            $<%= totalCost.toFixed(2) %>
+          </span>
         </div>
+
+
+        <!-- Net Profit -->
         <div class="stat-card">
-          <p class="stat-label">Net profit</p>
-          <p class="stat-value">$<%= profit.toFixed(2) %></p>
+          <span class="stat-label">Net profit</span>
+
+          <span class="stat-value">
+            $<%= profit.toFixed(2) %>
+          </span>
         </div>
+
+
+        <!-- Inventory Value -->
         <div class="stat-card">
-          <p class="stat-label">Inventory value</p>
-          <p class="stat-value">$<%= inventoryValue.toFixed(2) %></p>
+          <span class="stat-label">Inventory value</span>
+
+          <span class="stat-value">
+            $<%= inventoryValue.toFixed(2) %>
+          </span>
         </div>
+
       </div>
-      <p class="hint-text">Revenue and cost are calculated from sale and restock transactions. Inventory value reflects current product quantity × selling price.</p>
+
+
+      <!-- =====================================================
+           INFORMATION
+           ===================================================== -->
+
+      <p class="hint-text">
+        Revenue and cost are calculated from sale and restock
+        transactions. Inventory value reflects current product
+        quantity × selling price.
+      </p>
+
     </main>
+
   </div>
+
   <%- include('../partials/footer') %>
+
 </body>
 </html>

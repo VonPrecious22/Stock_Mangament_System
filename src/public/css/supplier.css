@@ -1,0 +1,418 @@
+/* =========================================================
+   SUPPLIERS PAGE
+   ========================================================= */
+
+.main-content {
+  flex: 1;
+  min-height: 100vh;
+  padding: 32px;
+  padding-bottom: 100px;
+  background: #f6f8fb;
+}
+
+
+/* ---------------------------------------------------------
+   PAGE ACTIONS
+   NEW SUPPLIER BUTTON - BOTTOM RIGHT
+   --------------------------------------------------------- */
+
+.page-actions {
+  position: fixed;
+
+  right: 32px;
+  bottom: 32px;
+
+  display: flex;
+  align-items: center;
+
+  z-index: 1000;
+}
+
+
+/* ---------------------------------------------------------
+   BUTTON
+   --------------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  padding: 12px 20px;
+
+  border-radius: 8px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  text-decoration: none;
+
+  border: none;
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+/* ---------------------------------------------------------
+   AQUA PRIMARY BUTTON
+   --------------------------------------------------------- */
+
+.btn-primary {
+  background: #08a9a9;
+  color: #ffffff;
+
+  box-shadow:
+    0 4px 10px rgba(8, 169, 169, 0.25);
+}
+
+.btn-primary:hover {
+  background: #079494;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 6px 14px rgba(8, 169, 169, 0.30);
+}
+
+.btn-primary:active {
+  background: #078787;
+
+  transform: translateY(0);
+
+  box-shadow:
+    0 2px 6px rgba(8, 169, 169, 0.20);
+}
+
+
+/* ---------------------------------------------------------
+   SUPPLIER LIST
+   --------------------------------------------------------- */
+
+.row-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  width: 100%;
+}
+
+
+/* ---------------------------------------------------------
+   SUPPLIER ROW
+   --------------------------------------------------------- */
+
+.row-item {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  min-height: 82px;
+
+  padding: 16px 20px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+
+  text-decoration: none;
+  color: inherit;
+
+  box-sizing: border-box;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.row-item:hover {
+  border-color: #9ddddb;
+
+  background: #ffffff;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 4px 12px rgba(15, 23, 42, 0.07);
+}
+
+
+/* ---------------------------------------------------------
+   SUPPLIER ICON
+   --------------------------------------------------------- */
+
+.row-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 46px;
+
+  width: 46px;
+  height: 46px;
+
+  margin-right: 16px;
+
+  border-radius: 10px;
+
+  background: #e6fafa;
+  color: #08a9a9;
+
+  font-size: 22px;
+}
+
+.row-icon i {
+  line-height: 1;
+}
+
+
+/* ---------------------------------------------------------
+   MAIN SUPPLIER INFORMATION
+   --------------------------------------------------------- */
+
+.row-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.row-title {
+  margin: 0 0 5px;
+
+  color: #111827;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  line-height: 1.4;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.row-subtitle {
+  margin: 0;
+
+  color: #6b7280;
+
+  font-size: 13px;
+  font-weight: 400;
+
+  line-height: 1.5;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+/* ---------------------------------------------------------
+   SUPPLY QUANTITY
+   --------------------------------------------------------- */
+
+.row-meta {
+  flex-shrink: 0;
+
+  margin: 0 0 0 24px;
+
+  padding: 7px 11px;
+
+  background: #e8fafa;
+
+  border: 1px solid #b8e8e8;
+
+  border-radius: 7px;
+
+  color: #078787;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+
+/* ---------------------------------------------------------
+   EMPTY STATE
+   --------------------------------------------------------- */
+
+.row-list:empty::before {
+  content: "No suppliers found";
+
+  display: block;
+
+  padding: 50px 20px;
+
+  text-align: center;
+
+  background: #ffffff;
+
+  border: 1px dashed #d1d5db;
+
+  border-radius: 12px;
+
+  color: #6b7280;
+
+  font-size: 14px;
+}
+
+
+/* ---------------------------------------------------------
+   RESPONSIVE DESIGN
+   --------------------------------------------------------- */
+
+@media (max-width: 768px) {
+
+  .main-content {
+    padding: 24px 18px;
+    padding-bottom: 100px;
+  }
+
+  .page-actions {
+    right: 20px;
+    bottom: 20px;
+  }
+
+  .row-item {
+    padding: 14px 15px;
+  }
+
+  .row-icon {
+    flex-basis: 42px;
+
+    width: 42px;
+    height: 42px;
+
+    margin-right: 13px;
+
+    font-size: 20px;
+  }
+
+  .row-title {
+    font-size: 14px;
+  }
+
+  .row-subtitle {
+    font-size: 12px;
+  }
+
+  .row-meta {
+    margin-left: 12px;
+
+    padding: 6px 8px;
+
+    font-size: 11px;
+  }
+}
+
+
+/* ---------------------------------------------------------
+   SMALL MOBILE SCREENS
+   --------------------------------------------------------- */
+
+@media (max-width: 560px) {
+
+  .main-content {
+    padding: 18px 12px;
+    padding-bottom: 90px;
+  }
+
+  .page-actions {
+    position: fixed;
+
+    right: 16px;
+    bottom: 16px;
+
+    z-index: 1000;
+  }
+
+  .page-actions .btn {
+    width: auto;
+
+    padding: 11px 16px;
+
+    font-size: 13px;
+  }
+
+  .row-item {
+    align-items: flex-start;
+
+    position: relative;
+
+    padding: 14px;
+  }
+
+  .row-icon {
+    flex: 0 0 38px;
+
+    width: 38px;
+    height: 38px;
+
+    margin-right: 11px;
+
+    font-size: 18px;
+  }
+
+  .row-main {
+    padding-right: 4px;
+  }
+
+  .row-title {
+    white-space: normal;
+  }
+
+  .row-subtitle {
+    white-space: normal;
+  }
+
+  .row-meta {
+    position: absolute;
+
+    right: 14px;
+    bottom: 12px;
+
+    margin: 0;
+  }
+}
+
+
+/* ---------------------------------------------------------
+   VERY SMALL SCREENS
+   --------------------------------------------------------- */
+
+@media (max-width: 400px) {
+
+  .main-content {
+    padding-bottom: 85px;
+  }
+
+  .page-actions {
+    right: 12px;
+    bottom: 12px;
+  }
+
+  .page-actions .btn {
+    padding: 10px 14px;
+
+    font-size: 12px;
+  }
+
+  .row-item {
+    min-height: 100px;
+  }
+
+  .row-subtitle {
+    max-width: 180px;
+  }
+
+  .row-meta {
+    font-size: 10px;
+  }
+}

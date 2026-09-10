@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+     <link rel="stylesheet" href="/css/showsupplier.css">
   <%- include('../partials/head', { pageTitle: supplier.name }) %>
 </head>
 <body>
   <div class="app-layout">
     <%- include('../partials/sidebar', { currentPage: 'suppliers' }) %>
     <main class="main-content">
+     
       <%- include('../partials/header', { pageTitle: supplier.name, user: user }) %>
 
       <a href="/suppliers" class="back-link">&larr; Back to suppliers</a>

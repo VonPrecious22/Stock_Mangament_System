@@ -1,40 +1,189 @@
+```html
 <!DOCTYPE html>
 <html>
 <head>
+  <link rel="stylesheet", href="showtransaction">
   <%- include('../partials/head', { pageTitle: 'Transaction Detail' }) %>
 </head>
-<body>
-  <div class="app-layout">
-    <%- include('../partials/sidebar', { currentPage: 'transactions' }) %>
-    <main class="main-content">
-      <%- include('../partials/header', { pageTitle: 'Transaction detail', user: user }) %>
 
-      <a href="/transactions" class="back-link">&larr; Back to transactions</a>
+<body>
+
+  <div class="app-layout">
+
+    <%- include('../partials/sidebar', { currentPage: 'transactions' }) %>
+
+    <main class="main-content">
+
+      <%- include('../partials/header', {
+        pageTitle: 'Transaction detail',
+        user: user
+      }) %>
+
+
+      <!-- =====================================================
+           BACK LINK
+           ===================================================== -->
+
+      <a href="/transactions" class="back-link">
+        &larr; Back to transactions
+      </a>
+
+
+      <!-- =====================================================
+           TRANSACTION DETAIL CARD
+           ===================================================== -->
 
       <div class="detail-card">
+
+        <!-- TOP SECTION -->
         <div class="detail-card-top">
-          <div>
-            <p class="detail-title">$<%= transaction.amount.toFixed(2) %></p>
-            <p class="detail-subtitle"><%= transaction.date.toDateString() %></p>
+
+          <div class="detail-main-info">
+
+            <p class="detail-title">
+              $<%= transaction.amount.toFixed(2) %>
+            </p>
+
+            <p class="detail-subtitle">
+              <%= transaction.date.toDateString() %>
+            </p>
+
           </div>
-          <span class="badge badge-<%= transaction.type %>"><%= transaction.type %></span>
+
+
+          <!-- TRANSACTION TYPE -->
+          <span class="badge badge-<%= transaction.type %>">
+            <%= transaction.type %>
+          </span>
+
         </div>
-        <p class="detail-description">Customer: <%= transaction.customer ? transaction.customer.name : '—' %></p>
-        <% if (transaction.quantityBought) { %>
-          <p class="detail-description">Quantity: <%= transaction.quantityBought %></p>
-        <% } %>
-        <% if (transaction.notes) { %>
-          <p class="detail-description">Notes: <%= transaction.notes %></p>
-        <% } %>
+
+
+        <!-- ===================================================
+             PARTY
+             =================================================== -->
+
+        <div class="detail-info">
+
+          <% if (transaction.type === 'restock') { %>
+
+            <div class="detail-item">
+
+              <span class="detail-label">
+                Supplier
+              </span>
+
+              <span class="detail-value">
+                <%= transaction.supplier
+                  ? transaction.supplier.name
+                  : '—' %>
+              </span>
+
+            </div>
+
+          <% } else { %>
+
+            <div class="detail-item">
+
+              <span class="detail-label">
+                Customer
+              </span>
+
+              <span class="detail-value">
+                <%= transaction.customer
+                  ? transaction.customer.name
+                  : '—' %>
+              </span>
+
+            </div>
+
+          <% } %>
+
+
+          <!-- =================================================
+               QUANTITY
+               ================================================= -->
+
+          <% if (transaction.quantityBought) { %>
+
+            <div class="detail-item">
+
+              <span class="detail-label">
+                Quantity
+              </span>
+
+              <span class="detail-value">
+                <%= transaction.quantityBought %>
+              </span>
+
+            </div>
+
+          <% } %>
+
+
+          <!-- =================================================
+               NOTES
+               ================================================= -->
+
+          <% if (transaction.notes) { %>
+
+            <div class="detail-item detail-notes">
+
+              <span class="detail-label">
+                Notes
+              </span>
+
+              <span class="detail-value">
+                <%= transaction.notes %>
+              </span>
+
+            </div>
+
+          <% } %>
+
+        </div>
+
       </div>
 
+
+      <!-- =====================================================
+           ACTIONS
+           ===================================================== -->
+
       <div class="detail-actions">
-        <form action="/transactions/<%= transaction._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Delete this transaction?');">
-          <button type="submit" class="btn btn-danger">Delete</button>
+
+        <a
+          href="/transactions"
+          class="btn btn-secondary"
+        >
+          Back
+        </a>
+
+
+        <form
+          action="/transactions/<%= transaction._id %>?_method=DELETE"
+          method="POST"
+          onsubmit="return confirm('Delete this transaction?');"
+        >
+
+          <button
+            type="submit"
+            class="btn btn-danger"
+          >
+            Delete
+          </button>
+
         </form>
+
       </div>
+
     </main>
+
   </div>
+
+
   <%- include('../partials/footer') %>
+
 </body>
 </html>
+```

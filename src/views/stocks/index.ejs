@@ -1,41 +1,170 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <%- include('../partials/head', { pageTitle: 'Stock' }) %>
+
+  <link rel="stylesheet" href="/css/sidebar.css">
+  <link rel="stylesheet" href="/css/stock.css">
 </head>
+
 <body>
   <div class="app-layout">
+
     <%- include('../partials/sidebar', { currentPage: 'stocks' }) %>
+
     <main class="main-content">
-      <%- include('../partials/header', { pageTitle: 'Stock overview', user: user }) %>
 
-      <div class="page-actions">
-        <a href="/stocks/create" class="btn btn-primary">+ New stock batch</a>
-      </div>
+      <%- include('../partials/header', {
+        pageTitle: 'Stock Overview',
+        user: user
+      }) %>
 
-      <table class="data-table">
-        <thead>
-          <tr><th>Batch</th><th>Product</th><th>Qty</th><th>Method</th><th></th></tr>
-        </thead>
-        <tbody>
-          <% stocks.forEach(function(s) { %>
-            <tr>
-              <td><a href="/stocks/<%= s._id %>"><%= s.name %></a></td>
-              <td><%= s.Product ? s.Product.name : '—' %></td>
-              <td><%= s.Product ? s.Product.quantity : '—' %></td>
-              <td><span class="badge badge-<%= s.valuationMethod.toLowerCase() %>"><%= s.valuationMethod %></span></td>
-              <td>
-                <a href="/stocks/<%= s._id %>/edit">Edit</a>
-                <form action="/stocks/<%= s._id %>?_method=DELETE" method="POST" style="display:inline;" onsubmit="return confirm('Delete this stock batch?');">
-                  <button type="submit" class="link-danger">Delete</button>
-                </form>
-              </td>
-            </tr>
-          <% }); %>
-        </tbody>
-      </table>
+      <section class="page-section">
+
+        <div class="page-heading">
+          <div>
+            <h1 class="page-title">Stock Overview</h1>
+            <p class="page-description">
+              View and manage your stock batches.
+            </p>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table class="data-table">
+
+            <thead>
+              <tr>
+                <th class="col-batch">Batch</th>
+                <th class="col-product">Product</th>
+                <th class="col-qty">Quantity</th>
+                <th class="col-method">Method</th>
+                <th class="actions-heading">Actions</th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              <% if (stocks && stocks.length > 0) { %>
+
+                <% stocks.forEach(function(s) { %>
+
+                  <tr>
+
+                    <!-- Batch -->
+                    <td class="col-batch">
+                      <a
+                        href="/stocks/<%= s._id %>"
+                        class="batch-link"
+                      >
+                        <%= s.name || 'Unnamed batch' %>
+                      </a>
+                    </td>
+
+                    <!-- Product -->
+                    <td class="col-product">
+                      <%= s.Product ? s.Product.name : '—' %>
+                    </td>
+
+                    <!-- Quantity -->
+                    <td class="col-qty">
+                      <%= s.Product ? s.Product.quantity : '—' %>
+                    </td>
+
+                    <!-- Valuation Method -->
+                    <td class="col-method">
+
+                      <%
+                        let badgeClass = 'badge-default';
+
+                        if (s.valuationMethod) {
+                          const method = s.valuationMethod.toLowerCase();
+
+                          if (method === 'fifo') {
+                            badgeClass = 'badge-fifo';
+                          } else if (method === 'lifo') {
+                            badgeClass = 'badge-lifo';
+                          } else if (method === 'average') {
+                            badgeClass = 'badge-average';
+                          }
+                        }
+                      %>
+
+                      <span class="badge <%= badgeClass %>">
+                        <%= s.valuationMethod || 'N/A' %>
+                      </span>
+
+                    </td>
+
+                    <!-- Actions -->
+                    <td class="col-actions">
+
+                      <div class="action-buttons">
+
+                        <!-- Edit -->
+                        <a
+                          href="/stocks/<%= s._id %>/edit"
+                          class="btn btn-edit"
+                        >
+                          Edit
+                        </a>
+
+                        <!-- Delete -->
+                        <form
+                          action="/stocks/<%= s._id %>?_method=DELETE"
+                          method="POST"
+                          onsubmit="return confirm('Delete this stock batch?');"
+                        >
+                          <button
+                            type="submit"
+                            class="btn btn-delete"
+                          >
+                            Delete
+                          </button>
+                        </form>
+
+                      </div>
+
+                    </td>
+
+                  </tr>
+
+                <% }); %>
+
+              <% } else { %>
+
+                <tr>
+                  <td colspan="5" class="empty-message">
+                    No stock batches found.
+                  </td>
+                </tr>
+
+              <% } %>
+
+            </tbody>
+
+          </table>
+        </div>
+
+        <!-- New Stock Button -->
+        <div class="bottom-actions">
+          <a
+            href="/stocks/create"
+            class="btn btn-primary"
+          >
+            + New Stock Batch
+          </a>
+        </div>
+
+      </section>
+
     </main>
   </div>
+
   <%- include('../partials/footer') %>
+
 </body>
 </html>

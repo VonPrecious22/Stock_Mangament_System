@@ -1,35 +1,97 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <%- include('../partials/head', { pageTitle: 'Products' }) %>
+
+  <link rel="stylesheet" href="/css/sidebar.css">
+  <link rel="stylesheet" href="/css/product.css">
 </head>
+
 <body>
   <div class="app-layout">
+
     <%- include('../partials/sidebar', { currentPage: 'products' }) %>
+
     <main class="main-content">
-      <%- include('../partials/header', { pageTitle: 'Products', user: user }) %>
 
-      <div class="page-actions">
-        <a href="/products/create" class="btn btn-primary">+ New product</a>
-      </div>
+      <%- include('../partials/header', {
+        pageTitle: 'Products',
+        user: user
+      }) %>
 
-      <div class="card-grid">
-        <% products.forEach(function(p) { %>
-          <a href="/products/<%= p._id %>" class="product-card">
-            <div class="product-card-top">
-              <i class="ti ti-package"></i>
-              <span class="badge badge-tier-<%= (p.category || '').toLowerCase() %>">Tier <%= p.category || '—' %></span>
-            </div>
-            <p class="product-card-name"><%= p.name %></p>
-            <p class="product-card-price">$<%= p.sellingPrice.toFixed(2) %></p>
-            <p class="product-card-qty <%= p.quantity < 10 ? 'text-danger' : '' %>">
-              <%= p.quantity %> in stock<%= p.quantity < 10 ? ' — low' : '' %>
+      <section class="page-section">
+
+        <div class="page-heading">
+          <div>
+            <h1 class="page-title">Products</h1>
+            <p class="page-description">
+              View and manage your products.
             </p>
+          </div>
+        </div>
+
+        <% if (products && products.length > 0) { %>
+
+          <div class="card-grid">
+
+            <% products.forEach(function(p) { %>
+
+              <a
+                href="/products/<%= p._id %>"
+                class="product-card"
+              >
+
+                <div class="product-card-top">
+                  <div class="product-icon">
+                    <i class="ti ti-package"></i>
+                  </div>
+
+                  <p class="product-card-name">
+                    <%= p.name %>
+                  </p>
+                </div>
+
+                <p class="product-card-price">
+                  $<%= Number(p.sellingPrice || 0).toFixed(2) %>
+                </p>
+
+                <p class="product-card-qty <%= p.quantity < 10 ? 'text-danger' : '' %>">
+                  <%= p.quantity %> in stock<%= p.quantity < 10 ? ' — low' : '' %>
+                </p>
+
+                <span class="badge badge-tier-<%= (p.category || '').toLowerCase() %>">
+                  Tier <%= p.category || '—' %>
+                </span>
+
+              </a>
+
+            <% }); %>
+
+          </div>
+
+        <% } else { %>
+
+          <div class="empty-message">
+            No products found.
+          </div>
+
+        <% } %>
+
+        <!-- New product button at the bottom -->
+        <div class="bottom-actions">
+          <a href="/products/create" class="btn btn-primary">
+            + New product
           </a>
-        <% }); %>
-      </div>
+        </div>
+
+      </section>
+
     </main>
   </div>
+
   <%- include('../partials/footer') %>
 </body>
 </html>

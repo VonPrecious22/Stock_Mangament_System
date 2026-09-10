@@ -1,0 +1,526 @@
+/* =========================================================
+   NEW TRANSACTION PAGE
+   ========================================================= */
+
+.main-content {
+  flex: 1;
+  min-height: 100vh;
+
+  padding: 32px;
+
+  box-sizing: border-box;
+
+  /* Completely white background */
+  background: #ffffff;
+}
+
+/* =========================================================
+   FORM CARD
+   ========================================================= */
+
+.form-card {
+  width: 100%;
+  max-width: 700px;
+
+  padding: 24px;
+
+  box-sizing: border-box;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+/* =========================================================
+   FORM GROUP
+   ========================================================= */
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+
+  margin-bottom: 18px;
+}
+
+/* =========================================================
+   FORM ROW
+   ========================================================= */
+
+.form-row {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 16px;
+
+  width: 100%;
+}
+
+/* =========================================================
+   LABEL
+   ========================================================= */
+
+.form-group label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #374151;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  line-height: 1.4;
+
+  letter-spacing: 0.01em;
+}
+
+/* =========================================================
+   INPUTS / SELECT / TEXTAREA
+   ========================================================= */
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+
+  padding: 11px 12px;
+
+  box-sizing: border-box;
+
+  color: #111827;
+
+  background: #ffffff;
+
+  border: 1px solid #dfe3e8;
+  border-radius: 8px;
+
+  outline: none;
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  line-height: 1.4;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+/* =========================================================
+   SELECT
+   ========================================================= */
+
+.form-group select {
+  cursor: pointer;
+
+  appearance: auto;
+}
+
+/* =========================================================
+   INPUT FOCUS
+   ========================================================= */
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  background: #ffffff;
+
+  border-color: #08a9a9;
+
+  box-shadow: 0 0 0 3px rgba(8, 169, 169, 0.1);
+}
+
+/* =========================================================
+   INPUT HOVER
+   ========================================================= */
+
+.form-group input:hover,
+.form-group select:hover,
+.form-group textarea:hover {
+  border-color: #c7ced6;
+}
+
+/* =========================================================
+   PLACEHOLDER
+   ========================================================= */
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #9ca3af;
+}
+
+/* =========================================================
+   TEXTAREA
+   ========================================================= */
+
+.form-group textarea {
+  min-height: 100px;
+
+  resize: vertical;
+
+  line-height: 1.5;
+}
+
+/* =========================================================
+   HELP TEXT
+   ========================================================= */
+
+.form-help {
+  display: block;
+
+  margin-top: 5px;
+
+  color: #9ca3af;
+
+  font-size: 11px;
+
+  line-height: 1.4;
+}
+
+/* =========================================================
+   CUSTOMER / SUPPLIER FIELD
+   ========================================================= */
+
+.party-field {
+  animation: fadeIn 0.2s ease;
+}
+
+/* =========================================================
+   FADE ANIMATION
+   ========================================================= */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+
+    transform: translateY(-3px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+}
+
+/* =========================================================
+   FORM ERROR
+   ========================================================= */
+
+.form-error {
+  width: 100%;
+  max-width: 700px;
+
+  margin-bottom: 16px;
+
+  padding: 12px 14px;
+
+  box-sizing: border-box;
+
+  color: #9f1f1f;
+
+  background: #fff5f5;
+
+  border: 1px solid #f3cccc;
+
+  border-radius: 8px;
+
+  font-size: 13px;
+
+  line-height: 1.5;
+}
+
+/* =========================================================
+   FORM ACTIONS
+   ========================================================= */
+
+.form-actions {
+  display: flex;
+
+  justify-content: flex-end;
+  align-items: center;
+
+  gap: 10px;
+
+  margin-top: 24px;
+}
+
+/* =========================================================
+   BASE BUTTON
+   ========================================================= */
+
+.btn {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 40px;
+
+  padding: 10px 17px;
+
+  box-sizing: border-box;
+
+  border-radius: 8px;
+
+  font-family: inherit;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  line-height: 1;
+
+  text-decoration: none;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* =========================================================
+   PRIMARY BUTTON
+   CREATE TRANSACTION
+   ========================================================= */
+
+.btn-primary {
+  background: #08a9a9;
+
+  color: #ffffff;
+
+  border: 1px solid #08a9a9;
+
+  box-shadow: 0 3px 8px rgba(8, 169, 169, 0.15);
+}
+
+/* =========================================================
+   PRIMARY HOVER
+   ========================================================= */
+
+.btn-primary:hover {
+  background: #079494;
+
+  color: #ffffff;
+
+  border-color: #079494;
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 5px 12px rgba(8, 169, 169, 0.2);
+}
+
+/* =========================================================
+   PRIMARY ACTIVE
+   ========================================================= */
+
+.btn-primary:active {
+  background: #078787;
+
+  color: #ffffff;
+
+  border-color: #078787;
+
+  transform: translateY(0);
+
+  box-shadow: none;
+}
+
+/* =========================================================
+   SECONDARY BUTTON
+   CANCEL
+   ========================================================= */
+
+.btn-secondary {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 40px;
+
+  padding: 10px 17px;
+
+  box-sizing: border-box;
+
+  background: #ffffff;
+
+  color: #08a9a9;
+
+  border: 1px solid #08a9a9;
+
+  border-radius: 8px;
+
+  font-family: inherit;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  line-height: 1;
+
+  text-decoration: none;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* =========================================================
+   SECONDARY HOVER
+   ========================================================= */
+
+.btn-secondary:hover {
+  background: #f0fbfb;
+
+  color: #078787;
+
+  border-color: #08a9a9;
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 4px 10px rgba(8, 169, 169, 0.1);
+}
+
+/* =========================================================
+   SECONDARY ACTIVE
+   ========================================================= */
+
+.btn-secondary:active {
+  background: #e3f8f8;
+
+  color: #078787;
+
+  border-color: #078787;
+
+  transform: translateY(0);
+
+  box-shadow: none;
+}
+
+/* =========================================================
+   BUTTON FOCUS
+   ========================================================= */
+
+.btn:focus-visible {
+  outline: 2px solid #08a9a9;
+
+  outline-offset: 2px;
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 800px) {
+  .main-content {
+    padding: 24px 18px;
+  }
+
+  .form-card {
+    max-width: 100%;
+
+    padding: 20px;
+  }
+
+  .form-row {
+    gap: 12px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+  .main-content {
+    padding: 18px 12px;
+  }
+
+  .form-card {
+    padding: 18px;
+
+    border-radius: 10px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+
+    gap: 0;
+  }
+
+  .form-group {
+    margin-bottom: 16px;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+
+    align-items: stretch;
+
+    gap: 8px;
+
+    margin-top: 20px;
+  }
+
+  .form-actions .btn {
+    width: 100%;
+  }
+}
+
+/* =========================================================
+   VERY SMALL SCREENS
+   ========================================================= */
+
+@media (max-width: 380px) {
+  .main-content {
+    padding: 16px 10px;
+  }
+
+  .form-card {
+    padding: 15px;
+
+    border-radius: 9px;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 10px;
+
+    font-size: 13px;
+  }
+
+  .form-group label {
+    font-size: 11px;
+  }
+
+  .form-help {
+    font-size: 10px;
+  }
+
+  .btn {
+    min-height: 38px;
+
+    padding: 9px 14px;
+
+    font-size: 12px;
+  }
+}

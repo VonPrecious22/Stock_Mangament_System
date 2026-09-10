@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <link rel="stylesheet" href="/css/sidebar.css">
+  <link rel="stylesheet" href="/css/stockdetails.css">
   <%- include('../partials/head', { pageTitle: stock.name }) %>
 </head>
 <body>
   <div class="app-layout">
     <%- include('../partials/sidebar', { currentPage: 'stocks' }) %>
     <main class="main-content">
-      <%- include('../partials/header', { pageTitle: stock.name, user: user }) %>
+      <!-- <%- include('../partials/header', { pageTitle: stock.name, user: user }) %> -->
 
       <a href="/stocks" class="back-link">&larr; Back to stock</a>
 
@@ -36,9 +38,9 @@
       <% } %>
 
       <div class="detail-actions">
-        <a href="/stocks/<%= stock._id %>/edit" class="btn">Edit batch</a>
+        <a href="/stocks/<%= stock._id %>/edit" class="btn btn-edit">Edit batch</a>
         <form action="/stocks/<%= stock._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Delete this stock batch?');">
-          <button type="submit" class="btn btn-danger">Delete</button>
+          <button type="submit" class="btn btn-delete">Delete</button>
         </form>
       </div>
     </main>

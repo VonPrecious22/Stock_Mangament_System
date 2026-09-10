@@ -24,10 +24,10 @@ const transactionSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Customer",
   },
-  // user: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: "user",
-  // },
+  supplier: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Supplier",
+  }
 });
 
 const Transaction = mongoose.model("Transaction", transactionSchema);

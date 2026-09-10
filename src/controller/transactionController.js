@@ -1,6 +1,7 @@
 const Joi = require("joi");
 const Transaction = require("../model/transaction");
 const Customer = require("../model/customer");
+const Supplier = require("../model/supplier");
 
 const renderCreateForm = async (req, res) => {
   try {
@@ -17,13 +18,25 @@ const renderCreateForm = async (req, res) => {
 
 const createTransaction = async (req, res) => {
   try {
-    const { amount, quantityBought, type, notes, customerId } = req.body;
+    const { 
+      amount, 
+      quantityBought, 
+      type, 
+      notes,
+     customerId,
+      supplierId
+     } = req.body;
     const { error } = validate(req.body);
+
     if (error) {
-      const customers = await Customer.find();
+     const [customers, suppliers] = await Promise.all([
+           Customer.find().lean(),
+           Supplier.find().lean()
+     ])
       return res.render("transactions/create", {
         error: error.details[0].message,
         customers,
+        suppliers,
         currentPage: "transactions",
       });
     }
@@ -34,6 +47,7 @@ const createTransaction = async (req, res) => {
       type,
       notes,
       customer: customerId,
+      supplier: supplierId,
     });
 
     return res.redirect("/transactions");
@@ -43,6 +57,7 @@ const createTransaction = async (req, res) => {
     return res.render("transactions/create", {
       error: "Something went wrong. Please try again.",
       customers,
+      supplier,
       currentPage: "transactions",
     });
   }
@@ -51,7 +66,9 @@ const createTransaction = async (req, res) => {
 const getTransaction = async (req, res) => {
   try {
     const foundTransaction = await Transaction.findById(req.params.id).populate(
-      ["customer"],
+      ["customer",
+        "supplier"
+      ],
     );
     if (!foundTransaction) return res.status(404).render("errors/404");
 
@@ -67,7 +84,8 @@ const getTransaction = async (req, res) => {
 
 const getAllTransactions = async (req, res) => {
   try {
-    const allTransactions = await Transaction.find().populate(["customer"]);
+    const allTransactions = await Transaction.find().populate(["customer","supplier"
+    ]).sort({date: -1});
 
     return res.render("transactions/index", {
       transactions: allTransactions,
@@ -84,10 +102,14 @@ const renderEditForm = async (req, res) => {
     const foundTransaction = await Transaction.findById(req.params.id).lean();
     if (!foundTransaction) return res.status(404).render("errors/404");
 
-    const customers = await Customer.find().lean();
+    const [customers, supplier] = await Promise.all([
+      Customer.find().lean(),
+      Supplier.find().lean()
+    ])
     return res.render("transactions/edit", {
       transaction: foundTransaction,
       customers,
+      suppliers,
       currentPage: "transactions",
     });
   } catch (err) {
@@ -97,13 +119,13 @@ const renderEditForm = async (req, res) => {
 };
 const updateTransaction = async (req, res) => {
   try {
-    const { amount, quantityBought, type, notes } = req.body;
+    const { amount, quantityBought, type, notes, customerId, supplierId } = req.body;
     const { error } = validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
     const updatedTransaction = await Transaction.findByIdAndUpdate(
       req.params.id,
-      { amount, quantityBought, type, notes },
+      { amount, quantityBought, type, notes, customer: customerId, supplier: supplierId },
       { returnDocument: "after", runValidators: true },
     );
 
@@ -132,6 +154,7 @@ const deleteTransaction = async (req, res) => {
 
 function validate(data) {
   const schema = Joi.object({
+    supplierId: Joi.string().allow("").optional(),
     amount: Joi.number().required(),
     quantityBought: Joi.number(),
     notes: Joi.string().min(2).max(200),

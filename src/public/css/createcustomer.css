@@ -1,0 +1,339 @@
+/* =========================================================
+   CREATE CUSTOMER PAGE
+   ========================================================= */
+
+.main-content {
+  flex: 1;
+  min-height: 100vh;
+  padding: 32px;
+  background: #f6f8fb;
+}
+
+
+/* =========================================================
+   FORM CARD
+   ========================================================= */
+
+.form-card {
+  width: 100%;
+  max-width: 900px;
+
+  padding: 24px;
+
+  box-sizing: border-box;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+
+  box-shadow:
+    0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+
+/* =========================================================
+   FORM GROUP
+   ========================================================= */
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+}
+
+
+/* =========================================================
+   FORM ROW
+   ========================================================= */
+
+.form-row {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 16px;
+
+  margin-top: 16px;
+}
+
+
+/* =========================================================
+   LABEL
+   ========================================================= */
+
+.form-group label {
+  margin-bottom: 6px;
+
+  color: #374151;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  line-height: 1.4;
+}
+
+
+/* =========================================================
+   INPUT
+   ========================================================= */
+
+.form-group input {
+  width: 100%;
+
+  min-height: 40px;
+
+  padding: 9px 12px;
+
+  box-sizing: border-box;
+
+  color: #111827;
+
+  background: #ffffff;
+
+  border: 1px solid #dfe3e8;
+  border-radius: 7px;
+
+  outline: none;
+
+  font-family: inherit;
+  font-size: 14px;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+
+/* =========================================================
+   PLACEHOLDER
+   ========================================================= */
+
+.form-group input::placeholder {
+  color: #9ca3af;
+}
+
+
+/* =========================================================
+   INPUT HOVER
+   ========================================================= */
+
+.form-group input:hover {
+  border-color: #b8c1ca;
+}
+
+
+/* =========================================================
+   INPUT FOCUS
+   ========================================================= */
+
+.form-group input:focus {
+  border-color: #08a9a9;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 0 0 3px rgba(8, 169, 169, 0.10);
+}
+
+
+/* =========================================================
+   ERROR MESSAGE
+   ========================================================= */
+
+.form-error {
+  width: 100%;
+  max-width: 900px;
+
+  margin-bottom: 16px;
+
+  padding: 12px 14px;
+
+  box-sizing: border-box;
+
+  color: #991b1b;
+
+  background: #fef2f2;
+
+  border: 1px solid #fecaca;
+  border-radius: 7px;
+
+  font-size: 13px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   FORM ACTIONS
+   ========================================================= */
+
+.form-actions {
+  display: flex;
+
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  margin-top: 22px;
+}
+
+
+/* =========================================================
+   BUTTON
+   ========================================================= */
+
+.btn {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 40px;
+
+  padding: 10px 17px;
+
+  box-sizing: border-box;
+
+  border: none;
+  border-radius: 8px;
+
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+
+  line-height: 1;
+
+  text-decoration: none;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+/* =========================================================
+   PRIMARY BUTTON
+   ========================================================= */
+
+.btn-primary {
+  background: #08a9a9;
+}
+
+.btn-primary:hover {
+  background: #079494;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 4px 10px rgba(8, 169, 169, 0.20);
+}
+
+.btn-primary:active {
+  background: #078787;
+
+  transform: translateY(0);
+
+  box-shadow: none;
+}
+
+
+/* =========================================================
+   SECONDARY BUTTON
+   ========================================================= */
+
+.btn-secondary {
+  background: #f3f4f6;
+
+  color: #374151;
+
+  border: 1px solid #e5e7eb;
+}
+
+.btn-secondary:hover {
+  background: #e9edef;
+
+  color: #111827;
+
+  transform: translateY(-1px);
+}
+
+.btn-secondary:active {
+  background: #e5e7eb;
+
+  transform: translateY(0);
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  .main-content {
+    padding: 24px 18px;
+  }
+
+  .form-card {
+    padding: 22px;
+  }
+
+  .form-row {
+    gap: 12px;
+  }
+
+  .form-actions {
+    margin-top: 20px;
+  }
+
+  .btn {
+    padding: 10px 15px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 560px) {
+
+  .main-content {
+    padding: 18px 12px;
+  }
+
+  .form-card {
+    padding: 18px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+
+    gap: 14px;
+
+    margin-top: 14px;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+
+    align-items: stretch;
+
+    width: 100%;
+
+    margin-top: 20px;
+  }
+
+  .form-actions .btn {
+    width: 100%;
+  }
+}

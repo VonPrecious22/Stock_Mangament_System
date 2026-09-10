@@ -1,13 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <link rel="stylesheet" href="/css/sidebar.css">
+  <link rel="stylesheet" href="/css/createproduct.css">
   <%- include('../partials/head', { pageTitle: 'New Product' }) %>
 </head>
 <body>
   <div class="app-layout">
     <%- include('../partials/sidebar', { currentPage: 'products' }) %>
     <main class="main-content">
-      <%- include('../partials/header', { pageTitle: 'New product', user: user }) %>
+      <%- include('../partials/header', {
+        pageTitle: 'Products',
+        user: user
+      }) %>
+
 
       <% if (typeof error !== 'undefined' && error) { %>
         <div class="form-error"><%= error %></div>
