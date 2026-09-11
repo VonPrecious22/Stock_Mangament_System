@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <%- include('../partials/head', { pageTitle: 'Transactions' }) %>
   <link rel="stylesheet" href="/css/transaction.css">
 </head>
 
 <body>
+
   <div class="app-layout">
 
     <%- include('../partials/sidebar', { currentPage: 'transactions' }) %>
@@ -18,71 +20,136 @@
       }) %>
 
 
-      <!-- =====================================================
-           TRANSACTION LIST
-           ===================================================== -->
-
       <div class="transaction-list">
 
         <% if (transactions && transactions.length > 0) { %>
 
-          <% transactions.forEach(function(t) { %>
+          <% transactions.forEach(function(transaction) { %>
 
             <div class="transaction-row">
 
+              <!-- Date -->
               <div class="transaction-item">
-                <span class="detail-label">Date</span>
+
+                <span class="detail-label">
+                  Date
+                </span>
 
                 <a
-                  href="/transactions/<%= t._id %>"
+                  href="/transactions/<%= transaction._id %>"
                   class="transaction-date"
                 >
-                  <%= t.date.toDateString() %>
+                  <%= transaction.date
+                    ? new Date(transaction.date).toDateString()
+                    : 'No date'
+                  %>
                 </a>
+
               </div>
 
 
+              <!-- Product -->
               <div class="transaction-item">
-                <span class="detail-label">Customer</span>
+
+                <span class="detail-label">
+                  Product
+                </span>
 
                 <span class="detail-value">
-                  <%= t.customer ? t.customer.name : '—' %>
+                  <%= transaction.product
+                    ? transaction.product.name
+                    : 'No product'
+                  %>
                 </span>
+
               </div>
 
 
+              <!-- Customer / Supplier -->
               <div class="transaction-item">
-                <span class="detail-label">Type</span>
 
-                <span class="badge badge-<%= t.type %>">
-                  <%= t.type %>
+                <span class="detail-label">
+                  <%= transaction.type === 'sale'
+                    ? 'Customer'
+                    : 'Supplier'
+                  %>
                 </span>
+
+                <span class="detail-value">
+
+                  <% if (transaction.type === 'sale') { %>
+
+                    <%= transaction.customer
+                      ? transaction.customer.name
+                      : 'No customer'
+                    %>
+
+                  <% } else { %>
+
+                    <%= transaction.supplier
+                      ? transaction.supplier.name
+                      : 'No supplier'
+                    %>
+
+                  <% } %>
+
+                </span>
+
               </div>
 
 
+              <!-- Type -->
               <div class="transaction-item">
-                <span class="detail-label">Amount</span>
+
+                <span class="detail-label">
+                  Type
+                </span>
+
+                <span class="badge badge-<%= transaction.type %>">
+                  <%= transaction.type %>
+                </span>
+
+              </div>
+
+
+              <!-- Quantity -->
+              <div class="transaction-item">
+
+                <span class="detail-label">
+                  Quantity
+                </span>
+
+                <span class="detail-value">
+                  <%= transaction.quantityBought || 0 %>
+                </span>
+
+              </div>
+
+
+              <!-- Amount -->
+              <div class="transaction-item">
+
+                <span class="detail-label">
+                  Amount
+                </span>
 
                 <span class="detail-value amount">
-                  $<%= t.amount.toFixed(2) %>
+                  <%= Number(transaction.amount || 0).toFixed(2) %>
+                  FCFA
                 </span>
+
               </div>
 
 
+              <!-- Details -->
               <div class="transaction-item transaction-action">
 
-                <form
-                  action="/transactions/<%= t._id %>?_method=DELETE"
-                  method="POST"
-                  onsubmit="return confirm('Delete this transaction?');"
+                <a
+                  href="/transactions/<%= transaction._id %>"
+                  class="btn"
                 >
-                  <button
-                    type="submit"
-                    class="link-danger"
-                  >
-                    Delete
-                  </button>
-                </form>
+                  View
+                </a>
 
               </div>
 
@@ -90,11 +157,19 @@
 
           <% }); %>
 
+
         <% } else { %>
 
           <div class="empty-state">
 
-            <p>No transactions found.</p>
+            <p>
+              No transactions found.
+            </p>
+
+            <p>
+              Transactions will appear automatically when you
+              receive stock or make a sale.
+            </p>
 
           </div>
 
@@ -102,25 +177,10 @@
 
       </div>
 
-
-      <!-- =====================================================
-           NEW TRANSACTION BUTTON
-           ===================================================== -->
-
-      <div class="page-actions">
-
-        <a
-          href="/transactions/create"
-          class="btn btn-primary"
-        >
-          + New transaction
-        </a>
-
-      </div>
-
     </main>
 
   </div>
+
 
   <%- include('../partials/footer') %>
 

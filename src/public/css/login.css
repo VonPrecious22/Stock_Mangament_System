@@ -1,5 +1,11 @@
-/* Login Page Styles */
+/* Basic Login Page Design */
 
+/* Apply box-sizing to all elements */
+* {
+  box-sizing: border-box;
+}
+
+/* Keep the original colors */
 :root {
   --aqua: #00a6a6;
   --dark-aqua: #007f7f;
@@ -12,26 +18,34 @@
   --error-color: #b30000;
 }
 
-* {
-  box-sizing: border-box;
-}
-
+/* Page */
 body {
   margin: 0;
   min-height: 100vh;
-  font-family: "Times New Roman", Times, serif;
   color: var(--text-color);
-  background-color: var(--light-aqua);
+  background-color: var(--white);
+  font-family: "Times New Roman", Times, serif;
 }
 
+/* Use Times New Roman for form controls */
+button,
+input,
+select,
+textarea {
+  font-family: "Times New Roman", Times, serif;
+}
+
+/* Login page */
 .auth-page {
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
   padding: 20px;
+  background-color: var(--white);
 }
 
+/* Login card */
 .auth-card {
   width: 100%;
   max-width: 420px;
@@ -42,6 +56,7 @@ body {
   box-shadow: 0 5px 15px rgba(0, 128, 128, 0.15);
 }
 
+/* Title */
 .auth-title {
   margin: 0;
   color: var(--dark-aqua);
@@ -50,6 +65,7 @@ body {
   text-align: center;
 }
 
+/* Subtitle */
 .auth-subtitle {
   margin: 8px 0 28px;
   color: var(--muted-text);
@@ -57,23 +73,27 @@ body {
   text-align: center;
 }
 
+/* Form */
 .auth-form {
   display: flex;
   flex-direction: column;
   gap: 18px;
 }
 
+/* Form group */
 .form-group {
   display: flex;
   flex-direction: column;
   gap: 7px;
 }
 
+/* Labels */
 .form-group label {
   font-size: 17px;
   font-weight: bold;
 }
 
+/* Input fields */
 .form-group input {
   width: 100%;
   padding: 12px;
@@ -81,25 +101,26 @@ body {
   background-color: var(--white);
   border: 1px solid var(--border-color);
   border-radius: 5px;
-  font-family: inherit;
   font-size: 16px;
 }
 
+/* Input focus */
 .form-group input:focus {
   border-color: var(--aqua);
   outline: 2px solid rgba(0, 166, 166, 0.2);
 }
 
+/* Button */
 .btn {
   padding: 12px 20px;
   border: none;
   border-radius: 5px;
-  font-family: inherit;
   font-size: 17px;
   font-weight: bold;
   cursor: pointer;
 }
 
+/* Login button */
 .btn-primary {
   width: 80%;
   margin: 5px auto 0;
@@ -107,10 +128,12 @@ body {
   background-color: var(--aqua);
 }
 
+/* Login button hover */
 .btn-primary:hover {
   background-color: var(--dark-aqua);
 }
 
+/* Error message */
 .form-error {
   margin-bottom: 20px;
   padding: 12px;
@@ -121,6 +144,7 @@ body {
   font-size: 16px;
 }
 
+/* Login/register switch text */
 .auth-switch {
   margin: 25px 0 0;
   color: var(--muted-text);
@@ -128,6 +152,7 @@ body {
   text-align: center;
 }
 
+/* Link */
 .auth-switch a {
   color: var(--dark-aqua);
   font-weight: bold;
@@ -139,8 +164,15 @@ body {
   text-decoration: underline;
 }
 
-@media (max-width: 480px) {
+/* Tablet and mobile view */
+@media (max-width: 600px) {
+  .auth-page {
+    align-items: flex-start;
+    padding: 30px 15px;
+  }
+
   .auth-card {
+    max-width: 100%;
     padding: 25px 20px;
   }
 
@@ -148,7 +180,30 @@ body {
     font-size: 28px;
   }
 
+  .auth-subtitle {
+    font-size: 16px;
+  }
+
   .btn-primary {
     width: 100%;
+  }
+}
+
+/* Small mobile screens */
+@media (max-width: 380px) {
+  .auth-page {
+    padding: 20px 10px;
+  }
+
+  .auth-card {
+    padding: 20px 15px;
+  }
+
+  .auth-title {
+    font-size: 25px;
+  }
+
+  .form-group input {
+    padding: 11px;
   }
 }

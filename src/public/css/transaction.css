@@ -1,634 +1,362 @@
-css
-/* =========================================================
-   TRANSACTIONS PAGE
-   ========================================================= */
+/* Basic Transactions Page Design */
 
+/* Make sizing easier to control */
+* {
+  box-sizing: border-box;
+}
+
+/* Page */
+body {
+  margin: 0;
+  color: #111827;
+  background: #ffffff;
+  font-family: "Times New Roman", Times, serif;
+}
+
+/* Main content */
 .main-content {
   flex: 1;
   min-height: 100vh;
-
-  padding: 32px;
-
-  box-sizing: border-box;
-
-  /* Completely white page */
+  padding: 30px;
   background: #ffffff;
 }
 
-
-/* =========================================================
-   TRANSACTION LIST
-   ========================================================= */
-
+/* Transaction list */
 .transaction-list {
   width: 100%;
   max-width: 900px;
 }
 
-
-/* =========================================================
-   TRANSACTION ROW
-   ========================================================= */
-
+/* Transaction card */
 .transaction-row {
   display: grid;
-
-  grid-template-columns:
-    1.2fr
-    1.7fr
-    1fr
-    1fr
-    auto;
-
+  grid-template-columns: 1.2fr 1.7fr 1fr 1fr auto;
   align-items: center;
-
-  gap: 12px;
-
+  gap: 8px;
   width: 100%;
-  min-height: 66px;
-
-  padding: 10px 12px;
-
-  box-sizing: border-box;
-
+  min-height: 55px;
+  margin-bottom: 8px;
+  padding: 7px 10px;
   background: #ffffff;
-
   border: 1px solid #e5e7eb;
-  border-radius: 10px;
-
-  box-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.04);
-
-  transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease,
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+  border-radius: 8px;
 }
 
-
-.transaction-row + .transaction-row {
-  margin-top: 10px;
-}
-
-
-/* =========================================================
-   ROW HOVER
-   ========================================================= */
-
+/* Card hover */
 .transaction-row:hover {
   background: #faffff;
-
   border-color: #b8e5e5;
-
-  transform: translateY(-2px);
-
-  box-shadow:
-    0 5px 14px rgba(8, 169, 169, 0.08);
 }
 
-
-/* =========================================================
-   TRANSACTION ITEM
-   ========================================================= */
-
+/* Transaction item */
 .transaction-item {
   display: flex;
   flex-direction: column;
   justify-content: center;
-
   min-width: 0;
-
-  padding: 5px 7px;
-
-  box-sizing: border-box;
+  padding: 3px 5px;
 }
 
-
-/* =========================================================
-   DETAIL LABEL
-   ========================================================= */
-
+/* Labels */
 .detail-label {
   display: block;
-
-  margin: 0 0 5px;
-
+  margin-bottom: 2px;
   color: #6b7280;
-
-  font-size: 10px;
-  font-weight: 600;
-
-  line-height: 1.4;
-
-  letter-spacing: 0.03em;
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 1.2;
   text-transform: uppercase;
 }
 
-
-/* =========================================================
-   DETAIL VALUE
-   ========================================================= */
-
+/* Values */
 .detail-value {
   display: block;
-
   min-width: 0;
-
-  color: #111827;
-
-  font-size: 14px;
-  font-weight: 700;
-
-  line-height: 1.4;
-
-  white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-
-/* =========================================================
-   TRANSACTION DATE
-   ========================================================= */
-
-.transaction-date {
   color: #111827;
-
-  font-size: 14px;
-  font-weight: 700;
-
-  line-height: 1.4;
-
-  text-decoration: none;
-
+  font-size: 15px;
+  font-weight: bold;
+  line-height: 1.2;
+  text-overflow: ellipsis;
   white-space: nowrap;
-
-  transition: color 0.2s ease;
 }
 
+/* View/date link */
+.transaction-date {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  color: #111827;
+  font-size: 15px;
+  font-weight: bold;
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+}
 
 .transaction-date:hover {
-  color: #08a9a9;
+  color: #078787;
+  text-decoration: underline;
 }
 
-
-/* =========================================================
-   AMOUNT
-   ========================================================= */
-
+/* Amount */
 .amount {
   color: #111827;
-
-  transition: color 0.2s ease;
+  font-size: 15px;
+  font-weight: bold;
 }
 
-
-.transaction-row:hover .amount {
-  color: #078787;
-}
-
-
-/* =========================================================
-   BADGES
-   ========================================================= */
-
+/* Badges */
 .badge {
   display: inline-flex;
-
   align-items: center;
   justify-content: center;
-
   width: fit-content;
-
-  padding: 5px 9px;
-
+  min-height: 25px;
+  padding: 4px 8px;
   border-radius: 999px;
-
-  font-size: 10px;
-  font-weight: 700;
-
+  font-size: 12px;
+  font-weight: bold;
   line-height: 1;
-
+  text-align: center;
   text-transform: capitalize;
 }
 
-
-/* =========================================================
-   SALE
-   ========================================================= */
-
+/* Sale badge */
 .badge-sale {
   color: #17652a;
-
   background: #e9f7ed;
-
   border: 1px solid #d5efdc;
 }
 
-
-/* =========================================================
-   PURCHASE
-   ========================================================= */
-
+/* Purchase badge */
 .badge-purchase {
   color: #078787;
-
   background: #e3f8f8;
-
   border: 1px solid #c8eeee;
 }
 
-
-/* =========================================================
-   EXPENSE
-   ========================================================= */
-
+/* Expense badge */
 .badge-expense {
   color: #9f1f1f;
-
   background: #fdecec;
-
   border: 1px solid #f8d6d6;
 }
 
-
-/* =========================================================
-   TRANSACTION ACTION
-   ========================================================= */
-
+/* Transaction action */
 .transaction-action {
   display: flex;
-
-  align-items: flex-end;
-  justify-content: flex-end;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
 }
-
 
 .transaction-action form {
   margin: 0;
 }
 
-
-/* =========================================================
-   DELETE LINK
-   ========================================================= */
-
+/* Delete button */
 .link-danger {
-  padding: 5px 7px;
-
-  border: none;
-
-  background: transparent;
-
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 55px;
+  min-height: 34px;
+  padding: 6px 8px;
   color: #c62828;
-
-  font-family: inherit;
-
-  font-size: 11px;
-  font-weight: 600;
-
-  line-height: 1.3;
-
-  cursor: pointer;
-
-  text-decoration: none;
-
+  background: transparent;
+  border: 1px solid transparent;
   border-radius: 5px;
-
-  transition:
-    color 0.2s ease,
-    background-color 0.2s ease;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 14px;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
 }
-
 
 .link-danger:hover {
   color: #9f1f1f;
-
   background: #fff1f1;
+  border-color: #f8d6d6;
 }
 
-
-.link-danger:active {
-  background: #ffe5e5;
-}
-
-
-/* =========================================================
-   PAGE ACTIONS
-   ========================================================= */
-
+/* Page actions */
 .page-actions {
   display: flex;
-
-  justify-content: flex-end;
   align-items: center;
-
+  justify-content: flex-end;
   width: 100%;
   max-width: 900px;
-
-  margin-top: 18px;
+  margin-top: 15px;
 }
 
-
-/* =========================================================
-   BUTTON
-   ========================================================= */
-
+/* General button */
 .btn {
   display: inline-flex;
-
   align-items: center;
   justify-content: center;
-
-  min-height: 40px;
-
-  padding: 10px 18px;
-
-  box-sizing: border-box;
-
-  border-radius: 8px;
-
-  font-family: inherit;
-
-  font-size: 14px;
-  font-weight: 700;
-
-  line-height: 1;
-
+  min-width: 90px;
+  min-height: 38px;
+  padding: 8px 15px;
+  border-radius: 7px;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 15px;
+  font-weight: bold;
+  text-align: center;
   text-decoration: none;
-
   cursor: pointer;
-
-  transition:
-    background-color 0.2s ease,
-    color 0.2s ease,
-    border-color 0.2s ease,
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
 }
 
-
-/* =========================================================
-   AQUA PRIMARY BUTTON
-   ========================================================= */
-
+/* Primary button */
 .btn-primary {
-  background: #08a9a9;
-
   color: #ffffff;
-
+  background: #08a9a9;
   border: 1px solid #08a9a9;
-
-  box-shadow:
-    0 3px 8px rgba(8, 169, 169, 0.15);
 }
-
 
 .btn-primary:hover {
+  color: #ffffff;
   background: #079494;
-
-  color: #ffffff;
-
   border-color: #079494;
-
-  transform: translateY(-2px);
-
-  box-shadow:
-    0 5px 12px rgba(8, 169, 169, 0.20);
 }
 
-
-.btn-primary:active {
-  background: #078787;
-
-  color: #ffffff;
-
-  border-color: #078787;
-
-  transform: translateY(0);
-
-  box-shadow:
-    0 2px 5px rgba(8, 169, 169, 0.12);
+/* Empty state */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 140px;
+  padding: 24px;
+  color: #6b7280;
+  background: #ffffff;
+  border: 1px dashed #dfe3e8;
+  border-radius: 8px;
+  text-align: center;
 }
 
+.empty-state p {
+  margin: 0 0 14px;
+  font-size: 15px;
+}
 
-/* =========================================================
-   BUTTON FOCUS
-   ========================================================= */
-
+/* Focus effect */
 .btn:focus-visible,
 .link-danger:focus-visible,
 .transaction-date:focus-visible {
   outline: 2px solid #08a9a9;
-
   outline-offset: 2px;
 }
 
-
-/* =========================================================
-   EMPTY STATE
-   ========================================================= */
-
-.empty-state {
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-  justify-content: center;
-
-  min-height: 160px;
-
-  padding: 28px;
-
-  box-sizing: border-box;
-
-  text-align: center;
-
-  color: #6b7280;
-
-  background: #ffffff;
-
-  border: 1px dashed #dfe3e8;
-
-  border-radius: 10px;
-}
-
-
-.empty-state p {
-  margin: 0 0 16px;
-
-  font-size: 14px;
-
-  line-height: 1.5;
-}
-
-
-/* =========================================================
-   TABLET
-   ========================================================= */
-
+/* Tablet view */
 @media (max-width: 800px) {
-
   .main-content {
-    padding: 24px 18px;
+    padding: 22px 18px;
   }
-
 
   .transaction-row {
-    grid-template-columns:
-      1.2fr
-      1.5fr
-      1fr
-      1fr
-      auto;
-
-    gap: 8px;
-
-    padding: 9px;
+    grid-template-columns: 1.2fr 1.5fr 1fr 1fr auto;
+    gap: 6px;
+    padding: 7px;
   }
-
 
   .transaction-item {
-    padding: 4px 6px;
+    padding: 3px 4px;
   }
 
-
   .detail-value,
-  .transaction-date {
-    font-size: 13px;
+  .transaction-date,
+  .amount {
+    font-size: 14px;
   }
 }
 
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
-
+/* Mobile view */
 @media (max-width: 600px) {
-
   .main-content {
-    padding: 18px 12px;
+    padding: 16px 12px;
   }
-
 
   .transaction-list {
     max-width: 100%;
   }
 
-
+  /*
+    Keep all transaction details on the same horizontal row.
+    The card can scroll horizontally if the screen is very narrow.
+  */
   .transaction-row {
-    grid-template-columns: 1fr 1fr;
-
-    gap: 6px;
-
-    min-height: auto;
-
-    padding: 11px;
-
-    border-radius: 9px;
+    display: grid;
+    grid-template-columns: 1.1fr 1.4fr 0.9fr 0.9fr auto;
+    gap: 5px;
+    min-height: 52px;
+    padding: 6px;
+    overflow-x: auto;
   }
-
 
   .transaction-item {
-    padding: 5px 6px;
+    padding: 3px 4px;
   }
-
-
-  /* First item spans the entire row */
-  .transaction-item:first-child {
-    grid-column: 1 / -1;
-  }
-
-
-  .transaction-action {
-    align-items: flex-start;
-    justify-content: flex-start;
-  }
-
 
   .detail-label {
-    font-size: 9px;
+    font-size: 10px;
   }
-
 
   .detail-value,
-  .transaction-date {
+  .transaction-date,
+  .amount {
     font-size: 13px;
   }
 
+  .transaction-date {
+    min-height: 34px;
+  }
 
   .badge {
-    padding: 5px 8px;
-
-    font-size: 9px;
+    min-height: 24px;
+    padding: 4px 7px;
+    font-size: 11px;
   }
 
+  /*
+    Keep View/Delete beside the other transaction details.
+    Do not make the action full width.
+  */
+  .transaction-action {
+    align-items: center;
+    justify-content: center;
+    width: auto;
+  }
+
+  .transaction-action form {
+    width: auto;
+  }
+
+  .link-danger {
+    width: auto;
+    min-width: 52px;
+    min-height: 34px;
+    padding: 6px;
+    font-size: 13px;
+  }
 
   .page-actions {
-    margin-top: 14px;
-
-    justify-content: flex-end;
+    justify-content: stretch;
+    margin-top: 12px;
   }
 
-
-  .btn {
-    min-height: 40px;
-
-    padding: 10px 16px;
-
-    font-size: 13px;
+  .page-actions .btn {
+    width: 100%;
   }
 }
 
-
-/* =========================================================
-   VERY SMALL SCREENS
-   ========================================================= */
-
-@media (max-width: 380px) {
-
+/* Very small screens */
+@media (max-width: 400px) {
   .main-content {
-    padding: 16px 10px;
+    padding: 14px 8px;
   }
-
 
   .transaction-row {
-    padding: 9px;
-
-    gap: 5px;
-  }
-
-
-  .transaction-item {
-    padding: 4px 5px;
-  }
-
-
-  .detail-label {
-    font-size: 9px;
-  }
-
-
-  .detail-value,
-  .transaction-date {
-    font-size: 12px;
-  }
-
-
-  .badge {
-    padding: 4px 7px;
-
-    font-size: 9px;
-  }
-
-
-  .btn {
-    min-height: 38px;
-
-    padding: 9px 14px;
-
-    font-size: 12px;
+    min-width: 560px;
   }
 }

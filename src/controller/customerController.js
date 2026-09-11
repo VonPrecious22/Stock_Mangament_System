@@ -1,89 +1,129 @@
 const Joi = require("joi");
 const Customer = require("../model/customer");
 
-
-//Render the blanck form to create a new customer. 
-
-
+// Create form
 const renderCreateForm = (req, res) => {
-  res.render("customers/create", {currentPage: "customers"});
-}
+  return res.render("customers/create", {
+    currentPage: "customers",
+  });
+};
 
+// Create customer
 const createCustomer = async (req, res) => {
   try {
-    const { name, quantityBought, buyingPrice } = req.body;
+    const userId = req.session.userId;
+
+    const { name, contact, address } = req.body;
+
     const { error } = validate(req.body);
+
     if (error) {
-      return res.render("customers/create", {
+      return res.status(400).render("customers/create", {
         error: error.details[0].message,
         currentPage: "customers",
       });
     }
 
-    await Customer.create({ name, quantityBought, buyingPrice });
+    await Customer.create({
+      name,
+      contact,
+      address,
+      user: userId,
+    });
+
     return res.redirect("/customers");
   } catch (err) {
     console.error(err);
-    return res.render("customers/create", {
+
+    return res.status(500).render("customers/create", {
       error: "Something went wrong. Please try again.",
       currentPage: "customers",
     });
   }
 };
 
-const getCustomer = async (req, res) => {
-  try {
-    const foundCustomer = await Customer.findById(req.params.id);
-    if (!foundCustomer) return res.status(404).render("errors/404");
-
-    return res.render("customers/show", {
-      customer: foundCustomer,
-      currentPage: "customers",
-    });
-  } catch (err) {
-    console.error(err);
-    return res.render("errors/500");
-  }
-};
-
+// Get all customers
 const getAllCustomers = async (req, res) => {
   try {
-    const allCustomers = await Customer.find();
+    const userId = req.session.userId;
+
+    const customers = await Customer.find({
+      user: userId,
+    }).sort({ createdAt: -1 });
 
     return res.render("customers/index", {
-      customers: allCustomers,
+      customers,
       currentPage: "customers",
     });
   } catch (err) {
     console.error(err);
-    return res.render("errors/500");
+    return res.status(500).render("errors/500");
   }
 };
-//Render the edit form populated with customer data. 
 
-const renderEditForm = async(req, res) =>{
-  try{
-    const customer = await Customer.findById(req.params.id);
-    if(!customer) return res.status(404).render("errors/404");
+// Get customer
+const getCustomer = async (req, res) => {
+  try {
+    const userId = req.session.userId;
 
-    res.render("customers/edit", {
+    const customer = await Customer.findOne({
+      _id: req.params.id,
+      user: userId,
+    });
+
+    if (!customer) {
+      return res.status(404).render("errors/404");
+    }
+
+    return res.render("customers/show", {
       customer,
-      currentPage: "customers"
-    })
-  } catch(err){
+      currentPage: "customers",
+    });
+  } catch (err) {
     console.error(err);
-    res.status(500).render("errors/500");
+    return res.status(500).render("errors/500");
   }
-}
+};
 
+// Edit form
+const renderEditForm = async (req, res) => {
+  try {
+    const userId = req.session.userId;
 
-//Edit customer.
+    const customer = await Customer.findOne({
+      _id: req.params.id,
+      user: userId,
+    }).lean();
+
+    if (!customer) {
+      return res.status(404).render("errors/404");
+    }
+
+    return res.render("customers/edit", {
+      customer,
+      currentPage: "customers",
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).render("errors/500");
+  }
+};
+
+// Update
 const updateCustomer = async (req, res) => {
   try {
-    const { name, quantityBought, buyingPrice } = req.body;
+    const userId = req.session.userId;
+
+    const { name, contact, address } = req.body;
+
     const { error } = validate(req.body);
+
     if (error) {
-      const customer = await Customer.findById(req.params.id);
+      const customer = await Customer.findOne({
+        _id: req.params.id,
+        user: userId,
+      });
+
       return res.render("customers/edit", {
         customer,
         error: error.details[0].message,
@@ -91,30 +131,51 @@ const updateCustomer = async (req, res) => {
       });
     }
 
-    const updatedCustomer = await Customer.findByIdAndUpdate(
-      req.params.id,
-      { name, quantityBought, buyingPrice },
-      { returnDocument: "after", runValidators: true },
+    const updatedCustomer = await Customer.findOneAndUpdate(
+      {
+        _id: req.params.id,
+        user: userId,
+      },
+      {
+        name,
+        contact,
+        address,
+      },
+      {
+        new: true,
+        runValidators: true,
+      },
     );
 
-    if (!updatedCustomer) return res.status(404).render("errors/404");
+    if (!updatedCustomer) {
+      return res.status(404).render("errors/404");
+    }
 
     return res.redirect(`/customers/${updatedCustomer._id}`);
   } catch (err) {
     console.error(err);
-    return res.render("errors/500");
+    return res.status(500).render("errors/500");
   }
 };
 
+// Delete
 const deleteCustomer = async (req, res) => {
   try {
-    const deletedCustomer = await Customer.findByIdAndDelete(req.params.id);
-    if (!deletedCustomer) return res.status(404).render("errors/404");
+    const userId = req.session.userId;
+
+    const deletedCustomer = await Customer.findOneAndDelete({
+      _id: req.params.id,
+      user: userId,
+    });
+
+    if (!deletedCustomer) {
+      return res.status(404).render("errors/404");
+    }
 
     return res.redirect("/customers");
   } catch (err) {
     console.error(err);
-    return res.render("errors/500");
+    return res.status(500).render("errors/500");
   }
 };
 

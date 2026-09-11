@@ -1,5 +1,6 @@
-/* Presentable Sidebar Design */
+/* Basic Sidebar Design */
 
+/* Sidebar colors */
 :root {
   --aqua: #00a6a6;
   --dark-aqua: #007f7f;
@@ -10,140 +11,138 @@
   --red: #c62828;
 }
 
+/* Apply box-sizing to all elements */
 * {
   box-sizing: border-box;
 }
 
+/* Page */
 body {
   margin: 0;
-  font-family: "Times New Roman", Times, serif;
-  background-color: var(--white);
   color: var(--black);
+  background-color: var(--white);
+  font-family: "Times New Roman", Times, serif;
 }
 
+/* Use Times New Roman for form controls */
+button,
+input,
+select,
+textarea {
+  font-family: "Times New Roman", Times, serif;
+}
+
+/* Main layout */
 .app-layout {
   display: flex;
   min-height: 100vh;
   background-color: var(--white);
 }
 
-/* Sidebar container */
-
+/* Sidebar */
 .sidebar {
-  position: sticky;
-  top: 0;
   display: flex;
   flex-direction: column;
   width: 270px;
-  height: 100vh;
-  padding: 28px 18px;
+  min-height: 100vh;
+  padding: 25px 15px;
   background-color: var(--white);
   border-right: 1px solid var(--border-color);
-  box-shadow: 3px 0 15px rgba(0, 128, 128, 0.08);
 }
 
-/* Brand area */
-
+/* Sidebar brand */
 .sidebar-brand {
-  padding: 8px 8px 25px;
+  padding: 8px 8px 20px;
+  border-bottom: 2px solid var(--aqua);
   text-align: center;
-  border-bottom: 3px solid var(--aqua);
 }
 
 .sidebar-brand h2 {
   margin: 0;
   color: var(--dark-aqua);
   font-size: 25px;
-  letter-spacing: 0.3px;
 }
 
 /* Navigation */
-
 .sidebar-nav {
   display: flex;
   flex-direction: column;
-  gap: 9px;
-  margin-top: 28px;
+  gap: 7px;
+  margin-top: 22px;
 }
 
-/* Navigation tiles */
-
+/* Navigation links */
 .nav-tile {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   width: 100%;
-  min-height: 48px;
-  padding: 12px 15px;
+  padding: 11px 13px;
   color: var(--black);
   background-color: var(--white);
   border: 1px solid transparent;
-  border-radius: 8px;
+  border-radius: 6px;
   font-size: 18px;
   text-decoration: none;
-  transition: 0.2s ease;
 }
 
+/* Navigation link hover */
 .nav-tile:hover {
   color: var(--dark-aqua);
   background-color: var(--light-aqua);
   border-color: #b8e6e6;
-  transform: translateX(4px);
 }
 
+/* Active navigation link */
 .nav-tile.active {
   color: var(--white);
   background-color: var(--aqua);
   border-color: var(--aqua);
-  box-shadow: 0 4px 9px rgba(0, 166, 166, 0.25);
 }
 
-/* Icons */
-
+/* Navigation icons */
 .nav-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
-  color: inherit;
-  font-size: 20px;
+  width: 25px;
+  height: 25px;
+  font-size: 18px;
   font-weight: bold;
 }
 
-/* Logout */
-
+/* Sidebar footer */
 .sidebar-footer {
   margin-top: auto;
-  padding-top: 20px;
+  padding-top: 18px;
   border-top: 1px solid var(--border-color);
 }
 
+/* Logout button */
 .logout-tile {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   width: 100%;
-  min-height: 48px;
-  padding: 12px 15px;
+  padding: 11px 13px;
   color: var(--red);
   background-color: var(--white);
   border: 1px solid #efcaca;
-  border-radius: 8px;
+  border-radius: 6px;
+  font-family: "Times New Roman", Times, serif;
   font-size: 18px;
-  text-decoration: none;
-  transition: 0.2s ease;
+  text-align: left;
+  cursor: pointer;
 }
 
+/* Logout hover */
 .logout-tile:hover {
   color: var(--white);
   background-color: var(--red);
   border-color: var(--red);
-  transform: translateX(4px);
 }
 
 /* Main content */
-
 .main-content {
   flex: 1;
   min-width: 0;
@@ -152,8 +151,7 @@ body {
   background-color: var(--white);
 }
 
-/* Tablet */
-
+/* Tablet view */
 @media (max-width: 900px) {
   .sidebar {
     width: 230px;
@@ -163,19 +161,20 @@ body {
   .logout-tile {
     font-size: 16px;
   }
+
+  .main-content {
+    padding: 25px 20px;
+  }
 }
 
-/* Mobile */
-
+/* Mobile view */
 @media (max-width: 700px) {
   .app-layout {
     display: block;
   }
 
   .sidebar {
-    position: relative;
     width: 100%;
-    height: auto;
     min-height: auto;
     padding: 18px 15px;
     border-right: none;
@@ -189,16 +188,17 @@ body {
   .sidebar-nav {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 9px;
+    gap: 7px;
     margin-top: 18px;
   }
 
   .nav-tile,
   .logout-tile {
     justify-content: center;
-    min-height: 45px;
+    min-height: 44px;
     padding: 10px;
     font-size: 16px;
+    text-align: center;
   }
 
   .sidebar-footer {
@@ -211,6 +211,7 @@ body {
   }
 }
 
+/* Small mobile screens */
 @media (max-width: 420px) {
   .sidebar-nav {
     grid-template-columns: 1fr;
@@ -219,5 +220,6 @@ body {
   .nav-tile,
   .logout-tile {
     justify-content: flex-start;
+    text-align: left;
   }
 }

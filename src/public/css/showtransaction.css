@@ -1,276 +1,180 @@
-/* =========================================================
-   TRANSACTION DETAIL PAGE
-   ========================================================= */
+/* Basic Transaction Details Design */
 
+/* Make element sizes easier to control */
+* {
+  box-sizing: border-box;
+}
+
+/* Page */
+body {
+  margin: 0;
+  color: #111827;
+  background: #ffffff;
+  font-family: "Times New Roman", Times, serif;
+}
+
+/* Use Times New Roman for controls */
+button,
+input,
+select,
+textarea {
+  font-family: "Times New Roman", Times, serif;
+}
+
+/* Main content */
 .main-content {
   flex: 1;
   min-height: 100vh;
-
-  padding: 32px;
-
-  box-sizing: border-box;
-
+  padding: 30px;
   background: #ffffff;
 }
 
-/* =========================================================
-   BACK LINK
-   ========================================================= */
-
+/* Back link */
 .back-link {
   display: inline-flex;
-
   align-items: center;
-
+  min-height: 40px;
   margin-bottom: 18px;
-
   color: #08a9a9;
-
-  font-size: 13px;
-  font-weight: 600;
-
+  font-size: 16px;
+  font-weight: bold;
   line-height: 1.4;
-
   text-decoration: none;
-
-  transition:
-    color 0.2s ease,
-    transform 0.2s ease;
 }
 
 .back-link:hover {
   color: #078787;
-
-  transform: translateX(-2px);
+  text-decoration: underline;
 }
 
-/* =========================================================
-   DETAIL CARD
-   ========================================================= */
-
+/* Details card */
 .detail-card {
   width: 100%;
   max-width: 700px;
-
   padding: 24px;
-
-  box-sizing: border-box;
-
   background: #ffffff;
-
   border: 1px solid #e5e7eb;
-
-  border-radius: 12px;
-
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  border-radius: 10px;
 }
 
-/* =========================================================
-   CARD TOP
-   ========================================================= */
-
+/* Card top section */
 .detail-card-top {
   display: flex;
-
   align-items: flex-start;
   justify-content: space-between;
-
   gap: 20px;
-
-  padding-bottom: 20px;
-
+  padding-bottom: 18px;
   border-bottom: 1px solid #eef0f2;
 }
 
-/* =========================================================
-   MAIN INFO
-   ========================================================= */
-
+/* Main information */
 .detail-main-info {
   min-width: 0;
 }
 
-/* =========================================================
-   DETAIL TITLE
-   ========================================================= */
-
+/* Title */
 .detail-title {
   margin: 0;
-
   color: #111827;
-
-  font-size: 30px;
-  font-weight: 800;
-
+  font-size: 28px;
+  font-weight: bold;
   line-height: 1.2;
-
-  letter-spacing: -0.02em;
 }
 
-/* =========================================================
-   DETAIL SUBTITLE
-   ========================================================= */
-
+/* Subtitle */
 .detail-subtitle {
   margin: 6px 0 0;
-
   color: #6b7280;
-
-  font-size: 12px;
-  font-weight: 500;
-
+  font-size: 16px;
   line-height: 1.4;
 }
 
-/* =========================================================
-   BADGE
-   ========================================================= */
-
+/* Badge */
 .badge {
   display: inline-flex;
-
   align-items: center;
   justify-content: center;
-
   flex-shrink: 0;
-
+  min-height: 30px;
   padding: 6px 10px;
-
   border-radius: 999px;
-
-  font-size: 10px;
-  font-weight: 700;
-
+  font-size: 14px;
+  font-weight: bold;
   line-height: 1;
-
   text-transform: capitalize;
 }
 
-/* =========================================================
-   SALE BADGE
-   ========================================================= */
-
+/* Sale badge */
 .badge-sale {
   color: #17652a;
-
   background: #e9f7ed;
-
   border: 1px solid #d5efdc;
 }
 
-/* =========================================================
-   RESTOCK BADGE
-   ========================================================= */
-
+/* Restock badge */
 .badge-restock {
   color: #078787;
-
   background: #e3f8f8;
-
   border: 1px solid #c8eeee;
 }
 
-/* =========================================================
-   EXPENSE BADGE
-   ========================================================= */
-
+/* Expense badge */
 .badge-expense {
   color: #9f1f1f;
-
   background: #fdecec;
-
   border: 1px solid #f8d6d6;
 }
 
-/* =========================================================
-   DETAIL INFO
-   ========================================================= */
-
+/* Information grid */
 .detail-info {
   display: grid;
-
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-
+  grid-template-columns: repeat(2, 1fr);
   gap: 18px 24px;
-
   padding-top: 20px;
 }
 
-/* =========================================================
-   DETAIL ITEM
-   ========================================================= */
-
+/* Information item */
 .detail-item {
   display: flex;
-
   flex-direction: column;
-
   min-width: 0;
 }
 
-/* =========================================================
-   DETAIL LABEL
-   ========================================================= */
-
+/* Information label */
 .detail-label {
   display: block;
-
-  margin-bottom: 6px;
-
+  margin-bottom: 5px;
   color: #6b7280;
-
-  font-size: 10px;
-  font-weight: 700;
-
-  line-height: 1.4;
-
-  letter-spacing: 0.03em;
-
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 1.3;
   text-transform: uppercase;
 }
 
-/* =========================================================
-   DETAIL VALUE
-   ========================================================= */
-
+/* Information value */
 .detail-value {
   display: block;
-
   color: #111827;
-
-  font-size: 14px;
-  font-weight: 600;
-
-  line-height: 1.5;
-
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 1.4;
   overflow-wrap: anywhere;
 }
 
-/* =========================================================
-   NOTES
-   ========================================================= */
-
+/* Notes */
 .detail-notes {
   grid-column: 1 / -1;
-
   padding-top: 4px;
 }
 
-/* =========================================================
-   ACTIONS
-   ========================================================= */
-
+/* Action buttons container */
 .detail-actions {
   display: flex;
-
-  justify-content: flex-end;
   align-items: center;
-
+  justify-content: flex-end;
   gap: 10px;
-
   width: 100%;
   max-width: 700px;
-
   margin-top: 18px;
 }
 
@@ -278,129 +182,58 @@
   margin: 0;
 }
 
-/* =========================================================
-   BASE BUTTON
-   ========================================================= */
-
+/* Buttons */
 .btn {
   display: inline-flex;
-
   align-items: center;
   justify-content: center;
-
-  min-height: 40px;
-
+  min-width: 100px;
+  min-height: 44px;
   padding: 10px 17px;
-
-  box-sizing: border-box;
-
-  border-radius: 8px;
-
-  font-family: inherit;
-
-  font-size: 13px;
-  font-weight: 700;
-
+  border-radius: 7px;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 16px;
+  font-weight: bold;
   line-height: 1;
-
+  text-align: center;
   text-decoration: none;
-
   cursor: pointer;
-
-  transition:
-    background-color 0.2s ease,
-    color 0.2s ease,
-    border-color 0.2s ease,
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
 }
 
-/* =========================================================
-   SECONDARY / BACK BUTTON
-   ========================================================= */
-
+/* Back or secondary button */
 .btn-secondary {
-  background: #ffffff;
-
   color: #08a9a9;
-
+  background: #ffffff;
   border: 1px solid #08a9a9;
 }
 
 .btn-secondary:hover {
+  color: #078787;
   background: #f0fbfb;
-
-  color: #078787;
-
   border-color: #08a9a9;
-
-  transform: translateY(-1px);
-
-  box-shadow: 0 4px 10px rgba(8, 169, 169, 0.1);
 }
 
-.btn-secondary:active {
-  background: #e3f8f8;
-
-  color: #078787;
-
-  border-color: #078787;
-
-  transform: translateY(0);
-
-  box-shadow: none;
-}
-
-/* =========================================================
-   DANGER / DELETE BUTTON
-   ========================================================= */
-
+/* Delete button */
 .btn-danger {
-  background: #ffffff;
-
   color: #c62828;
-
+  background: #ffffff;
   border: 1px solid #e2bcbc;
 }
 
 .btn-danger:hover {
+  color: #9f1f1f;
   background: #fff5f5;
-
-  color: #9f1f1f;
-
   border-color: #c62828;
-
-  transform: translateY(-1px);
-
-  box-shadow: 0 4px 10px rgba(198, 40, 40, 0.1);
 }
 
-.btn-danger:active {
-  background: #fdecec;
-
-  color: #9f1f1f;
-
-  border-color: #9f1f1f;
-
-  transform: translateY(0);
-
-  box-shadow: none;
-}
-
-/* =========================================================
-   BUTTON FOCUS
-   ========================================================= */
-
-.btn:focus-visible {
-  outline: 2px solid #08a9a9;
-
+/* Focus effect for keyboard users */
+.btn:focus-visible,
+.back-link:focus-visible {
+  outline: 3px solid #08a9a9;
   outline-offset: 2px;
 }
 
-/* =========================================================
-   TABLET
-   ========================================================= */
-
+/* Tablet view */
 @media (max-width: 800px) {
   .main-content {
     padding: 24px 18px;
@@ -408,7 +241,6 @@
 
   .detail-card {
     max-width: 100%;
-
     padding: 20px;
   }
 
@@ -417,10 +249,7 @@
   }
 }
 
-/* =========================================================
-   MOBILE
-   ========================================================= */
-
+/* Mobile view */
 @media (max-width: 600px) {
   .main-content {
     padding: 18px 12px;
@@ -428,15 +257,10 @@
 
   .detail-card {
     padding: 18px;
-
-    border-radius: 10px;
   }
 
   .detail-card-top {
-    align-items: flex-start;
-
     gap: 12px;
-
     padding-bottom: 16px;
   }
 
@@ -445,14 +269,12 @@
   }
 
   .detail-subtitle {
-    font-size: 11px;
+    font-size: 15px;
   }
 
   .detail-info {
     grid-template-columns: 1fr;
-
     gap: 15px;
-
     padding-top: 18px;
   }
 
@@ -461,52 +283,50 @@
   }
 
   .detail-actions {
-    margin-top: 14px;
+    justify-content: stretch;
+    margin-top: 15px;
+  }
+
+  .detail-actions .btn,
+  .detail-actions form {
+    flex: 1;
+  }
+
+  .detail-actions form .btn {
+    width: 100%;
   }
 }
 
-/* =========================================================
-   VERY SMALL SCREENS
-   ========================================================= */
-
+/* Small mobile screens */
 @media (max-width: 380px) {
   .main-content {
-    padding: 16px 10px;
+    padding: 15px 10px;
   }
 
   .detail-card {
     padding: 15px;
   }
 
-  .detail-title {
-    font-size: 21px;
-  }
-
   .detail-card-top {
+    align-items: flex-start;
     flex-direction: column;
   }
 
-  .badge {
-    align-self: flex-start;
-
-    padding: 5px 8px;
-
-    font-size: 9px;
+  .detail-title {
+    font-size: 22px;
   }
 
   .detail-label {
-    font-size: 9px;
+    font-size: 12px;
   }
 
   .detail-value {
-    font-size: 13px;
+    font-size: 15px;
   }
 
   .detail-actions {
-    flex-direction: column;
-
     align-items: stretch;
-
+    flex-direction: column;
     gap: 8px;
   }
 
@@ -514,13 +334,5 @@
   .detail-actions form,
   .detail-actions form .btn {
     width: 100%;
-  }
-
-  .btn {
-    min-height: 38px;
-
-    padding: 9px 14px;
-
-    font-size: 12px;
   }
 }

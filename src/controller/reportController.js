@@ -3,15 +3,21 @@ const Product = require("../model/product");
 
 const getFinancialSummary = async (req, res) => {
   try {
-    const result = await Transaction.find();
+    const userId = req.session.userId;
+
+    const transactions = await Transaction.find({
+      user: userId,
+    });
+
 
     let totalRevenue = 0;
     let totalCost = 0;
 
-    result.forEach((transaction) => {
+    transactions.forEach((transaction) => {
       if (transaction.type === "sale") {
         totalRevenue += transaction.amount;
       }
+
       if (transaction.type === "restock") {
         totalCost += transaction.amount;
       }
@@ -19,8 +25,12 @@ const getFinancialSummary = async (req, res) => {
 
     const profit = totalRevenue - totalCost;
 
-    const products = await Product.find();
+    const products = await Product.find({
+      user: userId,
+    });
+
     let inventoryValue = 0;
+
     products.forEach((product) => {
       inventoryValue += product.quantity * product.sellingPrice;
     });
@@ -34,8 +44,11 @@ const getFinancialSummary = async (req, res) => {
     });
   } catch (err) {
     console.error(err);
-    return res.render("errors/500");
+
+    return res.status(500).render("errors/500");
   }
 };
 
-module.exports = { getFinancialSummary };
+module.exports = {
+  getFinancialSummary,
+};

@@ -2,55 +2,164 @@
 <html>
 <head>
   <link rel="stylesheet" href="/css/sidebar.css">
-<link rel="stylesheet" href="/css/createstock.css">
+  <link rel="stylesheet" href="/css/createstock.css">
   <%- include('../partials/head', { pageTitle: 'New Stock Batch' }) %>
 </head>
 <body>
   <div class="app-layout">
     <%- include('../partials/sidebar', { currentPage: 'stocks' }) %>
+
     <main class="main-content">
-      <%- include('../partials/header', { pageTitle: 'New stock batch', user: user }) %>
+
+      <%- include('../partials/header', {
+        pageTitle: 'New stock batch',
+        user: user
+      }) %>
 
       <% if (typeof error !== 'undefined' && error) { %>
-        <div class="form-error"><%= error %></div>
+        <div class="form-error">
+          <%= error %>
+        </div>
       <% } %>
 
       <form action="/stocks/create" method="POST" class="form-card">
-        <div class="form-group">
-          <label>Batch name</label>
-          <input type="text" name="name" placeholder="September delivery" required />
-        </div>
 
+        <!-- Product -->
         <div class="form-group">
-          <label>Product</label>
-          <select name="ProductId" required>
-            <option value="">Select an existing product</option>
+          <label for="productName">Product</label>
+
+          <input
+            type="text"
+            name="productName"
+            id="productName"
+            list="productList"
+            placeholder="Select or type a product"
+            required
+            autocomplete="off"
+          >
+
+          <datalist id="productList">
             <% products.forEach(function(p) { %>
-              <option value="<%= p._id %>"><%= p.name %></option>
+              <option value="<%= p.name %>"></option>
             <% }); %>
-          </select>
+          </datalist>
         </div>
 
+
+        <!-- Supplier -->
         <div class="form-group">
-          <label>Valuation method</label>
-          <select name="valuationMethod">
+          <label for="supplierName">Supplier</label>
+
+          <input
+            type="text"
+            name="supplierName"
+            id="supplierName"
+            list="supplierList"
+            placeholder="Select or type a supplier"
+            required
+            autocomplete="off"
+          >
+
+          <datalist id="supplierList">
+            <% suppliers.forEach(function(s) { %>
+              <option value="<%= s.name %>"></option>
+            <% }); %>
+          </datalist>
+        </div>
+
+
+        <!-- Quantity -->
+        <div class="form-group">
+          <label for="quantity">Quantity received</label>
+
+          <input
+            type="number"
+            name="quantity"
+            id="quantity"
+            min="1"
+            placeholder="Enter quantity received"
+            required
+          >
+        </div>
+
+
+        <!-- Cost per unit -->
+        <div class="form-group">
+          <label for="costPerUnit">Cost per unit</label>
+
+          <input
+            type="number"
+            name="costPerUnit"
+            id="costPerUnit"
+            min="0"
+            step="0.01"
+            placeholder="Enter purchase cost per unit"
+            required
+          >
+        </div>
+
+
+        <!-- Selling price -->
+        <div class="form-group">
+          <label for="sellingPrice">Selling price</label>
+
+          <input
+            type="number"
+            name="sellingPrice"
+            id="sellingPrice"
+            min="0"
+            step="0.01"
+            placeholder="Price you'll sell this product at"
+            required
+          >
+        </div>
+
+
+        <!-- Valuation method -->
+        <div class="form-group">
+          <label for="valuationMethod">Valuation method</label>
+
+          <select
+            name="valuationMethod"
+            id="valuationMethod"
+            required
+          >
             <option value="FIFO">FIFO</option>
             <option value="LIFO">LIFO</option>
           </select>
         </div>
 
+
+        <!-- Notes -->
         <div class="form-group">
-          <label>Description</label>
-          <textarea name="description" placeholder="Optional notes"></textarea>
+          <label for="notes">Notes</label>
+
+          <textarea
+            name="notes"
+            id="notes"
+            placeholder="Optional notes"
+          ></textarea>
         </div>
 
+
         <div class="form-actions">
-          <a href="/stocks" class="btn">Cancel</a>
-          <button type="submit" class="btn btn-primary">Create batch</button>
+          <a href="/stocks" class="btn">
+            Cancel
+          </a>
+
+          <button
+            type="submit"
+            class="btn btn-primary"
+          >
+            Receive Stock
+          </button>
         </div>
+
       </form>
+
     </main>
   </div>
+
   <%- include('../partials/footer') %>
 </body>
 </html>

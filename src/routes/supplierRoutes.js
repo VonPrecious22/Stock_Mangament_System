@@ -1,6 +1,9 @@
 const express = require("express");
+
 const router = express.Router();
+
 const auth = require("../middleware/auth");
+
 const {
   renderCreateForm,
   createSupplier,
@@ -11,15 +14,21 @@ const {
   deleteSupplier,
 } = require("../controller/supplierController");
 
-// Static routes must precede dynamic parameters
+// Create supplier
 router.get("/create", auth, renderCreateForm);
 router.post("/create", auth, createSupplier);
+
+// All suppliers
 router.get("/", auth, getAllSuppliers);
 
-// Parameterized routes
-router.get("/:id/edit", auth, renderEditForm);
+// One supplier
 router.get("/:id", auth, getSupplier);
+
+// Edit supplier
+router.get("/:id/edit", auth, renderEditForm);
 router.put("/:id", auth, updateSupplier);
+
+// Delete supplier
 router.delete("/:id", auth, deleteSupplier);
 
 module.exports = router;

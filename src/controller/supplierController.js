@@ -1,19 +1,24 @@
 const Joi = require("joi");
 const Supplier = require("../model/supplier");
 
+// Create form
 const renderCreateForm = (req, res) => {
   return res.render("suppliers/create", {
-    error: null,
     currentPage: "suppliers",
   });
 };
 
+// Create supplier
 const createSupplier = async (req, res) => {
   try {
-    const { name, supplyQuantity, supplyPrice, contact, address } = req.body;
+    const userId = req.session.userId;
+
+    const { name, contact, address } = req.body;
+
     const { error } = validate(req.body);
+
     if (error) {
-      return res.render("suppliers/create", {
+      return res.status(400).render("suppliers/create", {
         error: error.details[0].message,
         currentPage: "suppliers",
       });
@@ -21,58 +26,33 @@ const createSupplier = async (req, res) => {
 
     await Supplier.create({
       name,
-      supplyQuantity,
-      supplyPrice,
       contact,
       address,
+      user: userId,
     });
+
     return res.redirect("/suppliers");
   } catch (err) {
     console.error(err);
-    return res.render("suppliers/create", {
+
+    return res.status(500).render("suppliers/create", {
       error: "Something went wrong. Please try again.",
       currentPage: "suppliers",
     });
   }
 };
 
-const getSupplier = async (req, res) => {
-  try {
-    const foundSupplier = await Supplier.findById(req.params.id);
-    if (!foundSupplier) return res.status(404).render("errors/404");
-
-    return res.render("suppliers/show", {
-      supplier: foundSupplier,
-      currentPage: "suppliers",
-    });
-  } catch (err) {
-    console.error(err);
-    return res.render("errors/500");
-  }
-};
-
+// Get all suppliers
 const getAllSuppliers = async (req, res) => {
   try {
-    const allSuppliers = await Supplier.find();
+    const userId = req.session.userId;
+
+    const suppliers = await Supplier.find({
+      user: userId,
+    }).sort({ createdAt: -1 });
 
     return res.render("suppliers/index", {
-      suppliers: allSuppliers,
-      currentPage: "suppliers",
-    });
-  } catch (err) {
-    console.error(err);
-    return res.render("errors/500");
-  }
-};
-
-const renderEditForm = async (req, res) => {
-  try {
-    const supplier = await Supplier.findById(req.params.id).lean();
-    if (!supplier) return res.status(404).render("errors/404");
-
-    return res.render("suppliers/edit", {
-      supplier,
-      error: null,
+      suppliers,
       currentPage: "suppliers",
     });
   } catch (err) {
@@ -81,12 +61,69 @@ const renderEditForm = async (req, res) => {
   }
 };
 
+// Get supplier
+const getSupplier = async (req, res) => {
+  try {
+    const userId = req.session.userId;
+
+    const supplier = await Supplier.findOne({
+      _id: req.params.id,
+      user: userId,
+    });
+
+    if (!supplier) {
+      return res.status(404).render("errors/404");
+    }
+
+    return res.render("suppliers/show", {
+      supplier,
+      currentPage: "suppliers",
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).render("errors/500");
+  }
+};
+
+// Edit form
+const renderEditForm = async (req, res) => {
+  try {
+    const userId = req.session.userId;
+
+    const supplier = await Supplier.findOne({
+      _id: req.params.id,
+      user: userId,
+    }).lean();
+
+    if (!supplier) {
+      return res.status(404).render("errors/404");
+    }
+
+    return res.render("suppliers/edit", {
+      supplier,
+      currentPage: "suppliers",
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).render("errors/500");
+  }
+};
+
+// Update
 const updateSupplier = async (req, res) => {
   try {
-    const { name, supplyQuantity, supplyPrice, contact, address } = req.body;
+    const userId = req.session.userId;
+
+    const { name, contact, address } = req.body;
+
     const { error } = validate(req.body);
+
     if (error) {
-      const supplier = await Supplier.findById(req.params.id);
+      const supplier = await Supplier.findOne({
+        _id: req.params.id,
+        user: userId,
+      });
+
       return res.render("suppliers/edit", {
         supplier,
         error: error.details[0].message,
@@ -94,30 +131,51 @@ const updateSupplier = async (req, res) => {
       });
     }
 
-    const updatedSupplier = await Supplier.findByIdAndUpdate(
-      req.params.id,
-      { name, supplyQuantity, supplyPrice, contact, address },
-      { returnDocument: "after", runValidators: true },
+    const updatedSupplier = await Supplier.findOneAndUpdate(
+      {
+        _id: req.params.id,
+        user: userId,
+      },
+      {
+        name,
+        contact,
+        address,
+      },
+      {
+        new: true,
+        runValidators: true,
+      },
     );
 
-    if (!updatedSupplier) return res.status(404).render("errors/404");
+    if (!updatedSupplier) {
+      return res.status(404).render("errors/404");
+    }
 
     return res.redirect(`/suppliers/${updatedSupplier._id}`);
   } catch (err) {
     console.error(err);
-    return res.render("errors/500");
+    return res.status(500).render("errors/500");
   }
 };
 
+// Delete
 const deleteSupplier = async (req, res) => {
   try {
-    const deletedSupplier = await Supplier.findByIdAndDelete(req.params.id);
-    if (!deletedSupplier) return res.status(404).render("errors/404");
+    const userId = req.session.userId;
+
+    const deletedSupplier = await Supplier.findOneAndDelete({
+      _id: req.params.id,
+      user: userId,
+    });
+
+    if (!deletedSupplier) {
+      return res.status(404).render("errors/404");
+    }
 
     return res.redirect("/suppliers");
   } catch (err) {
     console.error(err);
-    return res.render("errors/500");
+    return res.status(500).render("errors/500");
   }
 };
 

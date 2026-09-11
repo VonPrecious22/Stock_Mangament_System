@@ -1,46 +1,175 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <%- include('../partials/head', {
+    pageTitle: 'Edit Stock Batch'
+  }) %>
+
   <link rel="stylesheet" href="/css/sidebar.css">
-<link rel="stylesheet" href="/css/createstock.css">
-  <%- include('../partials/head', { pageTitle: 'Edit Stock Batch' }) %>
+  <link rel="stylesheet" href="/css/createstock.css">
+
 </head>
+
 <body>
+
   <div class="app-layout">
-    <%- include('../partials/sidebar', { currentPage: 'stocks' }) %>
+
+    <%- include('../partials/sidebar', {
+      currentPage: 'stocks'
+    }) %>
+
+
     <main class="main-content">
-      <%- include('../partials/header', { pageTitle: 'Edit stock batch', user: user }) %>
+
+      <%- include('../partials/header', {
+        pageTitle: 'Edit stock batch',
+        user: user
+      }) %>
+
 
       <% if (typeof error !== 'undefined' && error) { %>
-        <div class="form-error"><%= error %></div>
+
+        <div class="form-error">
+          <%= error %>
+        </div>
+
       <% } %>
 
-      <form action="/stocks/<%= stock._id %>?_method=PUT" method="POST" class="form-card">
-        <div class="form-group">
-          <label>Batch name</label>
-          <input type="text" name="name" value="<%= stock.name %>" required />
-        </div>
+
+      <form
+        action="/stocks/<%= stock._id %>?_method=PUT"
+        method="POST"
+        class="form-card"
+      >
+
+
+        <!-- Batch name -->
 
         <div class="form-group">
-          <label>Valuation method</label>
-          <select name="valuationMethod">
-            <option value="FIFO" <%= stock.valuationMethod === 'FIFO' ? 'selected' : '' %>>FIFO</option>
-            <option value="LIFO" <%= stock.valuationMethod === 'LIFO' ? 'selected' : '' %>>LIFO</option>
+
+          <label for="name">
+            Batch name
+          </label>
+
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value="<%= stock.name %>"
+            required
+          >
+
+        </div>
+
+
+        <!-- Valuation method -->
+
+        <div class="form-group">
+
+          <label for="valuationMethod">
+            Valuation method
+          </label>
+
+          <select
+            name="valuationMethod"
+            id="valuationMethod"
+            required
+          >
+
+            <option
+              value="FIFO"
+              <%= stock.valuationMethod === 'FIFO'
+                ? 'selected'
+                : '' %>
+            >
+              FIFO
+            </option>
+
+
+            <option
+              value="LIFO"
+              <%= stock.valuationMethod === 'LIFO'
+                ? 'selected'
+                : '' %>
+            >
+              LIFO
+            </option>
+
           </select>
+
         </div>
 
+
+        <!-- Description -->
+
         <div class="form-group">
-          <label>Description</label>
-          <textarea name="description"><%= stock.description %></textarea>
+
+          <label for="description">
+            Description
+          </label>
+
+          <textarea
+            name="description"
+            id="description"
+          ><%= stock.description || '' %></textarea>
+
         </div>
+
+
+        <!-- Information -->
+
+        <div class="form-info">
+
+          <p>
+            Quantity and cost cannot be changed from this page.
+          </p>
+
+          <p>
+            To change inventory quantity, create a new restock or sale.
+          </p>
+
+        </div>
+
+
+        <!-- Actions -->
 
         <div class="form-actions">
-          <a href="/stocks/<%= stock._id %>" class="btn">Cancel</a>
-          <button type="submit" class="btn btn-primary">Save changes</button>
+
+          <a
+            href="/stocks/<%= stock._id %>"
+            class="btn"
+          >
+            Cancel
+          </a>
+
+
+          <button
+            type="submit"
+            class="btn btn-primary"
+          >
+            Save changes
+          </button>
+
         </div>
+
       </form>
+
     </main>
+
   </div>
+
+
   <%- include('../partials/footer') %>
+
 </body>
+
 </html>

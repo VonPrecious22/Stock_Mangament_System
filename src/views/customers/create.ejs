@@ -1,41 +1,98 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-   <link rel="stylesheet" href="/css/createcustomer.css">
+  <link rel="stylesheet" href="/css/createcustomer.css">
+
   <%- include('../partials/head', { pageTitle: 'New Customer' }) %>
 </head>
+
 <body>
+
   <div class="app-layout">
+
     <%- include('../partials/sidebar', { currentPage: 'customers' }) %>
+
     <main class="main-content">
-      <%- include('../partials/header', { pageTitle: 'New customer', user: user }) %>
+
+      <%- include('../partials/header', {
+        pageTitle: 'New customer',
+        user: user
+      }) %>
 
       <% if (typeof error !== 'undefined' && error) { %>
-        <div class="form-error"><%= error %></div>
+        <div class="form-error">
+          <%= error %>
+        </div>
       <% } %>
 
-      <form action="/customers/create" method="POST" class="form-card">
+      <form
+        action="/customers/create"
+        method="POST"
+        class="form-card"
+      >
+
+        <!-- Customer name -->
         <div class="form-group">
-          <label>Name</label>
-          <input type="text" name="name" required />
+          <label for="name">Name</label>
+
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Enter customer name"
+            value="<%= typeof values !== 'undefined' ? values.name : '' %>"
+            required
+          />
         </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>Quantity bought</label>
-            <input type="number" name="quantityBought" />
-          </div>
-          <div class="form-group">
-            <label>Buying price</label>
-            <input type="number" step="0.01" name="buyingPrice" />
-          </div>
+
+        <!-- Contact -->
+        <div class="form-group">
+          <label for="contact">Contact</label>
+
+          <input
+            type="text"
+            id="contact"
+            name="contact"
+            placeholder="Phone number or email"
+            value="<%= typeof values !== 'undefined' ? values.contact : '' %>"
+          />
         </div>
+
+        <!-- Address -->
+        <div class="form-group">
+          <label for="address">Address</label>
+
+          <textarea
+            id="address"
+            name="address"
+            placeholder="Customer address"
+          ><%= typeof values !== 'undefined' ? values.address : '' %></textarea>
+        </div>
+
         <div class="form-actions">
-          <a href="/customers" class="btn">Cancel</a>
-          <button type="submit" class="btn btn-primary">Create customer</button>
+
+          <a
+            href="/customers"
+            class="btn"
+          >
+            Cancel
+          </a>
+
+          <button
+            type="submit"
+            class="btn btn-primary"
+          >
+            Create customer
+          </button>
+
         </div>
+
       </form>
+
     </main>
   </div>
+
   <%- include('../partials/footer') %>
+
 </body>
 </html>

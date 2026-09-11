@@ -1,33 +1,68 @@
 const mongoose = require("mongoose");
 
-const stockSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
+const stockSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+
+    description: {
+      type: String,
+      trim: true,
+      maxlength: 200,
+    },
+
+    costPerUnit: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
+
+    quantity: {
+      type: Number,
+      required: true,
+      min: 1,
+    },
+
+    date: {
+      type: Date,
+      default: Date.now,
+    },
+
+    valuationMethod: {
+      type: String,
+      enum: ["FIFO", "LIFO"],
+      required: true,
+      default: "FIFO",
+    },
+
+    // Lowercase: must match the controller
+    product: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Product",
+      required: true,
+    },
+
+    // Lowercase: must match the controller
+    supplier: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Supplier",
+      required: true,
+    },
+
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
+      required: true,
+    },
   },
-  description: {
-    type: String,
+  {
+    timestamps: true,
   },
-  date: {
-    type: Date,
-    default: Date.now
-  },
-  valuationMethod: {
-    type: String,
-    enum: ["FIFO", "LIFO"],
-    default: "FIFO",
-  },
-  Product: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Product",
-    required: true
-  }
-});
+);
 
-const stock = mongoose.model("stock", stockSchema);
-module.exports = stock;
+const Stock = mongoose.model("Stock", stockSchema);
 
-
-
-
-
+module.exports = Stock;

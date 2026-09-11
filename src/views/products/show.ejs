@@ -55,16 +55,6 @@
           <a href="/products/<%= product._id %>/edit" class="btn btn-edit">
             Edit product
           </a>
-
-          <form
-            action="/products/<%= product._id %>?_method=DELETE"
-            method="POST"
-            onsubmit="return confirm('Delete this product?');"
-          >
-            <button type="submit" class="btn btn-danger">
-              Delete
-            </button>
-          </form>
         </div>
 
       </div>

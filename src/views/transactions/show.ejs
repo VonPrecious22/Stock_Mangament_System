@@ -3,6 +3,7 @@
 <html>
 <head>
   <link rel="stylesheet", href="showtransaction">
+  <link rel="stylesheet" href="/css/showtransaction.css">
   <%- include('../partials/head', { pageTitle: 'Transaction Detail' }) %>
 </head>
 
@@ -19,29 +20,18 @@
         user: user
       }) %>
 
-
-      <!-- =====================================================
-           BACK LINK
-           ===================================================== -->
-
       <a href="/transactions" class="back-link">
         &larr; Back to transactions
       </a>
 
-
-      <!-- =====================================================
-           TRANSACTION DETAIL CARD
-           ===================================================== -->
-
       <div class="detail-card">
 
-        <!-- TOP SECTION -->
         <div class="detail-card-top">
 
           <div class="detail-main-info">
 
             <p class="detail-title">
-              $<%= transaction.amount.toFixed(2) %>
+              <%= transaction.amount.toFixed(2) %> FCFA
             </p>
 
             <p class="detail-subtitle">
@@ -49,19 +39,11 @@
             </p>
 
           </div>
-
-
-          <!-- TRANSACTION TYPE -->
           <span class="badge badge-<%= transaction.type %>">
             <%= transaction.type %>
           </span>
 
         </div>
-
-
-        <!-- ===================================================
-             PARTY
-             =================================================== -->
 
         <div class="detail-info">
 
@@ -99,11 +81,6 @@
 
           <% } %>
 
-
-          <!-- =================================================
-               QUANTITY
-               ================================================= -->
-
           <% if (transaction.quantityBought) { %>
 
             <div class="detail-item">
@@ -119,11 +96,6 @@
             </div>
 
           <% } %>
-
-
-          <!-- =================================================
-               NOTES
-               ================================================= -->
 
           <% if (transaction.notes) { %>
 
@@ -145,11 +117,6 @@
 
       </div>
 
-
-      <!-- =====================================================
-           ACTIONS
-           ===================================================== -->
-
       <div class="detail-actions">
 
         <a
@@ -158,14 +125,11 @@
         >
           Back
         </a>
-
-
         <form
           action="/transactions/<%= transaction._id %>?_method=DELETE"
           method="POST"
           onsubmit="return confirm('Delete this transaction?');"
         >
-
           <button
             type="submit"
             class="btn btn-danger"

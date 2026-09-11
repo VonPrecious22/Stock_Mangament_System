@@ -6,6 +6,7 @@
 </head>
 
 <body>
+
   <div class="app-layout">
 
     <%- include('../partials/sidebar', { currentPage: 'reports' }) %>
@@ -18,67 +19,75 @@
       }) %>
 
 
-      <!-- =====================================================
-           FINANCIAL SUMMARY
-           ===================================================== -->
-
       <div class="stats-grid">
 
         <!-- Total Revenue -->
         <div class="stat-card">
-          <span class="stat-label">Total revenue</span>
+
+          <span class="stat-label">
+            Total revenue
+          </span>
 
           <span class="stat-value stat-success">
-            $<%= totalRevenue.toFixed(2) %>
+            <%= (totalRevenue || 0).toFixed(1) %> FCFA
           </span>
+
         </div>
 
 
         <!-- Total Cost -->
         <div class="stat-card">
-          <span class="stat-label">Total cost</span>
+
+          <span class="stat-label">
+            Total cost
+          </span>
 
           <span class="stat-value stat-danger">
-            $<%= totalCost.toFixed(2) %>
+            <%= (totalCost || 0).toFixed(1) %> FCFA
           </span>
+
         </div>
 
 
         <!-- Net Profit -->
         <div class="stat-card">
-          <span class="stat-label">Net profit</span>
+
+          <span class="stat-label">
+            Net profit
+          </span>
 
           <span class="stat-value">
-            $<%= profit.toFixed(2) %>
+            <%= (profit || 0).toFixed(1) %> FCFA
           </span>
+
         </div>
 
 
         <!-- Inventory Value -->
         <div class="stat-card">
-          <span class="stat-label">Inventory value</span>
+
+          <span class="stat-label">
+            Inventory value
+          </span>
 
           <span class="stat-value">
-            $<%= inventoryValue.toFixed(2) %>
+            <%= (inventoryValue || 0).toFixed(1) %> FCFA
           </span>
+
         </div>
 
       </div>
 
 
-      <!-- =====================================================
-           INFORMATION
-           ===================================================== -->
-
       <p class="hint-text">
-        Revenue and cost are calculated from sale and restock
-        transactions. Inventory value reflects current product
-        quantity × selling price.
+        This is an overall summary of your stock and financial activity.
       </p>
+
 
     </main>
 
   </div>
+
 
   <%- include('../partials/footer') %>
 

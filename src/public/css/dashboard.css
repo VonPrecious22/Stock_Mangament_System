@@ -1,5 +1,11 @@
-/* Dashboard Styles */
+/* Basic Dashboard Design */
 
+/* Keep element sizes easy to control */
+* {
+  box-sizing: border-box;
+}
+
+/* Dashboard colors */
 :root {
   --aqua: #00a6a6;
   --dark-aqua: #007f7f;
@@ -11,10 +17,7 @@
   --shadow: 0 3px 10px rgba(0, 128, 128, 0.12);
 }
 
-* {
-  box-sizing: border-box;
-}
-
+/* Page */
 body {
   margin: 0;
   color: var(--black);
@@ -23,12 +26,22 @@ body {
   font-size: 17px;
 }
 
+/* Use Times New Roman for form controls */
+button,
+input,
+select,
+textarea {
+  font-family: "Times New Roman", Times, serif;
+}
+
+/* Main layout */
 .app-layout {
   display: flex;
   min-height: 100vh;
   background-color: var(--white);
 }
 
+/* Main content */
 .main-content {
   flex: 1;
   min-width: 0;
@@ -37,8 +50,7 @@ body {
   background-color: var(--white);
 }
 
-/* Dashboard cards */
-
+/* Dashboard statistics */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -46,6 +58,7 @@ body {
   margin: 30px 0;
 }
 
+/* Statistic card */
 .stat-card {
   padding: 24px;
   color: var(--black);
@@ -56,12 +69,14 @@ body {
   box-shadow: var(--shadow);
 }
 
+/* Statistic label */
 .stat-label {
   margin: 0 0 12px;
   color: var(--black);
   font-size: 18px;
 }
 
+/* Statistic value */
 .stat-value {
   margin: 0;
   color: var(--dark-aqua);
@@ -69,12 +84,12 @@ body {
   font-weight: bold;
 }
 
+/* Danger statistic */
 .stat-danger {
   color: var(--danger);
 }
 
 /* Recent stock section */
-
 .recent-section {
   margin-top: 35px;
   padding: 24px;
@@ -85,12 +100,14 @@ body {
   box-shadow: var(--shadow);
 }
 
+/* Section heading */
 .section-title {
   margin: 0;
   color: var(--black);
   font-size: 24px;
 }
 
+/* Section header */
 .section-header {
   display: flex;
   align-items: center;
@@ -99,6 +116,7 @@ body {
   margin-bottom: 20px;
 }
 
+/* Links */
 .link {
   color: var(--dark-aqua);
   font-weight: bold;
@@ -110,23 +128,31 @@ body {
   text-decoration: underline;
 }
 
-/* Table */
-
-.data-table {
+/* Table wrapper */
+.table-container {
   width: 100%;
-  color: var(--black);
-  background-color: var(--white);
-  border-collapse: collapse;
+  overflow-x: auto;
 }
 
+/* Table */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--black);
+  background-color: var(--white);
+}
+
+/* Table headings */
 .data-table th {
   padding: 14px 16px;
   color: var(--white);
   background-color: var(--aqua);
   font-size: 17px;
   text-align: left;
+  white-space: nowrap;
 }
 
+/* Table cells */
 .data-table td {
   padding: 14px 16px;
   color: var(--black);
@@ -135,24 +161,30 @@ body {
   font-size: 16px;
 }
 
+/* Table row hover */
 .data-table tbody tr:hover td {
   background-color: #f2ffff;
 }
 
+/* Empty table message */
 .empty-message {
   padding: 28px !important;
   color: var(--black);
   text-align: center;
 }
 
-/* Responsive layout */
-
+/* Tablet view */
 @media (max-width: 900px) {
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .main-content {
+    padding: 25px 20px;
+  }
 }
 
+/* Mobile view */
 @media (max-width: 700px) {
   .app-layout {
     display: block;
@@ -168,8 +200,18 @@ body {
     margin: 20px 0;
   }
 
+  .stat-card {
+    padding: 20px;
+  }
+
+  .stat-value {
+    font-size: 30px;
+  }
+
   .recent-section {
+    margin-top: 25px;
     padding: 18px 12px;
+    overflow-x: auto;
   }
 
   .section-header {
@@ -178,7 +220,26 @@ body {
     gap: 8px;
   }
 
+  .section-title {
+    font-size: 21px;
+  }
+
   .data-table {
     min-width: 650px;
+  }
+}
+
+/* Small mobile screens */
+@media (max-width: 400px) {
+  .main-content {
+    padding: 15px 10px;
+  }
+
+  .stat-card {
+    padding: 17px;
+  }
+
+  .recent-section {
+    padding: 15px 10px;
   }
 }

@@ -1,19 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <%- include('../partials/head', { pageTitle: 'Stock' }) %>
 
   <link rel="stylesheet" href="/css/sidebar.css">
   <link rel="stylesheet" href="/css/stock.css">
+
 </head>
 
 <body>
+
   <div class="app-layout">
 
-    <%- include('../partials/sidebar', { currentPage: 'stocks' }) %>
+    <%- include('../partials/sidebar', {
+      currentPage: 'stocks'
+    }) %>
+
 
     <main class="main-content">
 
@@ -22,29 +33,52 @@
         user: user
       }) %>
 
+
       <section class="page-section">
 
         <div class="page-heading">
+
           <div>
-            <h1 class="page-title">Stock Overview</h1>
+
+            <h1 class="page-title">
+              Stock Overview
+            </h1>
+
             <p class="page-description">
               View and manage your stock batches.
             </p>
+
           </div>
+
         </div>
 
+
         <div class="table-container">
+
           <table class="data-table">
 
             <thead>
+
               <tr>
-                <th class="col-batch">Batch</th>
-                <th class="col-product">Product</th>
-                <th class="col-qty">Quantity</th>
-                <th class="col-method">Method</th>
-                <th class="actions-heading">Actions</th>
+
+                <th>Batch</th>
+
+                <th>Product</th>
+
+                <th>Supplier</th>
+
+                <th>Quantity</th>
+
+                <th>Cost / Unit</th>
+
+                <th>Method</th>
+
+                <th>Actions</th>
+
               </tr>
+
             </thead>
+
 
             <tbody>
 
@@ -55,76 +89,110 @@
                   <tr>
 
                     <!-- Batch -->
-                    <td class="col-batch">
+
+                    <td>
+
                       <a
                         href="/stocks/<%= s._id %>"
                         class="batch-link"
                       >
                         <%= s.name || 'Unnamed batch' %>
                       </a>
+
                     </td>
+
 
                     <!-- Product -->
-                    <td class="col-product">
-                      <%= s.Product ? s.Product.name : '—' %>
-                    </td>
 
-                    <!-- Quantity -->
-                    <td class="col-qty">
-                      <%= s.Product ? s.Product.quantity : '—' %>
-                    </td>
+                    <td>
 
-                    <!-- Valuation Method -->
-                    <td class="col-method">
-
-                      <%
-                        let badgeClass = 'badge-default';
-
-                        if (s.valuationMethod) {
-                          const method = s.valuationMethod.toLowerCase();
-
-                          if (method === 'fifo') {
-                            badgeClass = 'badge-fifo';
-                          } else if (method === 'lifo') {
-                            badgeClass = 'badge-lifo';
-                          } else if (method === 'average') {
-                            badgeClass = 'badge-average';
-                          }
-                        }
+                      <%= s.product
+                        ? s.product.name
+                        : '—'
                       %>
 
+                    </td>
+
+
+                    <!-- Supplier -->
+
+                    <td>
+
+                      <%= s.supplier
+                        ? s.supplier.name
+                        : '—'
+                      %>
+
+                    </td>
+
+
+                    <!-- Batch quantity -->
+
+                    <td>
+
+                      <%= s.quantity || 0 %>
+
+                    </td>
+
+
+                    <!-- Cost -->
+
+                    <td>
+
+                      <%= s.costPerUnit || 0 %> FCFA
+
+                    </td>
+
+
+                    <!-- Valuation method -->
+
+                    <td>
+
+                      <% let badgeClass = 'badge-default'; %>
+
+                      <% if (s.valuationMethod) { %>
+
+                        <% if (s.valuationMethod === 'FIFO') { %>
+
+                          <% badgeClass = 'badge-fifo'; %>
+
+                        <% } else if (s.valuationMethod === 'LIFO') { %>
+
+                          <% badgeClass = 'badge-lifo'; %>
+
+                        <% } %>
+
+                      <% } %>
+
+
                       <span class="badge <%= badgeClass %>">
+
                         <%= s.valuationMethod || 'N/A' %>
+
                       </span>
 
                     </td>
 
+
                     <!-- Actions -->
-                    <td class="col-actions">
+
+                    <td>
 
                       <div class="action-buttons">
 
-                        <!-- Edit -->
+                        <a
+                          href="/stocks/<%= s._id %>"
+                          class="btn btn-edit"
+                        >
+                          View
+                        </a>
+
                         <a
                           href="/stocks/<%= s._id %>/edit"
                           class="btn btn-edit"
                         >
                           Edit
                         </a>
-
-                        <!-- Delete -->
-                        <form
-                          action="/stocks/<%= s._id %>?_method=DELETE"
-                          method="POST"
-                          onsubmit="return confirm('Delete this stock batch?');"
-                        >
-                          <button
-                            type="submit"
-                            class="btn btn-delete"
-                          >
-                            Delete
-                          </button>
-                        </form>
 
                       </div>
 
@@ -134,12 +202,18 @@
 
                 <% }); %>
 
+
               <% } else { %>
 
                 <tr>
-                  <td colspan="5" class="empty-message">
+
+                  <td
+                    colspan="7"
+                    class="empty-message"
+                  >
                     No stock batches found.
                   </td>
+
                 </tr>
 
               <% } %>
@@ -147,24 +221,32 @@
             </tbody>
 
           </table>
+
         </div>
 
-        <!-- New Stock Button -->
+
+        <!-- New stock -->
+
         <div class="bottom-actions">
+
           <a
             href="/stocks/create"
             class="btn btn-primary"
           >
-            + New Stock Batch
+            + Receive Stock
           </a>
+
         </div>
 
       </section>
 
     </main>
+
   </div>
+
 
   <%- include('../partials/footer') %>
 
 </body>
+
 </html>

@@ -1,33 +1,82 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-     <link rel="stylesheet" href="/css/showsupplier.css">
+  <link rel="stylesheet" href="/css/showsupplier.css">
   <%- include('../partials/head', { pageTitle: supplier.name }) %>
 </head>
-<body>
-  <div class="app-layout">
-    <%- include('../partials/sidebar', { currentPage: 'suppliers' }) %>
-    <main class="main-content">
-     
-      <%- include('../partials/header', { pageTitle: supplier.name, user: user }) %>
 
-      <a href="/suppliers" class="back-link">&larr; Back to suppliers</a>
+<body>
+
+  <div class="app-layout">
+
+    <%- include('../partials/sidebar', { currentPage: 'suppliers' }) %>
+
+    <main class="main-content">
+
+      <%- include('../partials/header', {
+        pageTitle: supplier.name,
+        user: user
+      }) %>
+
+
+      <a href="/suppliers" class="back-link">
+        &larr; Back to suppliers
+      </a>
+
 
       <div class="detail-card">
-        <p class="detail-title"><%= supplier.name %></p>
-        <p class="detail-subtitle"><%= supplier.address || 'No address' %></p>
-        <p class="detail-description">Contact: <%= supplier.contact || '—' %></p>
-        <p class="detail-description">Supplies <%= supplier.supplyQuantity || 0 %> units at $<%= supplier.supplyPrice %> each</p>
+
+        <p class="detail-title">
+          <%= supplier.name %>
+        </p>
+
+        <p class="detail-subtitle">
+          <%= supplier.address || 'No address' %>
+        </p>
+
+        <p class="detail-description">
+          Contact:
+          <%= supplier.contact || 'No contact' %>
+        </p>
+
+        <p class="detail-description">
+          Supply history is managed automatically from restock transactions.
+        </p>
+
       </div>
 
+
       <div class="detail-actions">
-        <a href="/suppliers/<%= supplier._id %>/edit" class="btn">Edit supplier</a>
-        <form action="/suppliers/<%= supplier._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Delete this supplier?');">
-          <button type="submit" class="btn btn-danger">Delete</button>
+
+        <a
+          href="/suppliers/<%= supplier._id %>/edit"
+          class="btn"
+        >
+          Edit supplier
+        </a>
+
+        <form
+          action="/suppliers/<%= supplier._id %>?_method=DELETE"
+          method="POST"
+          onsubmit="return confirm('Delete this supplier?');"
+        >
+
+          <button
+            type="submit"
+            class="btn btn-danger"
+          >
+            Delete
+          </button>
+
         </form>
+
       </div>
+
     </main>
+
   </div>
+
   <%- include('../partials/footer') %>
+
 </body>
 </html>

@@ -2,18 +2,22 @@
 <html lang="en">
 <head>
   <link rel="stylesheet" href="/css/customer.css">
+
   <%- include('../partials/head', { pageTitle: 'Customers' }) %>
 </head>
 
 <body>
+
   <div class="app-layout">
-    
 
     <%- include('../partials/sidebar', { currentPage: 'customers' }) %>
 
     <main class="main-content">
 
-      <%- include('../partials/header', { pageTitle: 'Customers' }) %>
+      <%- include('../partials/header', {
+        pageTitle: 'Customers',
+        user: user
+      }) %>
 
       <div class="detail-card">
 
@@ -21,36 +25,53 @@
 
           <% if (customers && customers.length > 0) { %>
 
-            <% customers.forEach(function(c) { %>
+            <% customers.forEach(function(customer) { %>
 
-              <a href="/customers/<%= c._id %>" class="customer-row">
+              <a
+                href="/customers/<%= customer._id %>"
+                class="customer-row"
+              >
 
                 <div class="customer-item">
-                  <span class="detail-label">Customer</span>
+
+                  <span class="detail-label">
+                    Customer
+                  </span>
 
                   <span class="detail-value">
+
                     <span class="customer-icon">
                       <i class="ti ti-user"></i>
                     </span>
 
-                    <%= c.name %>
+                    <%= customer.name %>
+
                   </span>
+
                 </div>
 
                 <div class="customer-item">
-                  <span class="detail-label">Quantity Bought</span>
 
-                  <span class="detail-value quantity">
-                    <%= c.quantityBought || 0 %> units
+                  <span class="detail-label">
+                    Contact
                   </span>
+
+                  <span class="detail-value">
+                    <%= customer.contact || '—' %>
+                  </span>
+
                 </div>
 
                 <div class="customer-item">
-                  <span class="detail-label">Buying Price</span>
 
-                  <span class="detail-value price">
-                    $<%= (c.buyingPrice || 0).toFixed(2) %>
+                  <span class="detail-label">
+                    Address
                   </span>
+
+                  <span class="detail-value">
+                    <%= customer.address || '—' %>
+                  </span>
+
                 </div>
 
               </a>
@@ -60,21 +81,38 @@
           <% } else { %>
 
             <div class="empty-state">
-              <p>No customers found.</p>
-              <a href="/customers/create" class="btn btn-primary">
+
+              <p>
+                No customers found.
+              </p>
+
+              <a
+                href="/customers/create"
+                class="btn btn-primary"
+              >
                 + New customer
               </a>
+
             </div>
 
           <% } %>
 
         </div>
 
-        <div class="detail-actions">
-          <a href="/customers/create" class="btn btn-primary">
-            + New customer
-          </a>
-        </div>
+        <% if (customers && customers.length > 0) { %>
+
+          <div class="detail-actions">
+
+            <a
+              href="/customers/create"
+              class="btn btn-primary"
+            >
+              + New customer
+            </a>
+
+          </div>
+
+        <% } %>
 
       </div>
 

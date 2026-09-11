@@ -5,14 +5,20 @@ const customerSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  quantityBought: {
-    type: Number,
-    default: 0,
+  contact: {
+    type: String,
   },
-  buyingPrice: {
-    type: Number,
+  address: {
+    type: String,
   },
-});
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "user",
+    required: true
+  }
+},
+{timestamps: true}
+);
 
 const Customer = mongoose.model("Customer", customerSchema);
 module.exports = Customer;

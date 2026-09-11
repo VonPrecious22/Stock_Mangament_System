@@ -2,31 +2,37 @@
 <html lang="en">
 <head>
   <%- include('partials/head', { pageTitle: 'Dashboard' }) %>
-    <link rel="stylesheet" href="/css/dashboard.css">
-    <link rel="stylesheet" href="/css/sidebar.css">
-<link rel="stylesheet" href="/css/dashboard.css">
 
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/sidebar.css">
 </head>
+
 <body>
   <div class="app-layout">
+
     <%- include('partials/sidebar', { currentPage: 'dashboard' }) %>
-    
+
     <main class="main-content">
+
       <%- include('partials/header', { pageTitle: 'Dashboard' }) %>
 
       <div class="stats-grid">
+
         <div class="stat-card">
           <p class="stat-label">Total products</p>
           <p class="stat-value"><%= totalProducts %></p>
         </div>
+
         <div class="stat-card">
           <p class="stat-label">Stock batches</p>
           <p class="stat-value"><%= totalStocks %></p>
         </div>
+
         <div class="stat-card">
           <p class="stat-label">Low stock alerts</p>
           <p class="stat-value stat-danger"><%= lowStockCount %></p>
         </div>
+
       </div>
 
       <div class="section-header">
@@ -35,6 +41,7 @@
       </div>
 
       <table class="data-table">
+
         <thead>
           <tr>
             <th>Batch</th>
@@ -43,23 +50,55 @@
             <th>Method</th>
           </tr>
         </thead>
+
         <tbody>
-          <% recentStocks.forEach(function(s) { %>
-            <tr onclick="window.location.href='/stocks/<%= s._id %>'">
-              <td><%= s.name || '—' %></td>
-              <td><%= s.Product ? s.Product.name : '—' %></td>
-              <td><%= s.Product ? s.Product.quantity : '—' %></td>
-              <td>
-                <span class="badge badge-<%= s.valuationMethod ? s.valuationMethod.toLowerCase() : 'default' %>">
-                  <%= s.valuationMethod || 'N/A' %>
-                </span>
+
+          <% if (recentStocks && recentStocks.length > 0) { %>
+
+            <% recentStocks.forEach(function(s) { %>
+
+              <tr onclick="window.location.href='/stocks/<%= s._id %>'">
+
+                <td>
+                  <%= s.name || '—' %>
+                </td>
+
+                <td>
+                  <%= s.product ? s.product.name : '—' %>
+                </td>
+
+                <td>
+                  <%= s.product ? s.product.quantity : '—' %>
+                </td>
+
+                <td>
+                  <span class="badge badge-<%= s.valuationMethod ? s.valuationMethod.toLowerCase() : 'default' %>">
+                    <%= s.valuationMethod || 'N/A' %>
+                  </span>
+                </td>
+
+              </tr>
+
+            <% }); %>
+
+          <% } else { %>
+
+            <tr>
+              <td colspan="4">
+                No recent stock batches found.
               </td>
             </tr>
-          <% }); %>
+
+          <% } %>
+
         </tbody>
+
       </table>
+
     </main>
   </div>
+
   <%- include('partials/footer') %>
+
 </body>
 </html>

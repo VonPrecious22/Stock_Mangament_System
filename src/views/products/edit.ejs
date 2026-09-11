@@ -1,51 +1,161 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-   <link rel="stylesheet" href="/css/sidebar.css">
+  <link rel="stylesheet" href="/css/sidebar.css">
   <link rel="stylesheet" href="/css/editproduct.css">
+
   <%- include('../partials/head', { pageTitle: 'Edit Product' }) %>
 </head>
+
 <body>
+
   <div class="app-layout">
+
     <%- include('../partials/sidebar', { currentPage: 'products' }) %>
+
     <main class="main-content">
-      <%- include('../partials/header', { pageTitle: 'Edit product', user: user }) %>
+
+      <%- include('../partials/header', {
+        pageTitle: 'Edit Product',
+        user: user
+      }) %>
 
       <% if (typeof error !== 'undefined' && error) { %>
-        <div class="form-error"><%= error %></div>
+        <div class="form-error">
+          <%= error %>
+        </div>
       <% } %>
 
-      <form action="/products/<%= product._id %>?_method=PUT" method="POST" class="form-card">
+      <form
+        action="/products/<%= product._id %>?_method=PUT"
+        method="POST"
+        class="form-card"
+      >
+
+        <!-- Product name -->
         <div class="form-group">
-          <label>Name</label>
-          <input type="text" name="name" value="<%= product.name %>" required />
+
+          <label for="name">
+            Name
+          </label>
+
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value="<%= product.name %>"
+            required
+          />
+
         </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>Selling price</label>
-            <input type="number" step="0.01" name="sellingPrice" value="<%= product.sellingPrice %>" required />
-          </div>
-          <div class="form-group">
-            <label>Quantity</label>
-            <input type="number" name="quantity" value="<%= product.quantity %>" required />
-          </div>
-        </div>
+
+        <!-- Selling price -->
         <div class="form-group">
-          <label>Value tier</label>
-          <select name="category">
-            <option value="" <%= !product.category ? 'selected' : '' %>>None</option>
-            <option value="A" <%= product.category === 'A' ? 'selected' : '' %>>A</option>
-            <option value="B" <%= product.category === 'B' ? 'selected' : '' %>>B</option>
-            <option value="C" <%= product.category === 'C' ? 'selected' : '' %>>C</option>
+
+          <label for="sellingPrice">
+            Selling price
+          </label>
+
+          <input
+            type="number"
+            id="sellingPrice"
+            name="sellingPrice"
+            step="0.01"
+            min="0"
+            value="<%= product.sellingPrice %>"
+            required
+          />
+
+        </div>
+
+        <!-- Value tier -->
+        <div class="form-group">
+
+          <label for="category">
+            Value tier
+          </label>
+
+          <select
+            id="category"
+            name="category"
+          >
+
+            <option
+              value=""
+              <%= !product.category ? 'selected' : '' %>
+            >
+              None
+            </option>
+
+            <option
+              value="A"
+              <%= product.category === 'A' ? 'selected' : '' %>
+            >
+              A
+            </option>
+
+            <option
+              value="B"
+              <%= product.category === 'B' ? 'selected' : '' %>
+            >
+              B
+            </option>
+
+            <option
+              value="C"
+              <%= product.category === 'C' ? 'selected' : '' %>
+            >
+              C
+            </option>
+
           </select>
+
         </div>
+
+        <!-- Current quantity - display only -->
+        <div class="form-group">
+
+          <label>
+            Current quantity
+          </label>
+
+          <input
+            type="number"
+            value="<%= product.quantity %>"
+            readonly
+          />
+
+          <small>
+            Inventory quantity is changed through Receive Stock or Sales.
+          </small>
+
+        </div>
+
+        <!-- Actions -->
         <div class="form-actions">
-          <a href="/products/<%= product._id %>" class="btn">Cancel</a>
-          <button type="submit" class="btn btn-primary">Save changes</button>
+
+          <a
+            href="/products/<%= product._id %>"
+            class="btn"
+          >
+            Cancel
+          </a>
+
+          <button
+            type="submit"
+            class="btn btn-primary"
+          >
+            Save changes
+          </button>
+
         </div>
+
       </form>
+
     </main>
   </div>
+
   <%- include('../partials/footer') %>
+
 </body>
 </html>

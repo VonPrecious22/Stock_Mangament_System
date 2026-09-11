@@ -1,7 +1,11 @@
-/* =========================================
-   STOCK PAGE STYLES
-   ========================================= */
+/* Basic Stock Page Design */
 
+/* Keep element sizes easy to control */
+* {
+  box-sizing: border-box;
+}
+
+/* Stock page colors */
 :root {
   --aqua: #00a6a6;
   --dark-aqua: #007f7f;
@@ -21,270 +25,155 @@
   --red-light: #ffe5e5;
 
   --muted-text: #6b7280;
-
-  --font-sans:
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    sans-serif;
 }
 
-
-/* =========================================
-   BODY
-   ========================================= */
-
+/* Page */
 body {
-  color: var(--black);
-  background-color: #f9fafb;
-  font-family: var(--font-sans);
   margin: 0;
-}
-
-
-/* =========================================
-   MAIN CONTENT
-   ========================================= */
-
-.main-content {
   color: var(--black);
-  padding: 24px;
+  background-color: var(--white);
+  font-family: "Times New Roman", Times, serif;
 }
 
+/* Use Times New Roman for controls */
+button,
+input,
+select,
+textarea {
+  font-family: "Times New Roman", Times, serif;
+}
 
-/* =========================================
-   PAGE SECTION
-   ========================================= */
+/* Main content */
+.main-content {
+  min-width: 0;
+  padding: 30px;
+  background-color: var(--white);
+}
 
+/* Page section */
 .page-section {
   width: 100%;
   margin-top: 20px;
   padding: 24px;
-
   background-color: var(--white);
-
   border: 1px solid var(--border-color);
   border-radius: 8px;
-
-  box-shadow:
-    0 4px 6px -1px rgba(0, 0, 0, 0.05);
-
-  box-sizing: border-box;
 }
 
-
-/* =========================================
-   PAGE HEADING
-   ========================================= */
-
+/* Page heading */
 .page-heading {
   margin-bottom: 24px;
 }
 
 .page-title {
   margin: 0;
-
   color: var(--black);
-
   font-size: 26px;
-  font-weight: 700;
+  font-weight: bold;
 }
 
 .page-description {
   margin: 6px 0 0;
-
   color: var(--muted-text);
-
-  font-size: 15px;
+  font-size: 16px;
 }
 
-
-/* =========================================
-   BUTTON BASE
-   ========================================= */
-
+/* Buttons */
 .btn {
-  display: inline-flex;
-
-  align-items: center;
-  justify-content: center;
-
-  min-height: 36px;
-
-  padding: 8px 16px;
-
+  display: inline-block;
+  min-height: 38px;
+  padding: 9px 16px;
   border: none;
   border-radius: 6px;
-
-  font-family: var(--font-sans);
-  font-size: 14px;
-  font-weight: 600;
-
+  font-family: "Times New Roman", Times, serif;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
   text-decoration: none;
-
   cursor: pointer;
-
-  transition:
-    background-color 0.2s ease,
-    transform 0.15s ease,
-    box-shadow 0.15s ease;
-  
-  box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.08);
-
-  box-sizing: border-box;
 }
 
-.btn:hover {
-  transform: translateY(-1px);
-
-  box-shadow:
-    0 3px 6px rgba(0, 0, 0, 0.12);
-}
-
-
-/* =========================================
-   NEW STOCK BUTTON
-   ========================================= */
-
+/* New stock button */
 .btn-primary {
   color: var(--white);
   background-color: var(--aqua);
 }
 
 .btn-primary:hover {
-  color: var(--white);
   background-color: var(--dark-aqua);
 }
 
-
-/* =========================================
-   EDIT BUTTON
-   ========================================= */
-
+/* Edit button */
 .btn-edit {
+  min-width: 70px;
   color: var(--white);
   background-color: var(--green);
-
-  min-width: 70px;
 }
 
 .btn-edit:hover {
-  color: var(--white);
   background-color: var(--green-dark);
 }
 
-
-/* =========================================
-   DELETE BUTTON
-   ========================================= */
-
+/* Delete button */
 .btn-delete {
+  min-width: 75px;
   color: var(--white);
   background-color: var(--red);
-
-  min-width: 75px;
-
-  border: none;
-  border-radius: 6px;
 }
 
 .btn-delete:hover {
-  color: var(--white);
   background-color: var(--red-dark);
 }
 
-
-/* =========================================
-   TABLE CONTAINER
-   ========================================= */
-
+/* Table container */
 .table-container {
   width: 100%;
-
   overflow-x: auto;
-
-  border-radius: 6px;
-
   border: 1px solid var(--border-color);
+  border-radius: 6px;
 }
 
-
-/* =========================================
-   TABLE
-   ========================================= */
-
+/* Table */
 .data-table {
   width: 100%;
-
   border-collapse: collapse;
-
   color: var(--black);
-
   background-color: var(--white);
 }
 
-
-/* =========================================
-   TABLE HEADER
-   ========================================= */
-
+/* Table headings */
 .data-table th {
   padding: 14px 18px;
-
   color: var(--white);
-
   background-color: var(--aqua);
-
-  font-size: 15px;
-  font-weight: 600;
-
+  font-size: 16px;
   text-align: left;
-
   white-space: nowrap;
 }
 
-
-/* =========================================
-   TABLE CELLS
-   ========================================= */
-
+/* Table cells */
 .data-table td {
   padding: 14px 18px;
-
   color: var(--black);
-
   border-bottom: 1px solid var(--border-color);
-
-  font-size: 15px;
-
+  font-size: 16px;
   vertical-align: middle;
 }
 
-
-/* Remove border from final row */
-
+/* Remove the border from the last row */
 .data-table tbody tr:last-child td {
   border-bottom: none;
 }
 
-
 /* Row hover */
-
 .data-table tbody tr:hover td {
   background-color: var(--light-aqua);
 }
 
-
-/* =========================================
-   TABLE COLUMNS
-   ========================================= */
-
+/* Table columns */
 .col-batch {
   width: 30%;
-  font-weight: 600;
+  font-weight: bold;
 }
 
 .col-product {
@@ -295,193 +184,161 @@ body {
 .col-qty {
   width: 15%;
   color: #374151;
-  font-weight: 500;
+  font-weight: bold;
 }
 
 .col-method {
   width: 15%;
 }
 
+.col-actions {
+  width: 15%;
+  text-align: center;
+  white-space: nowrap;
+}
 
-/* =========================================
-   BATCH LINK
-   ========================================= */
-
+/* Batch link */
 .batch-link {
   color: var(--dark-aqua);
-
+  font-weight: bold;
   text-decoration: none;
-
-  transition: color 0.15s ease;
 }
 
 .batch-link:hover {
   color: var(--aqua);
-
   text-decoration: underline;
 }
 
-
-/* =========================================
-   ACTION COLUMN
-   ========================================= */
-
+/* Action heading */
 .actions-heading {
   text-align: center !important;
 }
 
-.col-actions {
-  width: 15%;
-
-  text-align: center;
-
-  white-space: nowrap;
-}
-
-
-/* =========================================
-   EDIT + DELETE HORIZONTAL ALIGNMENT
-   ========================================= */
-
+/* Action buttons */
 .action-buttons {
   display: flex;
-
   align-items: center;
   justify-content: center;
-
-  flex-direction: row;
-
   gap: 8px;
-
   white-space: nowrap;
 }
-
-
-/* Make form behave correctly beside Edit */
 
 .action-buttons form {
   display: flex;
-
   align-items: center;
-
   margin: 0;
-  padding: 0;
 }
 
-
-/* =========================================
-   VALUATION METHOD BADGES
-   ========================================= */
-
+/* Badges */
 .badge {
   display: inline-block;
-
   min-width: 65px;
-
   padding: 4px 10px;
-
   border-radius: 20px;
-
-  font-size: 13px;
-  font-weight: 600;
-
+  font-family: "Times New Roman", Times, serif;
+  font-size: 14px;
+  font-weight: bold;
   text-align: center;
-
-  letter-spacing: 0.3px;
-
-  box-sizing: border-box;
 }
 
-
-/* FIFO */
-
+/* FIFO badge */
 .badge-fifo {
   color: #0369a1;
   background-color: #e0f2fe;
 }
 
-
-/* LIFO */
-
+/* LIFO badge */
 .badge-lifo {
   color: #15803d;
   background-color: var(--green-light);
 }
 
-
-/* Average */
-
+/* Average badge */
 .badge-average {
   color: #b45309;
   background-color: #fef3c7;
 }
 
-
-/* Default */
-
+/* Default badge */
 .badge-default {
   color: var(--muted-text);
   background-color: #f3f4f6;
 }
 
-
-/* =========================================
-   EMPTY MESSAGE
-   ========================================= */
-
+/* Empty message */
 .empty-message {
   padding: 32px !important;
-
   color: var(--muted-text) !important;
-
+  font-size: 16px;
   font-style: italic;
-
   text-align: center;
 }
 
-
-/* =========================================
-   BOTTOM ACTIONS
-   ========================================= */
-
+/* Bottom actions */
 .bottom-actions {
   display: flex;
-
   justify-content: flex-start;
-
   margin-top: 24px;
 }
 
-
-/* =========================================
-   RESPONSIVE DESIGN
-   ========================================= */
-
-@media (max-width: 700px) {
-
+/* Tablet view */
+@media (max-width: 900px) {
   .main-content {
-    padding: 16px 12px;
+    padding: 25px 20px;
+  }
+
+  .page-section {
+    padding: 20px;
+  }
+}
+
+/* Mobile view */
+@media (max-width: 700px) {
+  .main-content {
+    padding: 20px 15px;
   }
 
   .page-section {
     padding: 16px;
   }
 
+  .page-title {
+    font-size: 22px;
+  }
+
   .data-table {
     min-width: 750px;
+  }
+
+  .bottom-actions {
+    display: block;
   }
 
   .bottom-actions .btn-primary {
     width: 100%;
   }
 
-  /*
-     Keep Edit and Delete horizontal
-     even on smaller screens.
-  */
+  .action-buttons {
+    justify-content: flex-start;
+  }
+}
+
+/* Small mobile screens */
+@media (max-width: 420px) {
+  .main-content {
+    padding: 15px 10px;
+  }
+
+  .page-section {
+    padding: 12px;
+  }
 
   .action-buttons {
-    flex-direction: row;
-    justify-content: center;
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .action-buttons .btn {
+    width: 100%;
   }
 }

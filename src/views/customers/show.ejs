@@ -1,31 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="/css/showcustomer.css">
+  <link rel="stylesheet" href="/css/showcustomer.css">
   <%- include('../partials/head', { pageTitle: customer.name }) %>
 </head>
-<body>
-  <div class="app-layout">
-    <%- include('../partials/sidebar', { currentPage: 'customers' }) %>
-    <main class="main-content">
-      <%- include('../partials/header', { pageTitle: customer.name }) %>
 
-      <a href="/customers" class="back-link">&larr; Back to customers</a>
+<body>
+
+  <div class="app-layout">
+
+    <%- include('../partials/sidebar', { currentPage: 'customers' }) %>
+
+    <main class="main-content">
+
+      <%- include('../partials/header', {
+        pageTitle: customer.name,
+        user: user
+      }) %>
+
+      <a href="/customers" class="back-link">
+        &larr; Back to customers
+      </a>
 
       <div class="detail-card">
-        <p class="detail-title"><%= customer.name %></p>
-        <p class="detail-description">Total bought: <%= customer.quantityBought || 0 %> units</p>
-        <p class="detail-description">Buying price: $<%= (customer.buyingPrice || 0).toFixed(2) %></p>
+
+        <p class="detail-title">
+          <%= customer.name %>
+        </p>
+
+        <div class="detail-item">
+          <span class="detail-label">Contact</span>
+
+          <span class="detail-value">
+            <%= customer.contact || '—' %>
+          </span>
+        </div>
+
+        <div class="detail-item">
+          <span class="detail-label">Address</span>
+
+          <span class="detail-value">
+            <%= customer.address || '—' %>
+          </span>
+        </div>
+
+        <div class="detail-item">
+          <span class="detail-label">Purchase history</span>
+
+          <span class="detail-value">
+            Automatically calculated from sales transactions
+          </span>
+        </div>
+
       </div>
 
       <div class="detail-actions">
-        <a href="/customers/<%= customer._id %>/edit" class="btn">Edit customer</a>
-        <form action="/customers/<%= customer._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Delete this customer?');">
-          <button type="submit" class="btn btn-danger">Delete</button>
+
+        <a
+          href="/customers/<%= customer._id %>/edit"
+          class="btn"
+        >
+          Edit customer
+        </a>
+
+        <form
+          action="/customers/<%= customer._id %>?_method=DELETE"
+          method="POST"
+          onsubmit="return confirm('Delete this customer?');"
+        >
+          <button
+            type="submit"
+            class="btn btn-danger"
+          >
+            Delete
+          </button>
         </form>
+
       </div>
+
     </main>
   </div>
+
   <%- include('../partials/footer') %>
+
 </body>
 </html>
