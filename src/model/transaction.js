@@ -31,7 +31,6 @@ const transactionSchema = new mongoose.Schema(
       maxlength: 200,
     },
 
-    // Lowercase: matches product: product._id
     product: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Product",

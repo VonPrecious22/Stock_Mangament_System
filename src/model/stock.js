@@ -38,14 +38,12 @@ const stockSchema = new mongoose.Schema(
       default: "FIFO",
     },
 
-    // Lowercase: must match the controller
     product: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Product",
       required: true,
     },
 
-    // Lowercase: must match the controller
     supplier: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Supplier",

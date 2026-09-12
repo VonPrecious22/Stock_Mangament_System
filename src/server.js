@@ -35,8 +35,6 @@ app.use(
   }),
 );
 
-//Global user state for templates.
-
 app.use((req, res, next) => {
 
   res.locals.user = req.session.userId ? { name: req.session.userName } : null;
@@ -49,9 +47,6 @@ app.get("/", (req, res) => {
   res.redirect(req.session.userId ? "/dashboard" : "/login");
 });
 
-//Registration of Routes.
-
-
 app.use("/", dashboardRoutes);
 app.use("/", userRoutes);
 app.use("/stocks", stockRoutes);
@@ -61,8 +56,6 @@ app.use("/suppliers", supplierRoutes);
 app.use("/transactions", transactionRoutes);
 app.use("/reports", reportRoutes);
 
-
-//Error Handling.
 app.use((req, res) => {
   res.status(404).render("errors/404"); 
 });

@@ -243,10 +243,6 @@ body {
 }
 
 
-/* =========================================
-   BASE BUTTON
-   ========================================= */
-
 .btn {
   display: inline-flex;
 
@@ -290,21 +286,12 @@ body {
 }
 
 
-/* =========================================
-   BUTTON HOVER
-   ========================================= */
-
 .btn:hover {
   transform: translateY(-1px);
 
   box-shadow:
     0 3px 6px rgba(0, 0, 0, 0.10);
 }
-
-
-/* =========================================
-   CANCEL BUTTON
-   ========================================= */
 
 .form-actions .btn:not(.btn-primary) {
   color: #374151;
@@ -323,11 +310,6 @@ body {
   border-color: #9ca3af;
 }
 
-
-/* =========================================
-   CREATE BATCH BUTTON
-   ========================================= */
-
 .btn-primary {
   color: var(--white);
 
@@ -345,20 +327,11 @@ body {
   border-color: var(--dark-aqua);
 }
 
-
-/* =========================================
-   REQUIRED INPUT VALIDATION
-   ========================================= */
-
 .form-group input:invalid:not(:placeholder-shown),
 .form-group select:invalid {
   border-color: #d1d5db;
 }
 
-
-/* =========================================
-   RESPONSIVE DESIGN
-   ========================================= */
 
 @media (max-width: 700px) {
 

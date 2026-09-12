@@ -3,7 +3,6 @@ require('dotenv').config()
 const auth = (req, res, next) =>{
     if(!req.session.userId || !req.session.userId){
         return res.redirect("/login");
-        // return res.redirect('/login');
     }
     next();
 }
